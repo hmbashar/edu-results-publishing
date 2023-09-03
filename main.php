@@ -200,3 +200,6 @@ function enqueue_wp_media() {
     wp_enqueue_media();
 }
 add_action('admin_enqueue_scripts', 'enqueue_wp_media');
+
+
+require_once plugin_dir_path(__FILE__) . 'inc/custom-fields.php';
