@@ -4,6 +4,13 @@ namespace inc\custom_fields;
 
 class EDUCustomFields
 {
+
+    public function __construct() {
+        
+        // Call the register_student_fields() method during class initialization
+        $this->register_student_fields();
+    }
+
     public function register_student_fields()
     {
         add_action('add_meta_boxes', array($this, 'add_student_fields_meta_box'));
@@ -94,6 +101,3 @@ class EDUCustomFields
         }
     }
 }
-
-$custom_fields = new \inc\custom_fields\EDUCustomFields();
-$custom_fields->register_student_fields();

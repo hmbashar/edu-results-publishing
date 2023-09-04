@@ -32,23 +32,40 @@ class EDUResultSettings {
             <form method="post" action="options.php" enctype="multipart/form-data"> <!-- Add enctype for file upload -->
                 <?php settings_fields('edu_results_settings_group'); ?>
                 <?php do_settings_sections('edu_results_settings'); ?>
-    
-             
-    
+                <?php
+                    // Add nonce field
+                    wp_nonce_field('edu_results_settings_nonce', 'edu_results_settings_nonce_field');
+                ?>
                 <?php submit_button(); ?>
             </form>
         </div>
         <?php
     }
+    
     public function registerSettings() {
         register_setting('edu_results_settings_group', 'edu_results_setting_name');
-        // Add a new option for the logo
-        register_setting('edu_results_settings_group', 'edu_results_logo', array(
-            'type' => 'string', // Store the attachment URL as a string
-            'sanitize_callback' => 'esc_url_raw', // Sanitize the URL
-            'show_in_rest' => true, // Show the field in the REST API
-        ));
-    
+        
+        // Add a new option for Collage Name
+        register_setting('edu_results_settings_group', 'edu_results_collage_name', 'sanitize_text_field');
+        
+        // Add a new option for Collage Registration Number
+        register_setting('edu_results_settings_group', 'edu_results_collage_registration_number', 'sanitize_text_field');
+        
+        // Add a new option for Collage Since Year
+        register_setting('edu_results_settings_group', 'edu_results_collage_since_year', 'sanitize_text_field');
+        
+        // Add a new option for Collage Address
+        register_setting('edu_results_settings_group', 'edu_results_collage_address', 'sanitize_text_field');
+        
+        // Add a new option for Collage Phone Number
+        register_setting('edu_results_settings_group', 'edu_results_collage_phone_number', 'sanitize_text_field');
+        
+        // Add a new option for Collage Email Address
+        register_setting('edu_results_settings_group', 'edu_results_collage_email_address', 'sanitize_email');
+        
+        // Add a new option for Collage Address (if it's meant to be different from the previous one)
+        register_setting('edu_results_settings_group', 'edu_results_collage_address_2', 'sanitize_text_field');
+        
         add_settings_section(
             'edu_results_settings_section',
             'General Settings',
@@ -63,17 +80,79 @@ class EDUResultSettings {
             'edu_results_settings',
             'edu_results_settings_section'
         );
-    
-        // Add a new settings field for the logo
+        
+        // Add new settings fields for the new options
         add_settings_field(
-            'edu_results_logo',
-            'Logo',
-            array($this, 'logoFieldCallback'),
+            'edu_results_collage_name',
+            'Collage Name',
+            array($this, 'collageNameFieldCallback'),
             'edu_results_settings',
             'edu_results_settings_section'
         );
+        
+        add_settings_field(
+            'edu_results_collage_registration_number',
+            'Collage Registration Number',
+            array($this, 'collageRegistrationNumberFieldCallback'),
+            'edu_results_settings',
+            'edu_results_settings_section'
+        );
+        
+        add_settings_field(
+            'edu_results_collage_since_year',
+            'Collage Since Year',
+            array($this, 'collageSinceYearFieldCallback'),
+            'edu_results_settings',
+            'edu_results_settings_section'
+        );
+        
+        add_settings_field(
+            'edu_results_collage_address',
+            'Collage Address',
+            array($this, 'collageAddressFieldCallback'),
+            'edu_results_settings',
+            'edu_results_settings_section'
+        );
+        
+        add_settings_field(
+            'edu_results_collage_phone_number',
+            'Collage Phone Number',
+            array($this, 'collagePhoneNumberFieldCallback'),
+            'edu_results_settings',
+            'edu_results_settings_section'
+        );
+        
+        add_settings_field(
+            'edu_results_collage_email_address',
+            'Collage Email Address',
+            array($this, 'collageEmailAddressFieldCallback'),
+            'edu_results_settings',
+            'edu_results_settings_section'
+        );
+        
+        // Add a new settings field for Collage Address (if it's meant to be different from the previous one)
+        add_settings_field(
+            'edu_results_collage_address_2',
+            'Collage Address 2',
+            array($this, 'collageAddress2FieldCallback'),
+            'edu_results_settings',
+            'edu_results_settings_section'
+        );
+
+        
+        // Add nonce validation
+        add_action('admin_init', array($this, 'validateNonce'));
+
     }
     
+    public function validateNonce() {
+        if (isset($_POST['edu_results_settings_nonce_field'])) {
+            $nonce = sanitize_text_field($_POST['edu_results_settings_nonce_field']);
+            if (!wp_verify_nonce($nonce, 'edu_results_settings_nonce')) {
+                die('Security check failed.');
+            }
+        }
+    }
 
     public function logoFieldCallback() {
         $logoURL = get_option('edu_results_logo');
@@ -121,4 +200,40 @@ class EDUResultSettings {
         $settingValue = get_option('edu_results_setting_name');
         echo '<input type="text" name="edu_results_setting_name" value="' . esc_attr($settingValue) . '" />';
     }
+
+    public function collageNameFieldCallback() {
+        $collageName = get_option('edu_results_collage_name');
+        echo '<input type="text" name="edu_results_collage_name" value="' . esc_attr($collageName) . '" />';
+    }
+    
+    public function collageRegistrationNumberFieldCallback() {
+        $collageRegNumber = get_option('edu_results_collage_registration_number');
+        echo '<input type="text" name="edu_results_collage_registration_number" value="' . esc_attr($collageRegNumber) . '" />';
+    }
+    
+    public function collageSinceYearFieldCallback() {
+        $collageSinceYear = get_option('edu_results_collage_since_year');
+        echo '<input type="text" name="edu_results_collage_since_year" value="' . esc_attr($collageSinceYear) . '" />';
+    }
+    
+    public function collageAddressFieldCallback() {
+        $collageAddress = get_option('edu_results_collage_address');
+        echo '<input type="text" name="edu_results_collage_address" value="' . esc_attr($collageAddress) . '" />';
+    }
+    
+    public function collagePhoneNumberFieldCallback() {
+        $collagePhoneNumber = get_option('edu_results_collage_phone_number');
+        echo '<input type="text" name="edu_results_collage_phone_number" value="' . esc_attr($collagePhoneNumber) . '" />';
+    }
+    
+    public function collageEmailAddressFieldCallback() {
+        $collageEmailAddress = get_option('edu_results_collage_email_address');
+        echo '<input type="email" name="edu_results_collage_email_address" value="' . esc_attr($collageEmailAddress) . '" />';
+    }
+    
+    public function collageAddress2FieldCallback() {
+        $collageAddress2 = get_option('edu_results_collage_address_2');
+        echo '<input type="text" name="edu_results_collage_address_2" value="' . esc_attr($collageAddress2) . '" />';
+    }
+    
 }
