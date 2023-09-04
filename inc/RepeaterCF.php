@@ -1,21 +1,25 @@
 <?php
 namespace inc\RepeaterCF;
 
-class EDURepeaterCustomFields {
+class EDURepeaterCustomFields
+{
     private $textdomain;
 
-    public function __construct($eduResultPublishing) {
+    public function __construct($eduResultPublishing)
+    {
         $this->textdomain = $eduResultPublishing->getTextDomain();
 
         add_action('add_meta_boxes', array($this, 'addMetaBox'));
         add_action('save_post', array($this, 'saveMetaBoxData'));
     }
 
-    public function addMetaBox() {
+    public function addMetaBox()
+    {
         add_meta_box('edu_results_repeater', __('Subjects Information', $this->textdomain), array($this, 'renderMetaBox'), 'edu_results', 'normal', 'default');
     }
 
-    public function renderMetaBox($post) {
+    public function renderMetaBox($post)
+    {
         $eduResultsGroup = get_post_meta($post->ID, 'edu_subjects_results', true);
 
         wp_nonce_field('edu_results_repeatable_meta_box_nonce', 'edu_results_repeatable_meta_box_nonce');
@@ -43,14 +47,22 @@ class EDURepeaterCustomFields {
                         ?>
                         <tr>
                             <td width="70%">
-                                <input type="text" placeholder="<?php esc_attr_e('Enter subject name', $this->textdomain); ?>" name="edu_results_subject_name[]"
-                                    value="<?php if ($field['subject_name'] != '') echo esc_attr($field['subject_name']); ?>" />
+                                <input style="width:80%;padding:10px;" type="text"
+                                    placeholder="<?php esc_attr_e('Enter subject name', $this->textdomain); ?>"
+                                    name="edu_results_subject_name[]"
+                                    value="<?php if ($field['subject_name'] != '')
+                                        echo esc_attr($field['subject_name']); ?>" />
                             </td>
                             <td width="70%">
-                                <input type="text" placeholder="<?php esc_attr_e('Enter subject URL', $this->textdomain); ?>" name="edu_results_subject_url[]"
-                                    value="<?php if ($field['subject_url'] != '') echo esc_attr($field['subject_url']); ?>" />
+                                <input style="width:80%;padding:10px;" type="text"
+                                    placeholder="<?php esc_attr_e('Enter subject value', $this->textdomain); ?>"
+                                    name="edu_results_subject_value[]"
+                                    value="<?php echo isset($field['subject_value']) ? esc_attr($field['subject_value']) : ''; ?>" />
                             </td>
-                            <td width="15%"><a class="button remove-row" href="#1"><?php esc_html_e('Remove', $this->textdomain); ?></a></td>
+
+                            <td width="15%"><a class="button remove-row" href="#1">
+                                    <?php esc_html_e('Remove', $this->textdomain); ?>
+                                </a></td>
                         </tr>
                         <?php
                     }
@@ -59,32 +71,47 @@ class EDURepeaterCustomFields {
                     ?>
                     <tr>
                         <td>
-                            <input type="text" placeholder="<?php esc_attr_e('Enter subject name', $this->textdomain); ?>" name="edu_results_subject_name[]" />
+                            <input style="width:80%;padding:10px;" type="text"
+                                placeholder="<?php esc_attr_e('Enter subject name', $this->textdomain); ?>"
+                                name="edu_results_subject_name[]" />
                         </td>
                         <td>
-                            <input type="text" placeholder="<?php esc_attr_e('Enter subject URL', $this->textdomain); ?>" name="edu_results_subject_url[]" />
+                            <input style="width:80%;padding:10px;" type="text"
+                                placeholder="<?php esc_attr_e('Enter subject value', $this->textdomain); ?>"
+                                name="edu_results_subject_value[]" />
                         </td>
-                        <td><a class="button  cmb-remove-row-button button-disabled" href="#"><?php esc_html_e('Remove', $this->textdomain); ?></a></td>
+                        <td><a class="button  cmb-remove-row-button button-disabled" href="#">
+                                <?php esc_html_e('Remove', $this->textdomain); ?>
+                            </a></td>
                     </tr>
                 <?php endif; ?>
 
                 <!-- Empty hidden row for jQuery -->
                 <tr class="empty-row screen-reader-text">
                     <td>
-                        <input type="text" placeholder="<?php esc_attr_e('Enter subject name', $this->textdomain); ?>" name="edu_results_subject_name[]" />
+                        <input style="width:80%;padding:10px;" type="text"
+                            placeholder="<?php esc_attr_e('Enter subject name', $this->textdomain); ?>"
+                            name="edu_results_subject_name[]" />
                     </td>
                     <td>
-                        <input type="text" placeholder="<?php esc_attr_e('Enter subject URL', $this->textdomain); ?>" name="edu_results_subject_url[]" />
+                        <input style="width:80%;padding:10px;" type="text"
+                            placeholder="<?php esc_attr_e('Enter subject value', $this->textdomain); ?>"
+                            name="edu_results_subject_value[]" />
                     </td>
-                    <td><a class="button remove-row" href="#"><?php esc_html_e('Remove', $this->textdomain); ?></a></td>
+                    <td><a class="button remove-row" href="#">
+                            <?php esc_html_e('Remove', $this->textdomain); ?>
+                        </a></td>
                 </tr>
             </tbody>
         </table>
-        <p><a id="edu-add-subject-row" class="button" href="#"><?php esc_html_e('Add another', $this->textdomain); ?></a></p>
+        <p><a id="edu-add-subject-row" class="button" href="#">
+                <?php esc_html_e('Add another', $this->textdomain); ?>
+            </a></p>
         <?php
     }
 
-    public function saveMetaBoxData($postID) {
+    public function saveMetaBoxData($postID)
+    {
         if (
             !isset($_POST['edu_results_repeatable_meta_box_nonce']) ||
             !wp_verify_nonce($_POST['edu_results_repeatable_meta_box_nonce'], 'edu_results_repeatable_meta_box_nonce')
@@ -100,12 +127,12 @@ class EDURepeaterCustomFields {
         $old = get_post_meta($postID, 'edu_subjects_results', true);
         $new = array();
         $subjectNames = $_POST['edu_results_subject_name'];
-        $subjectUrls = $_POST['edu_results_subject_url'];
+        $subjectValues = $_POST['edu_results_subject_value'];
         $count = count($subjectNames);
         for ($i = 0; $i < $count; $i++) {
             if ($subjectNames[$i] != ''):
                 $new[$i]['subject_name'] = stripslashes(strip_tags($subjectNames[$i]));
-                $new[$i]['subject_url'] = stripslashes($subjectUrls[$i]); // and however you want to sanitize
+                $new[$i]['subject_value'] = stripslashes(strip_tags($subjectValues[$i]));
             endif;
         }
         if (!empty($new) && $new != $old)
