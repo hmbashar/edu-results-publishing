@@ -14,7 +14,7 @@ class EDUResultsShortcode
     {
 
         // Shortcode logic goes here
-        $output = '<div class="edu-results">';
+        $output = '<div class="edu-results-shortcode-area">';
 
         // Include the 'render-result-view.php' file
         include EDU_RESULT_DIR . 'inc/front-end/render-result-view.php';

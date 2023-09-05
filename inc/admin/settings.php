@@ -43,8 +43,7 @@ class EDUResultSettings {
     }
     
     public function registerSettings() {
-        register_setting('edu_results_settings_group', 'edu_results_setting_name');
-        
+               
         // Add a new option for Collage Name
         register_setting('edu_results_settings_group', 'edu_results_collage_name', 'sanitize_text_field');
         
@@ -63,8 +62,6 @@ class EDUResultSettings {
         // Add a new option for Collage Email Address
         register_setting('edu_results_settings_group', 'edu_results_collage_email_address', 'sanitize_email');
         
-        // Add a new option for Collage Address (if it's meant to be different from the previous one)
-        register_setting('edu_results_settings_group', 'edu_results_collage_address_2', 'sanitize_text_field');
         
         add_settings_section(
             'edu_results_settings_section',
@@ -73,13 +70,6 @@ class EDUResultSettings {
             'edu_results_settings'
         );
     
-        add_settings_field(
-            'edu_results_setting_name',
-            'Setting Name',
-            array($this, 'settingsFieldCallback'),
-            'edu_results_settings',
-            'edu_results_settings_section'
-        );
         
         // Add new settings fields for the new options
         add_settings_field(
@@ -130,14 +120,7 @@ class EDUResultSettings {
             'edu_results_settings_section'
         );
         
-        // Add a new settings field for Collage Address (if it's meant to be different from the previous one)
-        add_settings_field(
-            'edu_results_collage_address_2',
-            'Collage Address 2',
-            array($this, 'collageAddress2FieldCallback'),
-            'edu_results_settings',
-            'edu_results_settings_section'
-        );
+   
 
         
         // Add nonce validation
@@ -196,10 +179,7 @@ class EDUResultSettings {
         echo 'These are the general settings for the Edu Results plugin.';
     }
 
-    public function settingsFieldCallback() {
-        $settingValue = get_option('edu_results_setting_name');
-        echo '<input type="text" name="edu_results_setting_name" value="' . esc_attr($settingValue) . '" />';
-    }
+ 
 
     public function collageNameFieldCallback() {
         $collageName = get_option('edu_results_collage_name');
@@ -231,9 +211,6 @@ class EDUResultSettings {
         echo '<input type="email" name="edu_results_collage_email_address" value="' . esc_attr($collageEmailAddress) . '" />';
     }
     
-    public function collageAddress2FieldCallback() {
-        $collageAddress2 = get_option('edu_results_collage_address_2');
-        echo '<input type="text" name="edu_results_collage_address_2" value="' . esc_attr($collageAddress2) . '" />';
-    }
+    
     
 }
