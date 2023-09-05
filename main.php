@@ -8,6 +8,8 @@
  * Text Domain: edu-results
  */
 
+ define('EDU_RESULT_DIR', plugin_dir_path(__FILE__));
+
 class EDUResultPublishing
 {
     private $prefix;
@@ -113,11 +115,13 @@ class EDUResultPublishing
 
 
 
-require_once plugin_dir_path(__FILE__) . 'inc/custom-fields.php';
+require_once EDU_RESULT_DIR . 'inc/custom-fields.php';
 
-require_once plugin_dir_path(__FILE__) . 'inc/admin/settings.php';
+require_once EDU_RESULT_DIR . 'inc/admin/settings.php';
 
-require_once plugin_dir_path(__FILE__) . 'inc/RepeaterCF.php';
+require_once EDU_RESULT_DIR . 'inc/RepeaterCF.php';
+
+require_once EDU_RESULT_DIR . 'inc/lib/shortcode.php';
 
 //init the main class
 $eduResultPublishing = new EDUResultPublishing();

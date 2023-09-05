@@ -105,7 +105,7 @@ class EDURepeaterCustomFields
             </tbody>
         </table>
         <p><a id="edu-add-subject-row" class="button" href="#">
-                <?php esc_html_e('Add another', $this->textdomain); ?>
+                <?php esc_html_e('Add Another', $this->textdomain); ?>
             </a></p>
         <?php
     }
