@@ -6,9 +6,22 @@
  * Description: This plugin is for student exam results publishing.
  * Tags: Result, WP Result Plugin, EDU Results
  * Text Domain: edu-results
+ * Version: 1.0
+ * License: GPLv2
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ * Domain Path: /languages
+ * Prefix: edu_ 
  */
 
- define('EDU_RESULT_DIR', plugin_dir_path(__FILE__));
+
+/* * @package edu-results
+ * @since 1.0
+ * @version 1.0
+ * @author MD Abul Bashar
+ * @link https://facebook.com/hmbashar
+ */
+
+define('EDU_RESULT_DIR', plugin_dir_path(__FILE__));
 
 class EDUResultPublishing
 {
