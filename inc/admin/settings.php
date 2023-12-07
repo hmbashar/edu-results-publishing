@@ -6,11 +6,10 @@ class EDUResultSettings
 {
 
     private $prefix;
-    private $textdomain;
 
     public function __construct($eduResultPublishing)
     {
-        $this->textdomain = $eduResultPublishing->getTextDomain();
+        
         $this->prefix = $eduResultPublishing->getPrefix();
 
         add_action('admin_menu', array($this, 'addSubmenuPage'));
@@ -20,8 +19,8 @@ class EDUResultSettings
     public function addSubmenuPage()
     {
         $parentSlug = 'edit.php?post_type=' . $this->prefix . 'results';
-        $pageTitle = __('Edu Result Settings', $this->textdomain);
-        $menuTitle = __('Settings', $this->textdomain);
+        $pageTitle = __('Edu Result Settings', 'edu-results');
+        $menuTitle = __('Settings', 'edu-results');
         $capability = 'edit_posts';
         $menuSlug = 'edu_results_settings';
         $function = array($this, 'renderSettingsPage');
