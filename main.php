@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name: EDU Results Publishing
  * Author: MD Abul Bashar
@@ -37,6 +38,9 @@ class EDUResultPublishing
         add_filter('enter_title_here', array($this, 'changeTitlePlaceholder'));
 
         add_action('admin_enqueue_scripts', array($this, 'edu_result_assets_enque_admin'));
+
+        // Register text domain for translation
+        add_action('plugins_loaded', array($this, 'loadTextDomain'));
     }
 
     public function getTextDomain()
@@ -120,10 +124,12 @@ class EDUResultPublishing
     {
         wp_enqueue_media();
     }
+
+    public function loadTextDomain()
+    {
+        load_plugin_textdomain($this->getTextDomain(), false, dirname(plugin_basename(__FILE__)) . '/languages/');
+    }
 }
-
-
-
 
 
 require_once EDU_RESULT_DIR . 'inc/custom-fields.php';
