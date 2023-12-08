@@ -26,7 +26,7 @@ class EDUResultsShortcode
 
         <?php 
         // Include the 'render-result-view.php' file
-        include EDU_RESULT_DIR . 'inc/front-end/render-result-view.php';
+        include CBEDU_RESULT_DIR . 'inc/front-end/render-result-view.php';
         ?>
         </div>
 

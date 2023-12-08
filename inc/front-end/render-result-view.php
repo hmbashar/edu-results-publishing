@@ -1,11 +1,11 @@
 <?php
-$edu_result = new WP_Query(
+$cbedu_result = new WP_Query(
     array(
-        'post_type' => 'edu_results',
+        'post_type' => 'cbedu_results',
         'posts_per_page' => 1,
     )
 );
-$collageName = get_option('edu_results_collage_name');
+$collageName = get_option('cbedu_results_collage_name');
 ?>
 
 <div class="edu-results-render-wrapping-area">
@@ -20,26 +20,26 @@ $collageName = get_option('edu_results_collage_name');
             </div>
         </div><!--/ Banner Area-->
         <?php
-        if ($edu_result->have_posts()):
-            while ($edu_result->have_posts()):
-                $edu_result->the_post();
+        if ($cbedu_result->have_posts()):
+            while ($cbedu_result->have_posts()):
+                $cbedu_result->the_post();
 
                 //student information metabox 
-                $edu_std_roll = get_post_meta(get_the_ID(), 'edu_result_std_roll', true);
-                $edu_std_reg_number = get_post_meta(get_the_ID(), 'edu_result_std_registration_number', true);
-                $edu_std_board = get_post_meta(get_the_ID(), 'edu_result_std_board', true);
-                $edu_std_f_name = get_post_meta(get_the_ID(), 'edu_result_std_father_name', true);
-                $edu_std_m_name = get_post_meta(get_the_ID(), 'edu_result_std_mother_name', true);
-                $edu_std_gpa = get_post_meta(get_the_ID(), 'edu_result_std_gpa', true);
-                $edu_std_group = get_post_meta(get_the_ID(), 'edu_result_std_group', true);
-                $edu_std_id = get_post_meta(get_the_ID(), 'edu_result_std_id', true);
-                $edu_std_re_status = get_post_meta(get_the_ID(), 'edu_result_std_result_status', true);
-                $edu_std_type = get_post_meta(get_the_ID(), 'edu_result_std_student_type', true);
-                $edu_std_dob = get_post_meta(get_the_ID(), 'edu_result_std_dob', true);
+                $cbedu_std_roll = get_post_meta(get_the_ID(), 'cbedu_result_std_roll', true);
+                $cbedu_std_reg_number = get_post_meta(get_the_ID(), 'cbedu_result_std_registration_number', true);
+                $cbedu_std_board = get_post_meta(get_the_ID(), 'cbedu_result_std_board', true);
+                $cbedu_std_f_name = get_post_meta(get_the_ID(), 'cbedu_result_std_father_name', true);
+                $cbedu_std_m_name = get_post_meta(get_the_ID(), 'cbedu_result_std_mother_name', true);
+                $cbedu_std_gpa = get_post_meta(get_the_ID(), 'cbedu_result_std_gpa', true);
+                $cbedu_std_group = get_post_meta(get_the_ID(), 'cbedu_result_std_group', true);
+                $cbedu_std_id = get_post_meta(get_the_ID(), 'cbedu_result_std_id', true);
+                $cbedu_std_re_status = get_post_meta(get_the_ID(), 'cbedu_result_std_result_status', true);
+                $cbedu_std_type = get_post_meta(get_the_ID(), 'cbedu_result_std_student_type', true);
+                $cbedu_std_dob = get_post_meta(get_the_ID(), 'cbedu_result_std_dob', true);
 
                 //Student subjects result
         
-                $edu_std_all_subjects_result = get_post_meta(get_the_ID(), 'edu_subjects_results', true);
+                $cbedu_std_all_subjects_result = get_post_meta(get_the_ID(), 'cbedu_subjects_results', true);
                 ?>
                 <!--Student Information-->
                 <div class="edu-result-student-information-area">
@@ -50,11 +50,11 @@ $collageName = get_option('edu_results_collage_name');
                         <tr>
                             <th>Roll:</th>
                             <td>
-                                <?php echo esc_html($edu_std_roll); ?>
+                                <?php echo esc_html($cbedu_std_roll); ?>
                             </td>
                             <th>Registration Number:</th>
                             <td>
-                                <?php echo esc_html($edu_std_reg_number); ?>
+                                <?php echo esc_html($cbedu_std_reg_number); ?>
                             </td>
                         </tr>
                         <tr>
@@ -68,23 +68,23 @@ $collageName = get_option('edu_results_collage_name');
                                 Father:
                             </td>
                             <td>
-                                <?php echo esc_html($edu_std_f_name); ?>
+                                <?php echo esc_html($cbedu_std_f_name); ?>
                             </td>
                         </tr>
                         <tr>
                             <td>Board:</td>
                             <td>
-                                <?php echo esc_html($edu_std_board); ?>
+                                <?php echo esc_html($cbedu_std_board); ?>
                             </td>
                             <td>Group:</td>
                             <td>
-                                <?php echo esc_html($edu_std_group); ?>
+                                <?php echo esc_html($cbedu_std_group); ?>
                             </td>
                         </tr>
                         <tr>
                             <td>DOB:</td>
                             <td>
-                                <?php echo esc_html($edu_std_dob); ?>
+                                <?php echo esc_html($cbedu_std_dob); ?>
                             </td>
                             <th>Institute</th>
                             <td>
@@ -96,27 +96,27 @@ $collageName = get_option('edu_results_collage_name');
                                 Monther Name:
                             </td>
                             <td>
-                                <?php echo esc_html($edu_std_m_name); ?>
+                                <?php echo esc_html($cbedu_std_m_name); ?>
                             </td>
                             <th>GPA</th>
                             <td>
-                                <?php echo esc_html($edu_std_gpa); ?>
+                                <?php echo esc_html($cbedu_std_gpa); ?>
                             </td>
                         </tr>
                         <tr>
                             <th>ID:</th>
                             <td>
-                                <?php echo esc_html($edu_std_id); ?>
+                                <?php echo esc_html($cbedu_std_id); ?>
                             </td>
                             <th>Result</th>
                             <td>
-                                <?php echo esc_html($edu_std_re_status); ?>
+                                <?php echo esc_html($cbedu_std_re_status); ?>
                             </td>
                         </tr>
                         <tr>
                             <th>Student Type: </th>
                             <td>
-                                <?php echo esc_html($edu_std_type); ?>
+                                <?php echo esc_html($cbedu_std_type); ?>
                             </td>
                         </tr>
                     </table>
@@ -140,9 +140,9 @@ $collageName = get_option('edu_results_collage_name');
                                 <?php
 
                                 // Check if there are subject results
-                                if (!empty($edu_std_all_subjects_result) && is_array($edu_std_all_subjects_result)) {
+                                if (!empty($cbedu_std_all_subjects_result) && is_array($cbedu_std_all_subjects_result)) {
 
-                                    foreach ($edu_std_all_subjects_result as $subject_result) {
+                                    foreach ($cbedu_std_all_subjects_result as $subject_result) {
                                         if (isset($subject_result['subject_name']) && isset($subject_result['subject_value'])) {
                                             $subject_name = esc_html($subject_result['subject_name']);
                                             $subject_value = esc_html($subject_result['subject_value']);

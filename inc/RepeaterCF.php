@@ -4,8 +4,7 @@ namespace inc\RepeaterCF;
 
 class EDURepeaterCustomFields
 {
-    private $textdomain;
-
+  
     public function __construct()
     {
 
@@ -15,14 +14,14 @@ class EDURepeaterCustomFields
 
     public function addMetaBox()
     {
-        add_meta_box('edu_results_repeater', __('Subjects Information', 'edu-results'), array($this, 'renderMetaBox'), 'edu_results', 'normal', 'default');
+        add_meta_box('cbedu_results_repeater', __('Subjects Information', 'edu-results'), array($this, 'renderMetaBox'), 'cbedu_results', 'normal', 'default');
     }
 
     public function renderMetaBox($post)
     {
-        $eduResultsGroup = get_post_meta($post->ID, 'edu_subjects_results', true);
+        $eduResultsGroup = get_post_meta($post->ID, 'cbedu_subjects_results', true);
 
-        wp_nonce_field('edu_results_repeatable_meta_box_nonce', 'edu_results_repeatable_meta_box_nonce');
+        wp_nonce_field('cbedu_results_repeatable_meta_box_nonce', 'cbedu_results_repeatable_meta_box_nonce');
 ?>
         <script type="text/javascript">
             jQuery(document).ready(function($) {
@@ -47,11 +46,11 @@ class EDURepeaterCustomFields
                 ?>
                         <tr>
                             <td width="70%">
-                                <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject name', 'edu-results'); ?>" name="edu_results_subject_name[]" value="<?php if ($field['subject_name'] != '')
+                                <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject name', 'edu-results'); ?>" name="cbedu_results_subject_name[]" value="<?php if ($field['subject_name'] != '')
                                                                                                                                                                                                         echo esc_attr($field['subject_name']); ?>" />
                             </td>
                             <td width="70%">
-                                <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject value', 'edu-results'); ?>" name="edu_results_subject_value[]" value="<?php echo isset($field['subject_value']) ? esc_attr($field['subject_value']) : ''; ?>" />
+                                <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject value', 'edu-results'); ?>" name="cbedu_results_subject_value[]" value="<?php echo isset($field['subject_value']) ? esc_attr($field['subject_value']) : ''; ?>" />
                             </td>
 
                             <td width="15%"><a class="button remove-row" href="#1">
@@ -65,10 +64,10 @@ class EDURepeaterCustomFields
                     ?>
                     <tr>
                         <td>
-                            <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject name', 'edu-results'); ?>" name="edu_results_subject_name[]" />
+                            <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject name', 'edu-results'); ?>" name="cbedu_results_subject_name[]" />
                         </td>
                         <td>
-                            <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject value', 'edu-results'); ?>" name="edu_results_subject_value[]" />
+                            <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject value', 'edu-results'); ?>" name="cbedu_results_subject_value[]" />
                         </td>
                         <td><a class="button  cmb-remove-row-button button-disabled" href="#">
                                 <?php esc_html_e('Remove', 'edu-results'); ?>
@@ -79,10 +78,10 @@ class EDURepeaterCustomFields
                 <!-- Empty hidden row for jQuery -->
                 <tr class="empty-row screen-reader-text">
                     <td>
-                        <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject name', 'edu-results'); ?>" name="edu_results_subject_name[]" />
+                        <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject name', 'edu-results'); ?>" name="cbedu_results_subject_name[]" />
                     </td>
                     <td>
-                        <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject value', 'edu-results'); ?>" name="edu_results_subject_value[]" />
+                        <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject value', 'edu-results'); ?>" name="cbedu_results_subject_value[]" />
                     </td>
                     <td><a class="button remove-row" href="#">
                             <?php esc_html_e('Remove', 'edu-results'); ?>
@@ -99,8 +98,8 @@ class EDURepeaterCustomFields
     public function saveMetaBoxData($postID)
     {
         if (
-            !isset($_POST['edu_results_repeatable_meta_box_nonce']) ||
-            !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['edu_results_repeatable_meta_box_nonce'])), 'edu_results_repeatable_meta_box_nonce')
+            !isset($_POST['cbedu_results_repeatable_meta_box_nonce']) ||
+            !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['cbedu_results_repeatable_meta_box_nonce'])), 'cbedu_results_repeatable_meta_box_nonce')
         )
             return;
 
@@ -110,10 +109,10 @@ class EDURepeaterCustomFields
         if (!current_user_can('edit_post', $postID))
             return;
 
-        $old = get_post_meta($postID, 'edu_subjects_results', true);
+        $old = get_post_meta($postID, 'cbedu_subjects_results', true);
         $new = array();
-        $subjectNames = isset($_POST['edu_results_subject_name']) ? $_POST['edu_results_subject_name'] : array();
-        $subjectValues = isset($_POST['edu_results_subject_value']) ? $_POST['edu_results_subject_value'] : array();
+        $subjectNames = isset($_POST['cbedu_results_subject_name']) ? $_POST['cbedu_results_subject_name'] : array();
+        $subjectValues = isset($_POST['cbedu_results_subject_value']) ? $_POST['cbedu_results_subject_value'] : array();
 
         $esc_subjectNames = array_map('sanitize_text_field', wp_unslash($subjectNames));
         $esc_subjectValues = array_map('sanitize_text_field', wp_unslash($subjectValues));
@@ -126,10 +125,10 @@ class EDURepeaterCustomFields
                 $new[$i]['subject_value'] = stripslashes(strip_tags($esc_subjectValues[$i]));
             endif;
         }
-        
+
         if (!empty($new) && $new != $old)
-            update_post_meta($postID, 'edu_subjects_results', $new);
+            update_post_meta($postID, 'cbedu_subjects_results', $new);
         elseif (empty($new) && $old)
-            delete_post_meta($postID, 'edu_subjects_results', $old);
+            delete_post_meta($postID, 'cbedu_subjects_results', $old);
     }
 }

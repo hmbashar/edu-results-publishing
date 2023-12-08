@@ -11,7 +11,7 @@
  * License: GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Domain Path: /languages
- * Prefix: edu_ 
+ * Prefix: cbedu_ 
  */
 
 
@@ -22,8 +22,10 @@
  * @link https://facebook.com/hmbashar
  */
 
-define('EDU_RESULT_DIR', plugin_dir_path(__FILE__));
-define('EDU_PREFIX', 'edu_');
+ //define URL
+define('CBEDU_TRACKER_URL', plugin_dir_url( __FILE__ ));
+define('CBEDU_RESULT_DIR', plugin_dir_path(__FILE__));
+define('CBEDU_PREFIX', 'cbedu_');
 class EDUResultPublishing
 {
     // Plugin prefix
@@ -31,7 +33,7 @@ class EDUResultPublishing
 
     public function __construct()
     {
-        $this->prefix = EDU_PREFIX;
+        $this->prefix = CBEDU_PREFIX;
 
         // Register post type
         add_action('init', array($this, 'registerPostType'));
@@ -40,9 +42,9 @@ class EDUResultPublishing
         // Change placeholder
         add_filter('enter_title_here', array($this, 'changeTitlePlaceholder'));
         // Add admin assets
-        add_action('admin_enqueue_scripts', array($this, 'edu_result_assets_enque_admin'));
+        add_action('admin_enqueue_scripts', array($this, 'cbedu_result_assets_enque_admin'));
         // Add plugin assets
-        add_action('wp_enqueue_scripts', array($this, 'edu_results_assets_enqueue'));
+        add_action('wp_enqueue_scripts', array($this, 'cbedu_results_assets_enqueue'));
 
         // Register text domain for translation
         add_action('plugins_loaded', array($this, 'loadTextDomain'));
@@ -125,7 +127,7 @@ class EDUResultPublishing
         return $title;
     }
 
-    public function edu_result_assets_enque_admin()
+    public function cbedu_result_assets_enque_admin()
     {
         wp_enqueue_media();
     }
@@ -135,26 +137,26 @@ class EDUResultPublishing
         load_plugin_textdomain($this->getTextDomain(), false, dirname(plugin_basename(__FILE__)) . '/languages/');
     }
 
-    public function edu_results_assets_enqueue()
+    public function cbedu_results_assets_enqueue()
     {       
-        wp_enqueue_style('edu-results-style', plugins_url('/assets/css/style.css', __FILE__));
+        wp_enqueue_style('cbedu-results-style', plugins_url('/assets/css/style.css', __FILE__));
     }
 }
 
 
-require_once EDU_RESULT_DIR . 'inc/custom-fields.php';
+require_once CBEDU_RESULT_DIR . 'inc/custom-fields.php';
 
-require_once EDU_RESULT_DIR . 'inc/admin/settings.php';
+require_once CBEDU_RESULT_DIR . 'inc/admin/settings.php';
 
-require_once EDU_RESULT_DIR . 'inc/RepeaterCF.php';
+require_once CBEDU_RESULT_DIR . 'inc/RepeaterCF.php';
 
-require_once EDU_RESULT_DIR . 'inc/lib/shortcode.php';
+require_once CBEDU_RESULT_DIR . 'inc/lib/shortcode.php';
 
 //init the main class
-$eduResultPublishing = new EDUResultPublishing();
+$CBEDUResultPublishing = new EDUResultPublishing();
 // Instantiate the EDURepeaterCustomFields class
-$repeaterCustomFields = new \inc\RepeaterCF\EDURepeaterCustomFields($eduResultPublishing);
-$repeaterCustomFields = new \inc\admin\settings\EDUResultSettings($eduResultPublishing);
+$CBEDUrepeaterCustomFields = new \inc\RepeaterCF\EDURepeaterCustomFields($CBEDUResultPublishing);
+$CBEDUAdminSettingsFields = new \inc\admin\settings\EDUResultSettings($CBEDUResultPublishing);
 
 
-$custom_fields = new \inc\custom_fields\EDUCustomFields();
+$CBEDUCustom_fields = new \inc\custom_fields\EDUCustomFields();
