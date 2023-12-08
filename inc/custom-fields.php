@@ -1,8 +1,8 @@
 <?php
+namespace cbedu\inc\custom_fields;
 
-namespace inc\custom_fields;
-
-class EDUCustomFields
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+class CBEDUCustomFields
 {
 
     public function __construct()

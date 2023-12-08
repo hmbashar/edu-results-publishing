@@ -1,6 +1,9 @@
 <?php
+namespace cbedu\inc\lib;
 
-class EDUResultsShortcode
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+class CBEDUResultsShortcode
 {
     /**
      * Constructor method for the class.
@@ -45,9 +48,6 @@ class EDUResultsShortcode
 
     public function register_shortcode()
     {
-        add_shortcode('edu_results', array($this, 'render_shortcode'));
+        add_shortcode('cbedu_results', array($this, 'render_shortcode'));
     }
 }
-
-// Instantiate the class to register the shortcode
-new EDUResultsShortcode();

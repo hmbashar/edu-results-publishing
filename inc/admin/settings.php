@@ -1,8 +1,9 @@
 <?php
+namespace cbedu\inc\admin\settings;
 
-namespace inc\admin\settings;
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-class EDUResultSettings
+class CBEDUResultSettings
 {
 
     private $prefix;

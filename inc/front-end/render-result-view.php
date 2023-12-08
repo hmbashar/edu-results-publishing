@@ -1,4 +1,6 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 $cbedu_result = new WP_Query(
     array(
         'post_type' => 'cbedu_results',

@@ -21,12 +21,13 @@
  * @author MD Abul Bashar
  * @link https://facebook.com/hmbashar
  */
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
  //define URL
 define('CBEDU_TRACKER_URL', plugin_dir_url( __FILE__ ));
 define('CBEDU_RESULT_DIR', plugin_dir_path(__FILE__));
 define('CBEDU_PREFIX', 'cbedu_');
-class EDUResultPublishing
+class CBEDUResultPublishing
 {
     // Plugin prefix
     private $prefix;
@@ -153,10 +154,10 @@ require_once CBEDU_RESULT_DIR . 'inc/RepeaterCF.php';
 require_once CBEDU_RESULT_DIR . 'inc/lib/shortcode.php';
 
 //init the main class
-$CBEDUResultPublishing = new EDUResultPublishing();
+$CBEDUResultPublishing = new CBEDUResultPublishing();
 // Instantiate the EDURepeaterCustomFields class
-$CBEDUrepeaterCustomFields = new \inc\RepeaterCF\EDURepeaterCustomFields($CBEDUResultPublishing);
-$CBEDUAdminSettingsFields = new \inc\admin\settings\EDUResultSettings($CBEDUResultPublishing);
-
-
-$CBEDUCustom_fields = new \inc\custom_fields\EDUCustomFields();
+$CBEDUrepeaterCustomFields = new \cbedu\inc\RepeaterCF\CBEDURepeaterCustomFields($CBEDUResultPublishing);
+$CBEDUAdminSettingsFields = new \cbedu\inc\admin\settings\CBEDUResultSettings($CBEDUResultPublishing);
+$CBEDUCustom_fields = new \cbedu\inc\custom_fields\CBEDUCustomFields();
+// Instantiate the class to register the shortcode
+$CBEDUCustom_fields = new \cbedu\inc\lib\CBEDUResultsShortcode();
