@@ -1,4 +1,5 @@
 <?php
+
 namespace inc\RepeaterCF;
 
 class EDURepeaterCustomFields
@@ -7,7 +8,7 @@ class EDURepeaterCustomFields
 
     public function __construct()
     {
-        
+
         add_action('add_meta_boxes', array($this, 'addMetaBox'));
         add_action('save_post', array($this, 'saveMetaBoxData'));
     }
@@ -22,17 +23,17 @@ class EDURepeaterCustomFields
         $eduResultsGroup = get_post_meta($post->ID, 'edu_subjects_results', true);
 
         wp_nonce_field('edu_results_repeatable_meta_box_nonce', 'edu_results_repeatable_meta_box_nonce');
-        ?>
+?>
         <script type="text/javascript">
-            jQuery(document).ready(function ($) {
-                $('#edu-add-subject-row').on('click', function () {
+            jQuery(document).ready(function($) {
+                $('#edu-add-subject-row').on('click', function() {
                     var row = $('.empty-row.screen-reader-text').clone(true);
                     row.removeClass('empty-row screen-reader-text');
                     row.insertBefore('#repeatable-fieldset-one tbody>tr:last');
                     return false;
                 });
 
-                $('.remove-row').on('click', function () {
+                $('.remove-row').on('click', function() {
                     $(this).parents('tr').remove();
                     return false;
                 });
@@ -41,43 +42,33 @@ class EDURepeaterCustomFields
         <table id="repeatable-fieldset-one" width="100%">
             <tbody>
                 <?php
-                if ($eduResultsGroup):
+                if ($eduResultsGroup) :
                     foreach ($eduResultsGroup as $field) {
-                        ?>
+                ?>
                         <tr>
                             <td width="70%">
-                                <input style="width:80%;padding:10px;" type="text"
-                                    placeholder="<?php esc_attr_e('Enter subject name', 'edu-results'); ?>"
-                                    name="edu_results_subject_name[]"
-                                    value="<?php if ($field['subject_name'] != '')
-                                        echo esc_attr($field['subject_name']); ?>" />
+                                <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject name', 'edu-results'); ?>" name="edu_results_subject_name[]" value="<?php if ($field['subject_name'] != '')
+                                                                                                                                                                                                        echo esc_attr($field['subject_name']); ?>" />
                             </td>
                             <td width="70%">
-                                <input style="width:80%;padding:10px;" type="text"
-                                    placeholder="<?php esc_attr_e('Enter subject value', 'edu-results'); ?>"
-                                    name="edu_results_subject_value[]"
-                                    value="<?php echo isset($field['subject_value']) ? esc_attr($field['subject_value']) : ''; ?>" />
+                                <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject value', 'edu-results'); ?>" name="edu_results_subject_value[]" value="<?php echo isset($field['subject_value']) ? esc_attr($field['subject_value']) : ''; ?>" />
                             </td>
 
                             <td width="15%"><a class="button remove-row" href="#1">
                                     <?php esc_html_e('Remove', 'edu-results'); ?>
                                 </a></td>
                         </tr>
-                        <?php
+                    <?php
                     }
-                else:
+                else :
                     // Show a blank row
                     ?>
                     <tr>
                         <td>
-                            <input style="width:80%;padding:10px;" type="text"
-                                placeholder="<?php esc_attr_e('Enter subject name', 'edu-results'); ?>"
-                                name="edu_results_subject_name[]" />
+                            <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject name', 'edu-results'); ?>" name="edu_results_subject_name[]" />
                         </td>
                         <td>
-                            <input style="width:80%;padding:10px;" type="text"
-                                placeholder="<?php esc_attr_e('Enter subject value', 'edu-results'); ?>"
-                                name="edu_results_subject_value[]" />
+                            <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject value', 'edu-results'); ?>" name="edu_results_subject_value[]" />
                         </td>
                         <td><a class="button  cmb-remove-row-button button-disabled" href="#">
                                 <?php esc_html_e('Remove', 'edu-results'); ?>
@@ -88,14 +79,10 @@ class EDURepeaterCustomFields
                 <!-- Empty hidden row for jQuery -->
                 <tr class="empty-row screen-reader-text">
                     <td>
-                        <input style="width:80%;padding:10px;" type="text"
-                            placeholder="<?php esc_attr_e('Enter subject name', 'edu-results'); ?>"
-                            name="edu_results_subject_name[]" />
+                        <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject name', 'edu-results'); ?>" name="edu_results_subject_name[]" />
                     </td>
                     <td>
-                        <input style="width:80%;padding:10px;" type="text"
-                            placeholder="<?php esc_attr_e('Enter subject value', 'edu-results'); ?>"
-                            name="edu_results_subject_value[]" />
+                        <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject value', 'edu-results'); ?>" name="edu_results_subject_value[]" />
                     </td>
                     <td><a class="button remove-row" href="#">
                             <?php esc_html_e('Remove', 'edu-results'); ?>
@@ -106,14 +93,14 @@ class EDURepeaterCustomFields
         <p><a id="edu-add-subject-row" class="button" href="#">
                 <?php esc_html_e('Add Another', 'edu-results'); ?>
             </a></p>
-        <?php
+<?php
     }
 
     public function saveMetaBoxData($postID)
     {
         if (
             !isset($_POST['edu_results_repeatable_meta_box_nonce']) ||
-            !wp_verify_nonce($_POST['edu_results_repeatable_meta_box_nonce'], 'edu_results_repeatable_meta_box_nonce')
+            !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['edu_results_repeatable_meta_box_nonce'])), 'edu_results_repeatable_meta_box_nonce')
         )
             return;
 
@@ -125,15 +112,21 @@ class EDURepeaterCustomFields
 
         $old = get_post_meta($postID, 'edu_subjects_results', true);
         $new = array();
-        $subjectNames = $_POST['edu_results_subject_name'];
-        $subjectValues = $_POST['edu_results_subject_value'];
+        $subjectNames = isset($_POST['edu_results_subject_name']) ? $_POST['edu_results_subject_name'] : array();
+        $subjectValues = isset($_POST['edu_results_subject_value']) ? $_POST['edu_results_subject_value'] : array();
+
+        $esc_subjectNames = array_map('sanitize_text_field', wp_unslash($subjectNames));
+        $esc_subjectValues = array_map('sanitize_text_field', wp_unslash($subjectValues));
+
         $count = count($subjectNames);
+
         for ($i = 0; $i < $count; $i++) {
-            if ($subjectNames[$i] != ''):
-                $new[$i]['subject_name'] = stripslashes(strip_tags($subjectNames[$i]));
-                $new[$i]['subject_value'] = stripslashes(strip_tags($subjectValues[$i]));
+            if ($subjectNames[$i] != '') :
+                $new[$i]['subject_name'] = stripslashes(strip_tags($esc_subjectNames[$i]));
+                $new[$i]['subject_value'] = stripslashes(strip_tags($esc_subjectValues[$i]));
             endif;
         }
+        
         if (!empty($new) && $new != $old)
             update_post_meta($postID, 'edu_subjects_results', $new);
         elseif (empty($new) && $old)

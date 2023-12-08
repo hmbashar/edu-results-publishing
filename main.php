@@ -15,7 +15,7 @@
  */
 
 
-/* * @package edu-results
+/* @package edu-results
  * @since 1.0
  * @version 1.0
  * @author MD Abul Bashar
@@ -23,21 +23,26 @@
  */
 
 define('EDU_RESULT_DIR', plugin_dir_path(__FILE__));
-
+define('EDU_PREFIX', 'edu_');
 class EDUResultPublishing
 {
+    // Plugin prefix
     private $prefix;
 
     public function __construct()
     {
-        $this->prefix = 'edu_';
+        $this->prefix = EDU_PREFIX;
 
+        // Register post type
         add_action('init', array($this, 'registerPostType'));
+        // Register plugin action links
         add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($this, 'addPluginActionLinks'));
-
+        // Change placeholder
         add_filter('enter_title_here', array($this, 'changeTitlePlaceholder'));
-
+        // Add admin assets
         add_action('admin_enqueue_scripts', array($this, 'edu_result_assets_enque_admin'));
+        // Add plugin assets
+        add_action('wp_enqueue_scripts', array($this, 'edu_results_assets_enqueue'));
 
         // Register text domain for translation
         add_action('plugins_loaded', array($this, 'loadTextDomain'));
@@ -128,6 +133,11 @@ class EDUResultPublishing
     public function loadTextDomain()
     {
         load_plugin_textdomain($this->getTextDomain(), false, dirname(plugin_basename(__FILE__)) . '/languages/');
+    }
+
+    public function edu_results_assets_enqueue()
+    {       
+        wp_enqueue_style('edu-results-style', plugins_url('/assets/css/style.css', __FILE__));
     }
 }
 

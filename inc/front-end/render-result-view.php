@@ -2,7 +2,7 @@
 $edu_result = new WP_Query(
     array(
         'post_type' => 'edu_results',
-        'posts_per_page' => -1,
+        'posts_per_page' => 1,
     )
 );
 $collageName = get_option('edu_results_collage_name');
@@ -46,7 +46,7 @@ $collageName = get_option('edu_results_collage_name');
                     <div class="edu-result-student-information-heading">
                         <h4>Student Information</h4>
                     </div>
-                    <table>
+                    <table border="1">
                         <tr>
                             <th>Roll:</th>
                             <td>
@@ -129,7 +129,7 @@ $collageName = get_option('edu_results_collage_name');
                             <h4>Result Sheet</h4>
                         </div>
 
-                        <table>
+                        <table border="1">
                             <thead>
                                 <tr>
                                     <th>Subject Name</th>
@@ -166,7 +166,10 @@ $collageName = get_option('edu_results_collage_name');
                     </div>
                 </div><!--/ Student Subjects Information-->
 
-            <?php endwhile; endif; ?>
-
+            <?php 
+            
+                endwhile; endif; 
+                wp_reset_query();
+            ?>
     </div>
 </div>
