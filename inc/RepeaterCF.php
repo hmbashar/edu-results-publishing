@@ -117,10 +117,10 @@ class CBEDURepeaterCustomFields
         $esc_subjectNames = array_map('sanitize_text_field', wp_unslash($subjectNames));
         $esc_subjectValues = array_map('sanitize_text_field', wp_unslash($subjectValues));
 
-        $count = count($subjectNames);
+        $count = count($esc_subjectNames);
 
         for ($i = 0; $i < $count; $i++) {
-            if ($subjectNames[$i] != '') :
+            if ($esc_subjectNames[$i] != '') :
                 $new[$i]['subject_name'] = stripslashes(strip_tags($esc_subjectNames[$i]));
                 $new[$i]['subject_value'] = stripslashes(strip_tags($esc_subjectValues[$i]));
             endif;
