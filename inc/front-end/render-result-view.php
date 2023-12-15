@@ -158,64 +158,48 @@ $collageName = get_option('cbedu_results_collage_name');
                             <tr>
                                 <th>Code.</th>
                                 <th>Name of Subjects</th>
+                                <th>Letter Mark</th>
                                 <th>Letter Grade</th>
-                                <th>Grade Point</th>
-                                <th>GPA (Without additional subject)</th>
+                                <th class="cbedu-table-gpa">GPA <abbr title="Without additional subject">(WAS)</abbr></th>
                                 <th>GPA</th>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Bengali</td>
-                                <td>A-</td>
-                                <td>3.5</td>
-                                <td rowspan="8" class="highlight">3.81</td>
-                                <td rowspan="8" class="highlight">4.19</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>English</td>
-                                <td>C</td>
-                                <td>2.0</td>
-                            </tr>
-                            <!-- Continue adding rows for each subject -->
-                            <tr>
-                                <td>9</td>
-                                <td>Agriculture Studies</td>
-                                <td>A+</td>
-                                <td>5.0</td>
-                            </tr>
+                            <?php
 
-                        </table>
+                            // Check if there are subject results
+                            if (!empty($cbedu_std_all_subjects_result) && is_array($cbedu_std_all_subjects_result)) {
+                                // Calculate the total number of rows for the rowspan
+                                $rowSpan = count($cbedu_std_all_subjects_result);
+                                // Initialize a variable to track the first row
+                                $isFirstRow = true;
 
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Subject Name</th>
-                                    <th>Subject Value</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
 
-                                // Check if there are subject results
-                                if (!empty($cbedu_std_all_subjects_result) && is_array($cbedu_std_all_subjects_result)) {
+                                foreach ($cbedu_std_all_subjects_result as $subject_result) {
+                                    if (isset($subject_result['subject_name']) && isset($subject_result['subject_value'])) {
+                                        $subject_name = esc_html($subject_result['subject_name']);
+                                        $subject_value = esc_html($subject_result['subject_value']);
+                            ?>
+                                        <tr>
+                                            <td>1</td>
+                                            <td><?php echo esc_html($subject_name); ?></td>
+                                            <td><?php echo esc_html($subject_value); ?></td>
+                                            <td>A+</td>
+                                            <?php if ($isFirstRow) { ?>
+                                                <td rowspan="<?php echo $rowSpan; ?>" class="highlight">3.81</td>
+                                                <td rowspan="<?php echo $rowSpan; ?>" class="highlight">4.19</td>
+                                                <?php
+                                                // Set to false so the rowspan is not repeated in subsequent rows
+                                                $isFirstRow = false;
+                                                ?>
+                                            <?php } ?>
+                                        </tr>
 
-                                    foreach ($cbedu_std_all_subjects_result as $subject_result) {
-                                        if (isset($subject_result['subject_name']) && isset($subject_result['subject_value'])) {
-                                            $subject_name = esc_html($subject_result['subject_name']);
-                                            $subject_value = esc_html($subject_result['subject_value']);
-                                ?>
-                                            <tr>
-                                                <td><?php echo esc_html($subject_name); ?></td>
-                                                <td><?php echo esc_html($subject_value); ?></td>
-                                            </tr>
+                            <?php
 
-                                <?php
-
-                                        }
                                     }
                                 }
-                                ?>
+                            }
+                            ?>
+
 
                             </tbody>
 

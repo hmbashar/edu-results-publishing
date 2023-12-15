@@ -63,9 +63,16 @@ td {
     text-align: left;
     padding: 8px;
 }
-
+.cbedu-table-gpa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.cbedu-table-gpa abbr {
+    font-size: 11px;
+}
 .cbedu-results-render-wrapping-area th {
-    background-color: #f2f2f2;
+    background-color: #f2f2f2;    
 }
 
 .cbedu-results-render-wrapping-area .highlight {
