@@ -1,9 +1,73 @@
-.edu-results-render-wrapping-area {
-    width: 800px;
+.cbedu-results-render-wrapping-area {
+    width: 1000px;
 }
-.edu-results-render-wrapping-area table {
-    width: 100%;
+.cbedu-result-ver-name {
+    text-align: center;
 }
-.edu-result-student-subject-area table {
+.cbedu-result-ver-name h2 {
+    font-size: 25px;
+    font-weight: 700;
+}
+.cbedu-result-sheet-header-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.cbedu-result-collage-std-image img {
+    width: 150px;
+    border-radius: 5px;
+    height: 150px;
+    object-fit: cover;
+}
+.cbedu-result-sheet-collage-logo img {
+    width: 150px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    height: 150px;
+    object-fit: contain;
+}
+.cbedu-result-collage-sub-heading {
+    text-align: center;
+}
+.cbedu-result-collage-sub-heading h4 {
+    line-height: 25px;
+    font-size: 20px;
+    margin: 0;
+}
+.cbedu-result-collage-info {
+    display: flex;
+    justify-content: center;
+}
+.cbedu-result-collage-info p {
+    margin: 0;
+}
+.cbedu-result-banner-heading {
+    text-align: center;
+}
+.cbedu-result-banner-heading h3 {
+    font-size: 21px;
+    font-weight: 600;
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.cbedu-results-render-wrapping-area table {
     width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.cbedu-results-render-wrapping-area th, .cbedu-results-render-wrapping-area
+td {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.cbedu-results-render-wrapping-area th {
+    background-color: #f2f2f2;
+}
+
+.cbedu-results-render-wrapping-area .highlight {
+    background-color: #e7f4e4;
 }

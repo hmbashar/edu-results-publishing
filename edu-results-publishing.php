@@ -21,12 +21,14 @@
  * @author MD Abul Bashar
  * @link https://facebook.com/hmbashar
  */
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
- //define URL
-define('CBEDU_TRACKER_URL', plugin_dir_url( __FILE__ ));
+
+//define URL
+define('CBEDU_RESULT_URL', plugin_dir_url(__FILE__));
 define('CBEDU_RESULT_DIR', plugin_dir_path(__FILE__));
 define('CBEDU_PREFIX', 'cbedu_');
+
 class CBEDUResultPublishing
 {
     // Plugin prefix
@@ -36,8 +38,6 @@ class CBEDUResultPublishing
     {
         $this->prefix = CBEDU_PREFIX;
 
-        // Register post type
-        add_action('init', array($this, 'registerPostType'));
         // Register plugin action links
         add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($this, 'addPluginActionLinks'));
         // Change placeholder
@@ -49,6 +49,12 @@ class CBEDUResultPublishing
 
         // Register text domain for translation
         add_action('plugins_loaded', array($this, 'loadTextDomain'));
+
+        // Add description after the title field for Subjects post type
+        add_action('edit_form_after_title', array($this, 'addDescriptionAfterTitle'));
+
+        // Initialize the plugin
+        $this->initialize();
     }
 
     public function getTextDomain()
@@ -61,55 +67,17 @@ class CBEDUResultPublishing
         return $this->prefix;
     }
 
-    public function registerPostType()
+    private function initialize()
     {
-        $labels = array(
-            'name' => __('Results', 'edu-results'),
-            'singular_name' => __('Result', 'edu-results'),
-            'menu_name' => __('EDU Results', 'edu-results'),
-            'add_new' => __('Add New', 'edu-results'),
-            'add_new_item' => __('Add New Result', 'edu-results'),
-            'edit_item' => __('Edit Result', 'edu-results'),
-            'new_item' => __('New Result', 'edu-results'),
-            'view_item' => __('View Result', 'edu-results'),
-            'search_items' => __('Search Results', 'edu-results'),
-            'not_found' => __('No Results found', 'edu-results'),
-            'not_found_in_trash' => __('No Results found in Trash', 'edu-results'),
-            'parent_item_colon' => __('Parent Result:', 'edu-results'),
-            'all_items' => __('All Results', 'edu-results'),
-            'archives' => __('Result Archives', 'edu-results'),
-            'insert_into_item' => __('Insert into Result', 'edu-results'),
-            'uploaded_to_this_item' => __('Uploaded to this Result', 'edu-results'),
-            'featured_image' => __('Student Image', 'edu-results'),
-            'set_featured_image' => __('Set Student Picture', 'edu-results'),
-            'remove_featured_image' => __('Remove Student Picture', 'edu-results'),
-            'use_featured_image' => __('Use as Student Picture', 'edu-results'),
-            'menu_icon' => 'dashicons-book',
-            'public' => true,
-            'has_archive' => true,
-            'rewrite' => array('slug' => 'edu-results'),
-            'supports' => array('title', 'editor', 'thumbnail', 'excerpt'),
-        );
+        // Register custom post types
+        $custom_post_type = new \cbedu\inc\lib\CBEDU_CUSTOM_POSTS($this->prefix);
 
-        $args = array(
-            'labels' => $labels,
-            'public' => true,
-            'publicly_queryable' => true,
-            'show_ui' => true,
-            'show_in_menu' => true,
-            'query_var' => true,
-            'rewrite' => true,
-            'capability_type' => 'post',
-            'has_archive' => true,
-            'hierarchical' => false,
-            'menu_position' => null,
-            'menu_icon' => 'dashicons-book',
-            'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
-        );
-
-        register_post_type($this->prefix . 'results', $args);
+        // Instantiate other classes
+        $repeaterCustomFields = new \cbedu\inc\RepeaterCF\CBEDURepeaterCustomFields($this);
+        $adminSettingsFields = new \cbedu\inc\admin\settings\CBEDUResultSettings($this);
+        $customFields = new \cbedu\inc\custom_fields\CBEDUCustomFields();
+        $resultsShortcode = new \cbedu\inc\lib\CBEDUResultsShortcode();
     }
-
 
     public function addPluginActionLinks($links)
     {
@@ -123,9 +91,25 @@ class CBEDUResultPublishing
     {
         $screen = get_current_screen();
         if ($screen->post_type == $this->prefix . 'results') {
-            $title = 'Student Name';
+            $title = 'Enter Student Name';
+        } elseif ($screen->post_type == $this->prefix . 'subjects') {
+            $title = 'Enter Code and Subject Name'; // Placeholder for Subjects post type
         }
         return $title;
+    }
+    /**
+     * Adds a description after the title of a post.
+     *
+     * @param object $post The post object.
+     * @return void
+     */
+    public function addDescriptionAfterTitle($post)
+    {
+        if ($post->post_type == $this->prefix . 'subjects') {
+            echo '<div style="margin-top:10px;">';
+            echo '<p class="description">Please enter your subject code and subject name here, ex: CS101 - Computer Science</p>';
+            echo '</div>';
+        }
     }
 
     public function cbedu_result_assets_enque_admin()
@@ -139,7 +123,7 @@ class CBEDUResultPublishing
     }
 
     public function cbedu_results_assets_enqueue()
-    {       
+    {
         wp_enqueue_style('cbedu-results-style', plugins_url('/assets/css/style.css', __FILE__));
     }
 }
@@ -153,11 +137,7 @@ require_once CBEDU_RESULT_DIR . 'inc/RepeaterCF.php';
 
 require_once CBEDU_RESULT_DIR . 'inc/lib/shortcode.php';
 
+require_once CBEDU_RESULT_DIR . 'inc/lib/custom-posts.php';
+
 //init the main class
 $CBEDUResultPublishing = new CBEDUResultPublishing();
-// Instantiate the EDURepeaterCustomFields class
-$CBEDUrepeaterCustomFields = new \cbedu\inc\RepeaterCF\CBEDURepeaterCustomFields($CBEDUResultPublishing);
-$CBEDUAdminSettingsFields = new \cbedu\inc\admin\settings\CBEDUResultSettings($CBEDUResultPublishing);
-$CBEDUCustom_fields = new \cbedu\inc\custom_fields\CBEDUCustomFields();
-// Instantiate the class to register the shortcode
-$CBEDUCustom_fields = new \cbedu\inc\lib\CBEDUResultsShortcode();

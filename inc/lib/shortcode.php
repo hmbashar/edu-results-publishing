@@ -25,7 +25,7 @@ class CBEDUResultsShortcode
     {
         ob_start();
         ?>
-        <div class="edu-results-shortcode-area"> <h2>this is test</h2>
+        <div class="cbedu-results-shortcode-area">
 
         <?php 
         // Include the 'render-result-view.php' file
