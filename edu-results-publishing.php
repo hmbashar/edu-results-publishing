@@ -70,9 +70,11 @@ class CBEDUResultPublishing
     {
         // Register custom post types
         $custom_post_type = new \cbedu\inc\lib\CBEDU_CUSTOM_POSTS($this->prefix);
-
+        // Register custom taxonomies
+        $custom_post_type = new \cbedu\inc\lib\CBEDU_CUSTOM_TAXONOMY($this->prefix);
         // Instantiate other classes
         $repeaterCustomFields = new \cbedu\inc\RepeaterCF\CBEDURepeaterCustomFields($this);
+        
         $adminSettingsFields = new \cbedu\inc\admin\settings\CBEDUResultSettings($this);
         $customFields = new \cbedu\inc\custom_fields\CBEDUCustomFields();
         $resultsShortcode = new \cbedu\inc\lib\CBEDUResultsShortcode();
@@ -187,6 +189,8 @@ require_once CBEDU_RESULT_DIR . 'inc/RepeaterCF.php';
 require_once CBEDU_RESULT_DIR . 'inc/lib/shortcode.php';
 
 require_once CBEDU_RESULT_DIR . 'inc/lib/custom-posts.php';
+
+require_once CBEDU_RESULT_DIR . 'inc/lib/custom-taxonomy.php';
 
 //init the main class
 $CBEDUResultPublishing = new CBEDUResultPublishing();

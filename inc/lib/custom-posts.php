@@ -86,7 +86,7 @@ class CBEDU_CUSTOM_POSTS{
             'hierarchical' => false,
             'menu_position' => null,
             'menu_icon' => 'dashicons-book',
-            'supports' => array('title', 'editor', 'thumbnail'),
+            'supports' => array('title', 'thumbnail'),
         );
         register_post_type($this->prefix . 'results', $args);
     }
@@ -122,7 +122,7 @@ class CBEDU_CUSTOM_POSTS{
             'public' => true,
             'has_archive' => true,
             'rewrite' => array('slug' => 'edu-subjects'),
-            'supports' => array('title', 'editor', 'thumbnail', 'excerpt'),
+            'supports' => array('title', 'thumbnail' ),
         );
 
         $args = array(
@@ -175,7 +175,7 @@ class CBEDU_CUSTOM_POSTS{
             'public' => true,
             'has_archive' => true,
             'rewrite' => array('slug' => 'edu-students'),
-            'supports' => array('title', 'editor', 'thumbnail', ),
+            'supports' => array('title', 'thumbnail', ),
         );        
 
         $args = array(
@@ -190,7 +190,7 @@ class CBEDU_CUSTOM_POSTS{
             'has_archive' => true,
             'hierarchical' => false,
             'menu_position' => null,
-            'supports' => array('title', 'editor', 'thumbnail'),            
+            'supports' => array('title', 'thumbnail'),            
         );
 
         register_post_type($this->prefix . 'students', $args);

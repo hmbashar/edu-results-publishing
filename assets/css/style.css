@@ -1,5 +1,7 @@
-.cbedu-results-render-wrapping-area {
+.cbedu-results-shortcode-area {
     width: 1000px;
+    margin: 0 auto;
+    max-width: 100% !important;
 }
 .cbedu-result-ver-name {
     text-align: center;

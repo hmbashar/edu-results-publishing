@@ -26,7 +26,7 @@ class CBEDUCustomFields
             'student_fields',
             'Student Fields',
             array($this, 'render_student_fields_meta_box'),
-            'cbedu_results',
+            'cbedu_students',
             //  custom post type slug
             'normal',
             'default'

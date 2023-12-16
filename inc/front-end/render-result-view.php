@@ -10,7 +10,7 @@ $cbedu_result = new WP_Query(
 $collageName = get_option('cbedu_results_collage_name');
 ?>
 
-<div class="cbedu-results-render-wrapping-area">
+<div class="cbedu-results-render-wrapping-area" id="cbedu-results-render-wrapping-area">
     <div class="cbedu-result-render-area">
         <!--Banner Area-->
         <div class="cbedu-result-ver-banner-area">
@@ -228,9 +228,5 @@ $collageName = get_option('cbedu_results_collage_name');
         endif;
         wp_reset_query();
         ?>
-    </div>
-    <!-- Print Button -->
-    <div class="cbedu-result-print-button">
-        <button onclick="window.print()">Print</button>
     </div>
 </div>
