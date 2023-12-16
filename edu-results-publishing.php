@@ -46,7 +46,7 @@ class CBEDUResultPublishing
         add_action('admin_enqueue_scripts', array($this, 'cbedu_result_assets_enque_admin'));
         // Add plugin assets
         add_action('wp_enqueue_scripts', array($this, 'cbedu_results_assets_enqueue'));
-        
+
         add_filter('post_updated_messages', array($this, 'cbedu_custom_post_publish_message'));
 
         // Register text domain for translation
@@ -54,6 +54,8 @@ class CBEDUResultPublishing
 
         // Initialize the plugin
         $this->initialize();
+
+        $this->register_ajax_handlers();
     }
 
     public function getTextDomain()
@@ -74,7 +76,7 @@ class CBEDUResultPublishing
         $custom_post_type = new \cbedu\inc\lib\CBEDU_CUSTOM_TAXONOMY($this->prefix);
         // Instantiate other classes
         $repeaterCustomFields = new \cbedu\inc\RepeaterCF\CBEDURepeaterCustomFields($this);
-        
+
         $adminSettingsFields = new \cbedu\inc\admin\settings\CBEDUResultSettings($this);
         $customFields = new \cbedu\inc\custom_fields\CBEDUCustomFields();
         $resultsShortcode = new \cbedu\inc\lib\CBEDUResultsShortcode();
@@ -87,7 +89,8 @@ class CBEDUResultPublishing
         return $links;
     }
 
-    public static function convert_marks_to_grade($marks) {
+    public static function convert_marks_to_grade($marks)
+    {
         if ($marks >= 80) {
             return array('A+', 5.00);
         } elseif ($marks >= 70) {
@@ -119,6 +122,13 @@ class CBEDUResultPublishing
     public function cbedu_result_assets_enque_admin()
     {
         wp_enqueue_media();
+
+        wp_enqueue_script('cbedu-custom-fields', CBEDU_RESULT_URL . 'assets/js/admin.js', array('jquery'), '1.0.0', true);
+
+        wp_localize_script('cbedu-custom-fields', 'cbedu_ajax_object', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('cbedu_register_number_nonce')
+        ));
     }
 
     public function loadTextDomain()
@@ -131,37 +141,69 @@ class CBEDUResultPublishing
         wp_enqueue_style('cbedu-results-style', plugins_url('/assets/css/style.css', __FILE__));
     }
 
-   public function cbedu_custom_post_publish_message( $messages ) {
+    public function cbedu_custom_post_publish_message($messages)
+    {
         global $post, $post_ID;
-    
-        $post_type = get_post_type( $post_ID );
-    
+
+        $post_type = get_post_type($post_ID);
+
         // Check if the post type is 'subjects'
-        if ( $post_type == 'cbedu_subjects' ) {
-            $permalink = get_permalink( $post_ID );
-    
+        if ($post_type == 'cbedu_subjects') {
+            $permalink = get_permalink($post_ID);
+
             // Customizing the 'Post published' message for 'subjects' post type
             $messages[$post_type] = array_fill(0, 11, ''); // reset array
-            $messages[$post_type][1] = 'Subject published. <a href="' . esc_url( $permalink ) . '">View subject</a>';
-            $messages[$post_type][6] = 'Subject published. <a href="' . esc_url( $permalink ) . '">View subject</a>';
+            $messages[$post_type][1] = 'Subject published. <a href="' . esc_url($permalink) . '">View subject</a>';
+            $messages[$post_type][6] = 'Subject published. <a href="' . esc_url($permalink) . '">View subject</a>';
         }
-      // Check if the post type is 'results'
-        if ( $post_type == 'cbedu_results' ) {
-            $permalink = get_permalink( $post_ID );
-    
+        // Check if the post type is 'results'
+        if ($post_type == 'cbedu_results') {
+            $permalink = get_permalink($post_ID);
+
             // Customizing the 'Post published' message for 'subjects' post type
             $messages[$post_type] = array_fill(0, 11, ''); // reset array
-            $messages[$post_type][1] = 'Results published. <a href="' . esc_url( $permalink ) . '">View Results</a>';
-            $messages[$post_type][6] = 'Results published. <a href="' . esc_url( $permalink ) . '">View Results</a>';
+            $messages[$post_type][1] = 'Results published. <a href="' . esc_url($permalink) . '">View Results</a>';
+            $messages[$post_type][6] = 'Results published. <a href="' . esc_url($permalink) . '">View Results</a>';
         }
-    
+
         return $messages;
-    }    
-   
-    
+    }
+
+    public function register_ajax_handlers()
+    {
+        add_action('wp_ajax_get_student_name_by_registration', array($this, 'get_student_name_by_registration_callback'));
+        add_action('wp_ajax_nopriv_get_student_name_by_registration', array($this, 'get_student_name_by_registration_callback'));
+    }
+
+
+   public function get_student_name_by_registration_callback()
+    {
+        // Check nonce for security
+        check_ajax_referer('cbedu_register_number_nonce', 'security');
+
+        $registration_number = sanitize_text_field($_POST['registration_number']);
+
+        $args = array(
+            'post_type' => 'cbedu_students',
+            'meta_key' => 'cbedu_result_std_registration_number',
+            'meta_value' => $registration_number,
+            'posts_per_page' => 1
+        );
+
+        $students = get_posts($args);
+
+        if (!empty($students)) {
+            echo esc_html($students[0]->post_title); // Assuming the title is the student's name
+        } else {
+            echo 'Not Found!';
+        }
+
+        wp_die(); // This is required to terminate immediately and return a proper response
+    }
 }
 
-function convert_marks_to_grade($marks) {
+function convert_marks_to_grade($marks)
+{
     if ($marks >= 80) {
         return array('A+', 5.00);
     } elseif ($marks >= 70) {
@@ -178,6 +220,7 @@ function convert_marks_to_grade($marks) {
         return array('F', 0.00);
     }
 }
+
 
 
 require_once CBEDU_RESULT_DIR . 'inc/custom-fields.php';
