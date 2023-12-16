@@ -157,7 +157,7 @@ $collageName = get_option('cbedu_results_collage_name');
                         </div>
                         <table>
                             <tr>
-                                <th>Subject Code.</th>
+                                <th>Code</th>
                                 <th>Name of Subjects</th>
                                 <th>Letter Mark</th>
                                 <th>Letter Grade</th>
@@ -176,8 +176,7 @@ $collageName = get_option('cbedu_results_collage_name');
 
                                 foreach ($cbedu_std_all_subjects_result as $subject_result) {
                                     if (isset($subject_result['subject_name']) && isset($subject_result['subject_value'])) {
-                                        $subject_name = esc_html($subject_result['subject_name']);
-                                        $subject_value = esc_html($subject_result['subject_value']);
+                                        $subject_name = esc_html($subject_result['subject_name']);                                        
                                         $marks = intval(esc_html($subject_result['subject_value'])); // Assuming the marks are stored in 'subject_value'
                                         list($letter_grade, $grade_point) = CBEDUResultPublishing::convert_marks_to_grade($marks);
 
@@ -197,7 +196,7 @@ $collageName = get_option('cbedu_results_collage_name');
                                         <tr>
                                             <td><?php echo esc_html($subject_code); ?></td>
                                             <td><?php echo esc_html($subject_name); ?></td>
-                                            <td><?php echo esc_html($subject_value); ?></td>
+                                            <td><?php echo esc_html($marks); ?></td>
                                             <td><?php echo esc_html($letter_grade); ?></td>
                                             <?php if ($isFirstRow) { ?>
                                                 <td rowspan="<?php echo $rowSpan; ?>" class="highlight"><?php echo esc_html($cbedu_std_was_gpa); ?></td>
@@ -229,5 +228,9 @@ $collageName = get_option('cbedu_results_collage_name');
         endif;
         wp_reset_query();
         ?>
+    </div>
+    <!-- Print Button -->
+    <div class="cbedu-result-print-button">
+        <button onclick="window.print()">Print</button>
     </div>
 </div>

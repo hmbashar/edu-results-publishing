@@ -106,7 +106,7 @@ class CBEDUResultPublishing
     public function changeTitlePlaceholder($title)
     {
         $screen = get_current_screen();
-        if ($screen->post_type == $this->prefix . 'results') {
+        if ($screen->post_type == $this->prefix . 'results' || $screen->post_type == $this->prefix . 'students') {
             $title = 'Enter Student Name';
         } elseif ($screen->post_type == $this->prefix . 'subjects') {
             $title = 'Enter Subject Name'; // Placeholder for Subjects post type

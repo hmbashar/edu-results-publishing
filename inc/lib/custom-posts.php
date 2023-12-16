@@ -12,10 +12,10 @@ class CBEDU_CUSTOM_POSTS{
         add_action('init', array($this, 'register_custom_post_types'));
         
         // Add Subjects as a submenu
-        add_action('admin_menu', array($this, 'addSubjectsSubMenu'));
+        add_action('admin_menu', array($this, 'addPostTypeSubMenu'));
     }
 
-    public function addSubjectsSubMenu()
+    public function addPostTypeSubMenu()
     {
         add_submenu_page(
             'edit.php?post_type=' . $this->prefix . 'results',
@@ -24,10 +24,18 @@ class CBEDU_CUSTOM_POSTS{
             'manage_options',
             'edit.php?post_type=' . $this->prefix . 'subjects'
         );
+        add_submenu_page(
+            'edit.php?post_type=' . $this->prefix . 'results', // Change this to the slug of your top-level menu
+            __('Students', 'edu-students'),
+            __('Students', 'edu-students'),
+            'manage_options',
+            'edit.php?post_type=' . $this->prefix . 'students'
+        );
     }
     public function register_custom_post_types() {
         $this->register_results_post_type();
         $this->register_subjects_post_type();
+        $this->register_students_post_type();
     }
 
 
@@ -133,5 +141,58 @@ class CBEDU_CUSTOM_POSTS{
             'supports' => array('title'),
         );
         register_post_type($this->prefix . 'subjects', $args);
+    }
+
+    private function register_students_post_type()
+    {
+        $labels = array(
+            'name' => __('Students', 'edu-students'),
+            'singular_name' => __('Student', 'edu-students'),
+            'item_published' => __('Student published.', 'edu-students'),
+            'item_published_privately' => __('Student private.', 'edu-students'),
+            'item_reverted_to_draft' => __('Student profile reverted to draft.', 'edu-students'),
+            'item_scheduled' => __('Student scheduled.', 'edu-students'),
+            'item_updated' => __('Student profile updated.', 'edu-students'),
+            'menu_name' => __('Students', 'edu-students'),
+            'add_new' => __('Add New Students', 'edu-students'),
+            'add_new_item' => __('Add New Student', 'edu-students'),
+            'edit_item' => __('Edit Student', 'edu-students'),
+            'new_item' => __('New Student', 'edu-students'),
+            'view_item' => __('View Student', 'edu-students'),
+            'search_items' => __('Search Students', 'edu-students'),
+            'not_found' => __('No Students found', 'edu-students'),
+            'not_found_in_trash' => __('No Students found in Trash', 'edu-students'),
+            'parent_item_colon' => __('Parent Student:', 'edu-students'),
+            'all_items' => __('All Students', 'edu-students'),
+            'archives' => __('Student Archives', 'edu-students'),
+            'insert_into_item' => __('Insert into Student', 'edu-students'),
+            'uploaded_to_this_item' => __('Uploaded to this Student', 'edu-students'),
+            'featured_image' => __('Student Image', 'edu-students'),
+            'set_featured_image' => __('Set Student Picture', 'edu-students'),
+            'remove_featured_image' => __('Remove Student Picture', 'edu-students'),
+            'use_featured_image' => __('Use as Student Picture', 'edu-students'),
+            'menu_icon' => 'dashicons-welcome-learn-more', // Change the icon if needed
+            'public' => true,
+            'has_archive' => true,
+            'rewrite' => array('slug' => 'edu-students'),
+            'supports' => array('title', 'editor', 'thumbnail', ),
+        );        
+
+        $args = array(
+            'labels' => $labels,
+            'public' => true,
+            'publicly_queryable' => true,
+            'show_ui' => true,
+            'show_in_menu' => false,
+            'query_var' => true,
+            'rewrite' => array('slug' => 'edu-students'),
+            'capability_type' => 'post',
+            'has_archive' => true,
+            'hierarchical' => false,
+            'menu_position' => null,
+            'supports' => array('title', 'editor', 'thumbnail'),            
+        );
+
+        register_post_type($this->prefix . 'students', $args);
     }
 }
