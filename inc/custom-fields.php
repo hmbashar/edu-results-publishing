@@ -10,6 +10,8 @@ class CBEDUCustomFields
 
         // Call the register_student_fields() method during class initialization
         $this->register_student_fields();
+
+        $this->register_subject_fields();
     }
 
     public function register_student_fields()
@@ -227,6 +229,60 @@ class CBEDUCustomFields
         // Update Date of Birth (DOB)
         if (isset($_POST['cbedu_result_std_dob'])) {
             update_post_meta($post_id, 'cbedu_result_std_dob', sanitize_text_field($_POST['cbedu_result_std_dob']));
+        }
+    }
+
+    // New methods for subject fields
+    public function register_subject_fields()
+    {
+        add_action('add_meta_boxes', array($this, 'add_subject_fields_meta_box'));
+        add_action('save_post', array($this, 'save_subject_fields'));
+    }
+
+    public function add_subject_fields_meta_box()
+    {
+        add_meta_box(
+            'subject_fields',
+            'Subject Fields',
+            array($this, 'render_subject_fields_meta_box'),
+            'cbedu_subjects', // Assuming 'cbedu_subjects' is the custom post type slug for Subjects
+            'normal',
+            'default'
+        );
+    }
+
+    public function render_subject_fields_meta_box($post)
+    {
+        // Retrieve existing value for subject code
+        $subject_code = get_post_meta($post->ID, 'cbedu_subject_code', true);
+
+        // Output HTML input for subject code
+        ?>
+        <table>
+            <tr>
+                <td>
+                    <label for="cbedu_subject_code">Subject Code:</label>
+                </td>
+                <td>
+                    <input class="regular-text" type="text" id="cbedu_subject_code"
+                        name="cbedu_subject_code" value="<?php echo esc_attr($subject_code); ?>" />
+                </td>
+            </tr>
+        </table>
+        <?php
+    }
+
+    public function save_subject_fields($post_id)
+    {
+        // Save the custom field value when the post is saved
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return;
+        }
+
+        // Check if Subject Code is set and sanitize it
+        if (isset($_POST['cbedu_subject_code'])) {
+            $sanitized_subject_code = sanitize_text_field($_POST['cbedu_subject_code']);
+            update_post_meta($post_id, 'cbedu_subject_code', $sanitized_subject_code);
         }
     }
 }

@@ -45,13 +45,11 @@ class CBEDUResultPublishing
         // Add admin assets
         add_action('admin_enqueue_scripts', array($this, 'cbedu_result_assets_enque_admin'));
         // Add plugin assets
-        add_action('wp_enqueue_scripts', array($this, 'cbedu_results_assets_enqueue'));
+        add_action('wp_enqueue_scripts', array($this, 'cbedu_results_assets_enqueue'));        
+       
 
         // Register text domain for translation
         add_action('plugins_loaded', array($this, 'loadTextDomain'));
-
-        // Add description after the title field for Subjects post type
-        add_action('edit_form_after_title', array($this, 'addDescriptionAfterTitle'));
 
         // Initialize the plugin
         $this->initialize();
@@ -93,23 +91,9 @@ class CBEDUResultPublishing
         if ($screen->post_type == $this->prefix . 'results') {
             $title = 'Enter Student Name';
         } elseif ($screen->post_type == $this->prefix . 'subjects') {
-            $title = 'Enter Code and Subject Name'; // Placeholder for Subjects post type
+            $title = 'Enter Subject Name'; // Placeholder for Subjects post type
         }
         return $title;
-    }
-    /**
-     * Adds a description after the title of a post.
-     *
-     * @param object $post The post object.
-     * @return void
-     */
-    public function addDescriptionAfterTitle($post)
-    {
-        if ($post->post_type == $this->prefix . 'subjects') {
-            echo '<div style="margin-top:10px;">';
-            echo '<p class="description">Please enter your subject code and subject name here, ex: CS101 - Computer Science</p>';
-            echo '</div>';
-        }
     }
 
     public function cbedu_result_assets_enque_admin()
@@ -126,6 +110,7 @@ class CBEDUResultPublishing
     {
         wp_enqueue_style('cbedu-results-style', plugins_url('/assets/css/style.css', __FILE__));
     }
+    
 }
 
 

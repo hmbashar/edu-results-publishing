@@ -37,11 +37,16 @@ class CBEDU_CUSTOM_POSTS{
             'name' => __('Results', 'edu-results'),
             'singular_name' => __('Result', 'edu-results'),
             'menu_name' => __('EDU Results', 'edu-results'),
-            'add_new' => __('Add New', 'edu-results'),
+            'add_new' => __('Add New Result', 'edu-results'),
             'add_new_item' => __('Add New Result', 'edu-results'),
             'edit_item' => __('Edit Result', 'edu-results'),
             'new_item' => __('New Result', 'edu-results'),
-            'view_item' => __('View Result', 'edu-results'),
+            'view_item' => __('View Result', 'edu-results'),            
+            'item_published'           => __( 'Result published.', 'edu-results' ), 
+            'item_published_privately' => __( 'Result published privately.', 'edu-results' ), 
+            'item_reverted_to_draft'   => __( 'Result reverted to draft.', 'edu-results' ), 
+            'item_scheduled'           => __( 'Result scheduled.', 'edu-results' ), 
+            'item_updated'             => __( 'Result updated.', 'edu-results' ), 
             'search_items' => __('Search Results', 'edu-results'),
             'not_found' => __('No Results found', 'edu-results'),
             'not_found_in_trash' => __('No Results found in Trash', 'edu-results'),
@@ -58,7 +63,6 @@ class CBEDU_CUSTOM_POSTS{
             'public' => true,
             'has_archive' => true,
             'rewrite' => array('slug' => 'edu-results'),
-            'supports' => array('title', 'editor', 'thumbnail', 'excerpt'),
         );
 
         $args = array(
@@ -74,7 +78,7 @@ class CBEDU_CUSTOM_POSTS{
             'hierarchical' => false,
             'menu_position' => null,
             'menu_icon' => 'dashicons-book',
-            'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
+            'supports' => array('title', 'editor', 'thumbnail'),
         );
         register_post_type($this->prefix . 'results', $args);
     }
@@ -83,6 +87,11 @@ class CBEDU_CUSTOM_POSTS{
         $labels = array(
             'name' => __('Subjects', 'edu-subjects'),
             'singular_name' => __('Subject', 'edu-subjects'),
+            'item_published'           => __( 'Subject published.', 'edu-results' ), 
+            'item_published_privately' => __( 'Subject published privately.', 'edu-results' ), 
+            'item_reverted_to_draft'   => __( 'Subject reverted to draft.', 'edu-results' ), 
+            'item_scheduled'           => __( 'Subject scheduled.', 'edu-results' ), 
+            'item_updated'             => __( 'Subject updated.', 'edu-results' ), 
             'menu_name' => __('EDU Subjects', 'edu-subjects'),
             'add_new' => __('Add New', 'edu-subjects'),
             'add_new_item' => __('Add New Subject', 'edu-subjects'),
