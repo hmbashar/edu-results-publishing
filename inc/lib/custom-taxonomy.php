@@ -51,7 +51,7 @@ class CBEDU_CUSTOM_TAXONOMY {
             'show_tagcloud'              => true,
             'rewrite'                    => array('slug' => 'session-years'),
         );
-        register_taxonomy($this->prefix . 'session_years', $this->prefix . 'students', $args);
+        register_taxonomy($this->prefix . 'session_years', [$this->prefix . 'students', $this->prefix . 'results'], $args);
     }
 
     private function register_examination_taxonomy() {
@@ -87,7 +87,7 @@ class CBEDU_CUSTOM_TAXONOMY {
             'show_tagcloud'              => true,
             'rewrite'                    => array('slug' => 'examinations'),
         );
-        register_taxonomy($this->prefix . 'examinations', $this->prefix . 'students', $args);
+        register_taxonomy($this->prefix . 'examinations', [$this->prefix . 'students', $this->prefix . 'results'], $args);
     }
 
     private function register_board_taxonomy() {
@@ -123,7 +123,7 @@ class CBEDU_CUSTOM_TAXONOMY {
             'show_tagcloud'              => true,
             'rewrite'                    => array('slug' => 'boards'),
         );
-        register_taxonomy($this->prefix . 'boards', $this->prefix . 'students', $args);
+        register_taxonomy($this->prefix . 'boards', [$this->prefix . 'students', $this->prefix . 'results'], $args);
     }
 
     private function register_department_group_taxonomy() {
@@ -159,6 +159,6 @@ class CBEDU_CUSTOM_TAXONOMY {
             'show_tagcloud'              => true,
             'rewrite'                    => array('slug' => 'departments-groups'),
         );
-        register_taxonomy($this->prefix . 'department_group', $this->prefix . 'students', $args);
+        register_taxonomy($this->prefix . 'department_group', [$this->prefix . 'students', $this->prefix . 'results'], $args);
     }
 }
