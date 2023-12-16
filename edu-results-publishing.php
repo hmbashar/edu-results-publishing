@@ -45,8 +45,9 @@ class CBEDUResultPublishing
         // Add admin assets
         add_action('admin_enqueue_scripts', array($this, 'cbedu_result_assets_enque_admin'));
         // Add plugin assets
-        add_action('wp_enqueue_scripts', array($this, 'cbedu_results_assets_enqueue'));        
-       
+        add_action('wp_enqueue_scripts', array($this, 'cbedu_results_assets_enqueue'));
+        
+        add_filter('post_updated_messages', array($this, 'cbedu_custom_post_publish_message'));
 
         // Register text domain for translation
         add_action('plugins_loaded', array($this, 'loadTextDomain'));
@@ -84,6 +85,23 @@ class CBEDUResultPublishing
         return $links;
     }
 
+    public static function convert_marks_to_grade($marks) {
+        if ($marks >= 80) {
+            return array('A+', 5.00);
+        } elseif ($marks >= 70) {
+            return array('A', 4.00);
+        } elseif ($marks >= 60) {
+            return array('A-', 3.50);
+        } elseif ($marks >= 50) {
+            return array('B', 3.00);
+        } elseif ($marks >= 40) {
+            return array('C', 2.00);
+        } elseif ($marks >= 33) {
+            return array('D', 1.00);
+        } else {
+            return array('F', 0.00);
+        }
+    }
 
     public function changeTitlePlaceholder($title)
     {
@@ -110,7 +128,53 @@ class CBEDUResultPublishing
     {
         wp_enqueue_style('cbedu-results-style', plugins_url('/assets/css/style.css', __FILE__));
     }
+
+   public function cbedu_custom_post_publish_message( $messages ) {
+        global $post, $post_ID;
     
+        $post_type = get_post_type( $post_ID );
+    
+        // Check if the post type is 'subjects'
+        if ( $post_type == 'cbedu_subjects' ) {
+            $permalink = get_permalink( $post_ID );
+    
+            // Customizing the 'Post published' message for 'subjects' post type
+            $messages[$post_type] = array_fill(0, 11, ''); // reset array
+            $messages[$post_type][1] = 'Subject published. <a href="' . esc_url( $permalink ) . '">View subject</a>';
+            $messages[$post_type][6] = 'Subject published. <a href="' . esc_url( $permalink ) . '">View subject</a>';
+        }
+      // Check if the post type is 'results'
+        if ( $post_type == 'cbedu_results' ) {
+            $permalink = get_permalink( $post_ID );
+    
+            // Customizing the 'Post published' message for 'subjects' post type
+            $messages[$post_type] = array_fill(0, 11, ''); // reset array
+            $messages[$post_type][1] = 'Results published. <a href="' . esc_url( $permalink ) . '">View Results</a>';
+            $messages[$post_type][6] = 'Rubject published. <a href="' . esc_url( $permalink ) . '">View Results</a>';
+        }
+    
+        return $messages;
+    }    
+   
+    
+}
+
+function convert_marks_to_grade($marks) {
+    if ($marks >= 80) {
+        return array('A+', 5.00);
+    } elseif ($marks >= 70) {
+        return array('A', 4.00);
+    } elseif ($marks >= 60) {
+        return array('A-', 3.50);
+    } elseif ($marks >= 50) {
+        return array('B', 3.00);
+    } elseif ($marks >= 40) {
+        return array('C', 2.00);
+    } elseif ($marks >= 33) {
+        return array('D', 1.00);
+    } else {
+        return array('F', 0.00);
+    }
 }
 
 

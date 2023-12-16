@@ -47,6 +47,7 @@ class CBEDUCustomFields
         $student_type = get_post_meta($post->ID, 'cbedu_result_std_student_type', true);
         $result_status = get_post_meta($post->ID, 'cbedu_result_std_result_status', true);
         $gpa = get_post_meta($post->ID, 'cbedu_result_std_gpa', true);
+        $was_gpa = get_post_meta($post->ID, 'cbedu_result_std_was_gpa', true);
         $dob = get_post_meta($post->ID, 'cbedu_result_std_dob', true);
 
         // Output HTML inputs for each field
@@ -150,6 +151,15 @@ class CBEDUCustomFields
                     <input class="regular-text" style="padding: 7px 10px;" type="text" id="cbedu_result_std_gpa"
                         name="cbedu_result_std_gpa" value="<?php echo esc_attr($gpa); ?>" />
                 </td>
+            </tr>           
+            <tr>
+                <td>
+                    <label for="cbedu_result_std_was_gpa">GPA <abbr title="Without additional subject">(WAS)</abbr>:</label>
+                </td>
+                <td>
+                    <input class="regular-text" style="padding: 7px 10px;" type="text" id="cbedu_result_std_was_gpa"
+                        name="cbedu_result_std_was_gpa" value="<?php echo esc_attr($was_gpa); ?>" />
+                </td>
             </tr>
             <tr>
                 <td>
@@ -224,6 +234,11 @@ class CBEDUCustomFields
         // Update GPA
         if (isset($_POST['cbedu_result_std_gpa'])) {
             update_post_meta($post_id, 'cbedu_result_std_gpa', sanitize_text_field($_POST['cbedu_result_std_gpa']));
+        }
+
+        // Update Was GPA
+        if (isset($_POST['cbedu_result_std_was_gpa'])) {
+            update_post_meta($post_id, 'cbedu_result_std_was_gpa', sanitize_text_field($_POST['cbedu_result_std_was_gpa']));
         }
 
         // Update Date of Birth (DOB)

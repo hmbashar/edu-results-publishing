@@ -57,14 +57,15 @@ $collageName = get_option('cbedu_results_collage_name');
                 $cbedu_std_f_name = get_post_meta(get_the_ID(), 'cbedu_result_std_father_name', true);
                 $cbedu_std_m_name = get_post_meta(get_the_ID(), 'cbedu_result_std_mother_name', true);
                 $cbedu_std_gpa = get_post_meta(get_the_ID(), 'cbedu_result_std_gpa', true);
+                $cbedu_std_was_gpa = get_post_meta(get_the_ID(), 'cbedu_result_std_was_gpa', true);
                 $cbedu_std_group = get_post_meta(get_the_ID(), 'cbedu_result_std_group', true);
                 $cbedu_std_id = get_post_meta(get_the_ID(), 'cbedu_result_std_id', true);
                 $cbedu_std_re_status = get_post_meta(get_the_ID(), 'cbedu_result_std_result_status', true);
                 $cbedu_std_type = get_post_meta(get_the_ID(), 'cbedu_result_std_student_type', true);
                 $cbedu_std_dob = get_post_meta(get_the_ID(), 'cbedu_result_std_dob', true);
 
-                //Student subjects result
 
+                //Student subjects result
                 $cbedu_std_all_subjects_result = get_post_meta(get_the_ID(), 'cbedu_subjects_results', true);
         ?>
                 <!--Student Information-->
@@ -156,7 +157,7 @@ $collageName = get_option('cbedu_results_collage_name');
                         </div>
                         <table>
                             <tr>
-                                <th>Code.</th>
+                                <th>Subject Code.</th>
                                 <th>Name of Subjects</th>
                                 <th>Letter Mark</th>
                                 <th>Letter Grade</th>
@@ -177,15 +178,30 @@ $collageName = get_option('cbedu_results_collage_name');
                                     if (isset($subject_result['subject_name']) && isset($subject_result['subject_value'])) {
                                         $subject_name = esc_html($subject_result['subject_name']);
                                         $subject_value = esc_html($subject_result['subject_value']);
+                                        $marks = intval(esc_html($subject_result['subject_value'])); // Assuming the marks are stored in 'subject_value'
+                                        list($letter_grade, $grade_point) = CBEDUResultPublishing::convert_marks_to_grade($marks);
+
+                                        // Fetch subject code based on subject name
+                                        $subject_posts = get_posts(array(
+                                            'post_type' => 'cbedu_subjects', 
+                                            'title'     => $subject_name,
+                                            'posts_per_page' => 1
+                                        ));
+
+                                        $subject_code = '';
+                                        if (!empty($subject_posts)) {
+                                            $subject_code = get_post_meta($subject_posts[0]->ID, 'cbedu_subject_code', true);
+                                        }
+
                             ?>
                                         <tr>
-                                            <td>1</td>
+                                            <td><?php echo esc_html($subject_code); ?></td>
                                             <td><?php echo esc_html($subject_name); ?></td>
                                             <td><?php echo esc_html($subject_value); ?></td>
-                                            <td>A+</td>
+                                            <td><?php echo esc_html($letter_grade); ?></td>
                                             <?php if ($isFirstRow) { ?>
-                                                <td rowspan="<?php echo $rowSpan; ?>" class="highlight">3.81</td>
-                                                <td rowspan="<?php echo $rowSpan; ?>" class="highlight">4.19</td>
+                                                <td rowspan="<?php echo $rowSpan; ?>" class="highlight"><?php echo esc_html($cbedu_std_was_gpa); ?></td>
+                                                <td rowspan="<?php echo $rowSpan; ?>" class="highlight"><?php echo esc_html($cbedu_std_gpa); ?></td>
                                                 <?php
                                                 // Set to false so the rowspan is not repeated in subsequent rows
                                                 $isFirstRow = false;

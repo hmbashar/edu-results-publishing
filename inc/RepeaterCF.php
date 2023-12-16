@@ -1,10 +1,11 @@
 <?php
+
 namespace cbedu\inc\RepeaterCF;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if (!defined('ABSPATH')) exit; // Exit if accessed directly
 class CBEDURepeaterCustomFields
 {
-  
+
     public function __construct()
     {
 
@@ -17,12 +18,17 @@ class CBEDURepeaterCustomFields
         add_meta_box('cbedu_results_repeater', __('Subjects Information', 'edu-results'), array($this, 'renderMetaBox'), 'cbedu_results', 'normal', 'default');
     }
 
-    public function renderMetaBox($post)
-    {
-        $eduResultsGroup = get_post_meta($post->ID, 'cbedu_subjects_results', true);
+    public function renderMetaBox($post) {
+        // Fetch subjects from 'subjects' custom post type
+        $subjects = get_posts(array(
+            'post_type' => 'cbedu_subjects', // Replace with your actual custom post type slug
+            'posts_per_page' => -1 // Fetch all posts
+        ));
 
+        $eduResultsGroup = get_post_meta($post->ID, 'cbedu_subjects_results', true);
         wp_nonce_field('cbedu_results_repeatable_meta_box_nonce', 'cbedu_results_repeatable_meta_box_nonce');
-?>
+        ?>
+
         <script type="text/javascript">
             jQuery(document).ready(function($) {
                 $('#edu-add-subject-row').on('click', function() {
@@ -38,61 +44,76 @@ class CBEDURepeaterCustomFields
                 });
             });
         </script>
+
         <table id="repeatable-fieldset-one" width="100%">
             <tbody>
                 <?php
                 if ($eduResultsGroup) :
-                    foreach ($eduResultsGroup as $field) {
+                    foreach ($eduResultsGroup as $field) :
                 ?>
                         <tr>
                             <td width="70%">
-                                <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject name', 'edu-results'); ?>" name="cbedu_results_subject_name[]" value="<?php if ($field['subject_name'] != '')
-                                                                                                                                                                                                        echo esc_attr($field['subject_name']); ?>" />
+                                <select style="width:80%;padding:10px;" name="cbedu_results_subject_name[]">
+                                    <option value=""><?php esc_attr_e('Select Subject', 'edu-results'); ?></option>
+                                    <?php foreach ($subjects as $subject) : 
+                                        $subject_code = get_post_meta($subject->ID, 'cbedu_subject_code', true); 
+                                    ?>
+                                    <option value="<?php echo esc_attr($subject->post_title); ?>" <?php selected($field['subject_name'], $subject->post_title); ?>>
+                                        <?php echo esc_html($subject_code . ' - ' . $subject->post_title); ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </td>
                             <td width="70%">
                                 <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject value', 'edu-results'); ?>" name="cbedu_results_subject_value[]" value="<?php echo isset($field['subject_value']) ? esc_attr($field['subject_value']) : ''; ?>" />
                             </td>
-
-                            <td width="15%"><a class="button remove-row" href="#1">
-                                    <?php esc_html_e('Remove', 'edu-results'); ?>
-                                </a></td>
+                            <td width="15%"><a class="button remove-row" href="#1"><?php esc_html_e('Remove', 'edu-results'); ?></a></td>
                         </tr>
                     <?php
-                    }
+                    endforeach;
                 else :
                     // Show a blank row
                     ?>
                     <tr>
-                        <td>
-                            <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject name', 'edu-results'); ?>" name="cbedu_results_subject_name[]" />
+                        <td width="70%">
+                            <select style="width:80%;padding:10px;" name="cbedu_results_subject_name[]">
+                                <option value=""><?php esc_attr_e('Select Subject', 'edu-results'); ?></option>
+                                <?php foreach ($subjects as $subject) : ?>
+                                    <option value="<?php echo esc_attr($subject->post_title); ?>">
+                                        <?php echo esc_html($subject->post_title); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
                         </td>
-                        <td>
+                        <td width="70%">
                             <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject value', 'edu-results'); ?>" name="cbedu_results_subject_value[]" />
                         </td>
-                        <td><a class="button  cmb-remove-row-button button-disabled" href="#">
-                                <?php esc_html_e('Remove', 'edu-results'); ?>
-                            </a></td>
+                        <td width="15%"><a class="button remove-row" href="#1"><?php esc_html_e('Remove', 'edu-results'); ?></a></td>
                     </tr>
                 <?php endif; ?>
 
                 <!-- Empty hidden row for jQuery -->
                 <tr class="empty-row screen-reader-text">
-                    <td>
-                        <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject name', 'edu-results'); ?>" name="cbedu_results_subject_name[]" />
+                    <td width="70%">
+                        <select style="width:80%;padding:10px;" name="cbedu_results_subject_name[]">
+                            <option value=""><?php esc_attr_e('Select Subject', 'edu-results'); ?></option>
+                            <?php foreach ($subjects as $subject) : ?>
+                                <option value="<?php echo esc_attr($subject->post_title); ?>">
+                                    <?php echo esc_html($subject->post_title); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </td>
-                    <td>
+                    <td width="70%">
                         <input style="width:80%;padding:10px;" type="text" placeholder="<?php esc_attr_e('Enter subject value', 'edu-results'); ?>" name="cbedu_results_subject_value[]" />
                     </td>
-                    <td><a class="button remove-row" href="#">
-                            <?php esc_html_e('Remove', 'edu-results'); ?>
-                        </a></td>
+                    <td width="15%"><a class="button remove-row" href="#1"><?php esc_html_e('Remove', 'edu-results'); ?></a></td>
                 </tr>
             </tbody>
         </table>
-        <p><a id="edu-add-subject-row" class="button" href="#">
-                <?php esc_html_e('Add Another', 'edu-results'); ?>
-            </a></p>
-<?php
+
+        <p><a id="edu-add-subject-row" class="button" href="#"><?php esc_html_e('Add Another', 'edu-results'); ?></a></p>
+    <?php
     }
 
     public function saveMetaBoxData($postID)
