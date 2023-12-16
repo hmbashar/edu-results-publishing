@@ -152,7 +152,7 @@ class CBEDUResultPublishing
             // Customizing the 'Post published' message for 'subjects' post type
             $messages[$post_type] = array_fill(0, 11, ''); // reset array
             $messages[$post_type][1] = 'Results published. <a href="' . esc_url( $permalink ) . '">View Results</a>';
-            $messages[$post_type][6] = 'Rubject published. <a href="' . esc_url( $permalink ) . '">View Results</a>';
+            $messages[$post_type][6] = 'Results published. <a href="' . esc_url( $permalink ) . '">View Results</a>';
         }
     
         return $messages;
