@@ -23,6 +23,8 @@ class CBEDUCustomFields
         $this->register_subject_fields();
 
         $this->register_result_fields(); // Call the register_result_fields() method
+
+        add_action( 'admin_notices', array($this, 'cbedu_admin_notices'));
     }
 
     /**
@@ -35,6 +37,7 @@ class CBEDUCustomFields
         add_action('add_meta_boxes', array($this, 'add_student_fields_meta_box'));  
 
         add_action('save_post', array($this, 'save_student_fields'));
+        add_action('save_post', array($this, 'cbedu_check_unique_registration_number'));
     }
 
     /**
@@ -500,4 +503,69 @@ class CBEDUCustomFields
                 }
             }        
     }
+
+   public function cbedu_check_unique_registration_number( $post_id ) {
+        // Check for autosave
+        if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+    
+        // Check the post type
+        if ( get_post_type( $post_id ) !== 'cbedu_students' ) return;
+    
+        // Get the registration number from the submitted form
+        if ( isset( $_POST['cbedu_result_std_registration_number'] ) ) {
+            $registration_number = sanitize_text_field( $_POST['cbedu_result_std_registration_number'] );
+    
+            // Search for posts with the same registration number
+            $query = new \WP_Query(array(
+                'post_type' => 'cbedu_students',
+                'meta_key' => 'cbedu_result_std_registration_number',
+                'meta_value' => $registration_number,
+                'post__not_in' => array( $post_id ), // Exclude the current post
+                'posts_per_page' => 1
+            ) );
+    
+            if ( $query->found_posts > 0 ) {
+                 // Set a custom error flag in the post meta.
+                update_post_meta( $post_id, '_cbedu_registration_error', '1' );
+                
+                // Unhook this function to prevent infinite loop
+                remove_action( 'save_post', array($this, 'cbedu_check_unique_registration_number') );
+    
+                // Update the post to revert the title change
+                wp_update_post( array(
+                    'ID' => $post_id,
+                    'post_status' => 'draft' // Optional: Change the post status
+                ) );
+    
+                // Re-hook the function
+                add_action( 'save_post',array($this, 'cbedu_check_unique_registration_number'));
+    
+                // Show error message
+                add_filter( 'redirect_post_location', array($this, 'cbedu_modify_redirect_location'), 10, 2 );
+            }
+        }
+    }
+    
+   public function cbedu_admin_notices() {
+        if ( ! isset( $_GET['cbedu_registration_error'] ) ) return;
+        ?>
+        <div class="notice notice-error">
+            <p><?php _e( 'Error: Registration number must be unique.', 'cbedu' ); ?></p>
+        </div>
+        <?php
+    }
+
+    public function cbedu_modify_redirect_location( $location, $post_id ) {
+        // Check if our custom query var is set to show the error message.
+        if ( get_post_meta( $post_id, '_cbedu_registration_error', true ) ) {
+            // Remove the default message query arg if your error is set.
+            $location = remove_query_arg( 'message', $location );
+            // Add your custom error message.
+            $location = add_query_arg( 'cbedu_registration_error', '1', $location );
+            // Delete the error meta to prevent the error from persisting on refresh.
+            delete_post_meta( $post_id, '_cbedu_registration_error' );
+        }
+        return $location;
+    }
+    
 }
