@@ -67,6 +67,8 @@ class CBEDUCustomFields
      */
     public function render_student_fields_meta_box($post)
     {
+        wp_nonce_field( 'cbedu_save_student_nonce_action', 'cbedu_save_student_nonce' );
+
         // Retrieve existing values for custom fields
         $id_number = get_post_meta($post->ID, 'cbedu_result_std_id', true);
         $roll = get_post_meta($post->ID, 'cbedu_result_std_roll', true);
@@ -517,6 +519,12 @@ class CBEDUCustomFields
     
         // Check the post type
         if ( get_post_type( $post_id ) !== 'cbedu_students' ) return;
+            
+        // Verify the nonce before proceeding.
+        if ( ! isset( $_POST['cbedu_save_student_nonce'] ) || 
+            ! wp_verify_nonce( $_POST['cbedu_save_student_nonce'], 'cbedu_save_student_nonce_action' ) ) {
+            return;
+        }
     
         // Get the registration number from the submitted form
         if ( isset( $_POST['cbedu_result_std_registration_number'] ) ) {
