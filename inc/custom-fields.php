@@ -379,7 +379,7 @@ class CBEDUCustomFields
         $current_value = get_post_meta($post->ID, 'cbedu_result_registration_number', true);
     
         echo '<tr><td><label for="cbedu_result_registration_number">Registration Number:</label></td>';
-        echo '<td><input type="text" id="cbedu_result_registration_number" name="cbedu_result_registration_number" class="cbedu-registration-number-autocomplete" value="' . esc_attr($current_value) . '" placeholder="Start typing...">';
+        echo '<td><input style="padding: 7px 10px;width: 100%;" type="text" id="cbedu_result_registration_number" name="cbedu_result_registration_number" class="cbedu-registration-number-autocomplete" value="' . esc_attr($current_value) . '" placeholder="Start typing...">';
         echo '</td></tr>';   
     }
     
