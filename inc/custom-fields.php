@@ -213,34 +213,34 @@ class CBEDUCustomFields
 
     public function render_result_fields_meta_box($post)
     {
-        
-       // Generate a nonce
+
+        // Generate a nonce
         $nonce = wp_create_nonce('cbedu_register_number_nonce');
         // Get current value of the selected registration number
         $current_reg_number = get_post_meta($post->ID, 'cbedu_result_registration_number', true);
         // Fetch student's name based on the current registration number
-// Fetch student's details based on the current registration number
-$student_details = $this->get_student_details_by_registration_number($current_reg_number);
-$student_name = $student_details['studentName'];
-$fathers_name = $student_details['fathersName'];
+        // Fetch student's details based on the current registration number
+        $student_details = $this->get_student_details_by_registration_number($current_reg_number);
+        $student_name = $student_details['studentName'];
+        $fathers_name = $student_details['fathersName'];
         $student_type = get_post_meta($post->ID, 'cbedu_result_std_student_type', true);
         $result_status = get_post_meta($post->ID, 'cbedu_result_std_result_status', true);
         $gpa = get_post_meta($post->ID, 'cbedu_result_std_gpa', true);
         $was_gpa = get_post_meta($post->ID, 'cbedu_result_std_was_gpa', true);
-       
+
     ?>
         <table>
-            <?php 
-         
+            <?php
 
-                $this->render_registration_number_dropdown($post);
 
-                echo '<tr><td><label for="cbedu_result_std_name">Student Name:</label></td>';
-                echo '<td><input type="text" id="cbedu_result_std_name" name="cbedu_result_std_name" value="' . esc_attr($student_name) . '" readonly /></td></tr>';
-            
-                echo '<tr><td><label for="cbedu_result_std_fathers_name">Father\'s Name:</label></td>';
-                echo '<td><input type="text" id="cbedu_result_std_fathers_name" name="cbedu_result_std_fathers_name" value="' . esc_attr($fathers_name) . '" readonly /></td></tr>';
-            
+            $this->render_registration_number_dropdown($post);
+
+            echo '<tr><td><label for="cbedu_result_std_name">Student Name:</label></td>';
+            echo '<td><input type="text" id="cbedu_result_std_name" name="cbedu_result_std_name" value="' . esc_attr($student_name) . '" readonly /></td></tr>';
+
+            echo '<tr><td><label for="cbedu_result_std_fathers_name">Father\'s Name:</label></td>';
+            echo '<td><input type="text" id="cbedu_result_std_fathers_name" name="cbedu_result_std_fathers_name" value="' . esc_attr($fathers_name) . '" readonly /></td></tr>';
+
             ?>
             <tr>
                 <td>
@@ -305,9 +305,9 @@ $fathers_name = $student_details['fathersName'];
         }
 
         echo '</select></td></tr>';
-        ?>              
-    <?php
-        }
+    ?>
+<?php
+    }
 
     public function save_result_fields($post_id)
     {
@@ -341,35 +341,64 @@ $fathers_name = $student_details['fathersName'];
         if (isset($_POST['cbedu_result_registration_number'])) {
             update_post_meta($post_id, 'cbedu_result_registration_number', sanitize_text_field($_POST['cbedu_result_registration_number']));
         }
+
+
+        // Check if the post type is 'cbedu_results' then update the title based on the registration number
+        if (get_post_type($post_id) == 'cbedu_results') {
+            // Get the registration number from the 'cbedu_results' post meta
+            $registration_number = get_post_meta($post_id, 'cbedu_result_registration_number', true);
+
+            // Find the 'cbedu_students' post with this registration number
+            $student_posts = get_posts(array(
+                'post_type' => 'cbedu_students',
+                'meta_key' => 'cbedu_result_std_registration_number', // Adjust if needed
+                'meta_value' => $registration_number,
+                'posts_per_page' => 1
+            ));
+
+
+            if (!empty($student_posts)) {
+                $student_post_title = $student_posts[0]->post_title;
+               
+                
+                // Check if the title is different from the current title of 'cbedu_results' post
+                if (get_the_title($post_id) !== $student_post_title) {
+                    // Update the title of 'cbedu_results' post                
+                    wp_update_post(array(
+                        'ID'         => $post_id,
+                        'post_title' => $student_post_title
+                    ));
+                }
+            }
+        }
     }
 
 
-    private function get_student_details_by_registration_number($registration_number) {
+    private function get_student_details_by_registration_number($registration_number)
+    {
         if (empty($registration_number)) {
             return array('studentName' => 'Not Found!', 'fathersName' => 'Not Found!');
         }
-    
+
         $args = array(
             'post_type' => 'cbedu_students',
             'meta_key' => 'cbedu_result_std_registration_number',
             'meta_value' => $registration_number,
             'posts_per_page' => 1
         );
-    
+
         $students = get_posts($args);
         if (!empty($students)) {
             $student_name = !empty($students[0]->post_title) ? $students[0]->post_title : 'Not Found!';
             $father_name = get_post_meta($students[0]->ID, 'cbedu_result_std_father_name', true);
             $father_name = !empty($father_name) ? $father_name : 'Not Found!';
-    
+
             return array(
                 'studentName' => $student_name,
                 'fathersName' => $father_name
             );
         }
-    
+
         return array('studentName' => 'Not Found!', 'fathersName' => 'Not Found!');
     }
-    
-    
 }

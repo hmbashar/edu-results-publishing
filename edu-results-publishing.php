@@ -51,7 +51,7 @@ class CBEDUResultPublishing
 
         // Register text domain for translation
         add_action('plugins_loaded', array($this, 'loadTextDomain'));
-
+     
         // Initialize the plugin
         $this->initialize();
 
@@ -211,6 +211,9 @@ class CBEDUResultPublishing
     
         wp_die(); // This is required to terminate immediately and return a proper response
     }
+
+    
+    
     
 }
 

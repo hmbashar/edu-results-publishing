@@ -67,16 +67,14 @@ class CBEDU_CUSTOM_POSTS{
             'set_featured_image' => __('Set Student Picture', 'edu-results'),
             'remove_featured_image' => __('Remove Student Picture', 'edu-results'),
             'use_featured_image' => __('Use as Student Picture', 'edu-results'),
-            'menu_icon' => 'dashicons-book',
-            'public' => true,
-            'has_archive' => true,
+            'menu_icon' => 'dashicons-book',          
             'rewrite' => array('slug' => 'edu-results'),
         );
 
         $args = array(
             'labels' => $labels,
             'public' => true,
-            'publicly_queryable' => true,
+            'publicly_queryable' => false,
             'show_ui' => true,
             'show_in_menu' => true,
             'query_var' => true,
