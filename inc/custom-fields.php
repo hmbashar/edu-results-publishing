@@ -300,6 +300,7 @@ class CBEDUCustomFields
         $student_details = $this->get_student_details_by_registration_number($current_reg_number);
         $student_name = $student_details['studentName'];
         $fathers_name = $student_details['fathersName'];
+        $mothers_name = $student_details['mothersName'];
         $student_type = get_post_meta($post->ID, 'cbedu_result_std_student_type', true);
         $result_status = get_post_meta($post->ID, 'cbedu_result_std_result_status', true);
         $gpa = get_post_meta($post->ID, 'cbedu_result_std_gpa', true);
@@ -317,6 +318,10 @@ class CBEDUCustomFields
             <tr>
                 <td><label for="cbedu_result_std_fathers_name">Father's Name:</label></td>
                 <td><input type="text" style="padding: 7px 10px;width: 100%;" id="cbedu_result_std_fathers_name" name="cbedu_result_std_fathers_name" value="<?php echo esc_attr($fathers_name); ?>" readonly /></td>
+            </tr>            
+            <tr>
+                <td><label for="cbedu_result_std_mothers_name">Mother's Name:</label></td>
+                <td><input type="text" style="padding: 7px 10px;width: 100%;" id="cbedu_result_std_mothers_name" name="cbedu_result_std_mothers_name" value="<?php echo esc_attr($mothers_name); ?>" readonly /></td>
             </tr>
             <tr>
                 <td>
@@ -440,32 +445,38 @@ class CBEDUCustomFields
      * @return array An array containing the student's name and father's name.
      */
     private function get_student_details_by_registration_number($registration_number)
-    {
-        if (empty($registration_number)) {
-            return array('studentName' => 'Not Found!', 'fathersName' => 'Not Found!');
-        }
-
-        $args = array(
-            'post_type' => 'cbedu_students',
-            'meta_key' => 'cbedu_result_std_registration_number',
-            'meta_value' => $registration_number,
-            'posts_per_page' => 1
-        );
-
-        $students = get_posts($args);
-        if (!empty($students)) {
-            $student_name = !empty($students[0]->post_title) ? $students[0]->post_title : 'Not Found!';
-            $father_name = get_post_meta($students[0]->ID, 'cbedu_result_std_father_name', true);
-            $father_name = !empty($father_name) ? $father_name : 'Not Found!';
-
-            return array(
-                'studentName' => $student_name,
-                'fathersName' => $father_name
-            );
-        }
-
-        return array('studentName' => 'Not Found!', 'fathersName' => 'Not Found!');
+{
+    if (empty($registration_number)) {
+        return array('studentName' => 'Not Found!', 'fathersName' => 'Not Found!', 'mothersName' => 'Not Found!');
     }
+
+    $args = array(
+        'post_type' => 'cbedu_students',
+        'meta_key' => 'cbedu_result_std_registration_number',
+        'meta_value' => $registration_number,
+        'posts_per_page' => 1
+    );
+
+    $students = get_posts($args);
+    if (!empty($students)) {
+        $student_name = !empty($students[0]->post_title) ? $students[0]->post_title : 'Not Found!';
+        $father_name = get_post_meta($students[0]->ID, 'cbedu_result_std_father_name', true);
+        $father_name = !empty($father_name) ? $father_name : 'Not Found!';
+        
+        // Fetch the mother's name
+        $mother_name = get_post_meta($students[0]->ID, 'cbedu_result_std_mother_name', true);
+        $mother_name = !empty($mother_name) ? $mother_name : 'Not Found!';
+
+        return array(
+            'studentName' => $student_name,
+            'fathersName' => $father_name,
+            'mothersName' => $mother_name // Added mother's name
+        );
+    }
+
+    return array('studentName' => 'Not Found!', 'fathersName' => 'Not Found!', 'mothersName' => 'Not Found!');
+}
+
 
    /**
     * Updates the title of the 'cbedu_results' post based on the registration number.
@@ -575,6 +586,13 @@ class CBEDUCustomFields
         <?php
     }
 
+    /**
+     * Modifies the redirect location.
+     *
+     * @param mixed $location The original redirect location.
+     * @param int $post_id The ID of the post.
+     * @return mixed The modified redirect location.
+     */
     public function cbedu_modify_redirect_location( $location, $post_id ) {
         // Check if our custom query var is set to show the error message.
         if ( get_post_meta( $post_id, '_cbedu_registration_error', true ) ) {

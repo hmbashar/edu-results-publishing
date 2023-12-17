@@ -200,13 +200,18 @@ class CBEDUResultPublishing
             $father_name = get_post_meta($students[0]->ID, 'cbedu_result_std_father_name', true);
             $father_name = !empty($father_name) ? $father_name : 'Not Found!';
     
+            // Get the father's name, check if it's not empty
+            $mother_name = get_post_meta($students[0]->ID, 'cbedu_result_std_mother_name', true);
+            $mother_name = !empty($mother_name) ? $mother_name : 'Not Found!';
+    
             // Output both names as JSON
             wp_send_json([
                 'studentName' => esc_html($student_name),
-                'fathersName' => esc_html($father_name)
+                'fathersName' => esc_html($father_name),
+                'mothersName' => esc_html($mother_name)
             ]);
         } else {
-            wp_send_json(['studentName' => 'Not Found!', 'fathersName' => 'Not Found!']);
+            wp_send_json(['studentName' => 'Not Found!', 'fathersName' => 'Not Found!', 'mothersName' => 'Not Found!']);
         }
     
         wp_die(); // This is required to terminate immediately and return a proper response

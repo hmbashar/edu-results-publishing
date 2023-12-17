@@ -14,6 +14,8 @@ jQuery(document).ready(function($) {
                 // Extracting student's name and father's name from the response
                 $('#cbedu_result_std_name').val(response.studentName);
                 $('#cbedu_result_std_fathers_name').val(response.fathersName);
+                $('#cbedu_result_std_fathers_name').val(response.fathersName);
+                $('#cbedu_result_std_mothers_name').val(response.mothersName);
             }
         });
     });
