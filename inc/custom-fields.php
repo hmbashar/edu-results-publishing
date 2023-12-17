@@ -504,6 +504,13 @@ class CBEDUCustomFields
             }        
     }
 
+   /**
+    * Checks if the registration number of a student is unique before saving the post.
+    *
+    * @param int $post_id The ID of the post being saved.
+    *
+    * @return void
+    */
    public function cbedu_check_unique_registration_number( $post_id ) {
         // Check for autosave
         if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
@@ -546,6 +553,11 @@ class CBEDUCustomFields
         }
     }
     
+   /**
+    * Displays an error notice if the 'cbedu_registration_error' query parameter is set.
+    *
+    * @return void
+    */
    public function cbedu_admin_notices() {
         if ( ! isset( $_GET['cbedu_registration_error'] ) ) return;
         ?>
