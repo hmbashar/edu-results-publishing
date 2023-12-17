@@ -219,8 +219,10 @@ class CBEDUCustomFields
         // Get current value of the selected registration number
         $current_reg_number = get_post_meta($post->ID, 'cbedu_result_registration_number', true);
         // Fetch student's name based on the current registration number
-        $student_name = $this->get_student_name_by_registration_number($current_reg_number);
-
+// Fetch student's details based on the current registration number
+$student_details = $this->get_student_details_by_registration_number($current_reg_number);
+$student_name = $student_details['studentName'];
+$fathers_name = $student_details['fathersName'];
         $student_type = get_post_meta($post->ID, 'cbedu_result_std_student_type', true);
         $result_status = get_post_meta($post->ID, 'cbedu_result_std_result_status', true);
         $gpa = get_post_meta($post->ID, 'cbedu_result_std_gpa', true);
@@ -234,29 +236,12 @@ class CBEDUCustomFields
                 $this->render_registration_number_dropdown($post);
 
                 echo '<tr><td><label for="cbedu_result_std_name">Student Name:</label></td>';
-                echo '<td><input type="text" id="cbedu_result_std_name" name="cbedu_result_std_name" value="' . $student_name . '" readonly /></td></tr>';            
+                echo '<td><input type="text" id="cbedu_result_std_name" name="cbedu_result_std_name" value="' . esc_attr($student_name) . '" readonly /></td></tr>';
+            
+                echo '<tr><td><label for="cbedu_result_std_fathers_name">Father\'s Name:</label></td>';
+                echo '<td><input type="text" id="cbedu_result_std_fathers_name" name="cbedu_result_std_fathers_name" value="' . esc_attr($fathers_name) . '" readonly /></td></tr>';
+            
             ?>
-    <script type="text/javascript">
-    jQuery(document).ready(function($) {
-        $('#cbedu_result_registration_number').on('change', function() {
-            var registrationNumber = $(this).val();
-
-            // AJAX call with nonce
-            $.ajax({
-                url: ajaxurl,
-                type: 'POST',
-                data: {
-                    'action': 'get_student_name_by_registration',
-                    'registration_number': registrationNumber,
-                    'security': '<?php echo $nonce; ?>'
-                },
-                success: function(response) {
-                    $('#cbedu_result_std_name').val(response);
-                }
-            });
-        });
-    });
-    </script>
             <tr>
                 <td>
                     <label for="cbedu_result_std_student_type">Student Type:</label>
@@ -359,9 +344,9 @@ class CBEDUCustomFields
     }
 
 
-    private function get_student_name_by_registration_number($registration_number) {
+    private function get_student_details_by_registration_number($registration_number) {
         if (empty($registration_number)) {
-            return '';
+            return array('studentName' => 'Not Found!', 'fathersName' => 'Not Found!');
         }
     
         $args = array(
@@ -373,9 +358,18 @@ class CBEDUCustomFields
     
         $students = get_posts($args);
         if (!empty($students)) {
-            return $students[0]->post_title; // Assuming the title is the student's name
+            $student_name = !empty($students[0]->post_title) ? $students[0]->post_title : 'Not Found!';
+            $father_name = get_post_meta($students[0]->ID, 'cbedu_result_std_father_name', true);
+            $father_name = !empty($father_name) ? $father_name : 'Not Found!';
+    
+            return array(
+                'studentName' => $student_name,
+                'fathersName' => $father_name
+            );
         }
     
-        return '';
+        return array('studentName' => 'Not Found!', 'fathersName' => 'Not Found!');
     }
+    
+    
 }

@@ -171,35 +171,47 @@ class CBEDUResultPublishing
 
     public function register_ajax_handlers()
     {
-        add_action('wp_ajax_get_student_name_by_registration', array($this, 'get_student_name_by_registration_callback'));
-        add_action('wp_ajax_nopriv_get_student_name_by_registration', array($this, 'get_student_name_by_registration_callback'));
+        add_action('wp_ajax_get_student_details_by_registration', array($this, 'get_student_details_by_registration_callback'));
+        add_action('wp_ajax_nopriv_get_student_details_by_registration', array($this, 'get_student_details_by_registration_callback'));
     }
 
 
-   public function get_student_name_by_registration_callback()
+    public function get_student_details_by_registration_callback()
     {
         // Check nonce for security
         check_ajax_referer('cbedu_register_number_nonce', 'security');
-
+    
         $registration_number = sanitize_text_field($_POST['registration_number']);
-
+        
         $args = array(
             'post_type' => 'cbedu_students',
             'meta_key' => 'cbedu_result_std_registration_number',
             'meta_value' => $registration_number,
             'posts_per_page' => 1
         );
-
+    
         $students = get_posts($args);
-
+    
         if (!empty($students)) {
-            echo esc_html($students[0]->post_title); // Assuming the title is the student's name
+            // Get the student's name, check if it's not empty
+            $student_name = !empty($students[0]->post_title) ? $students[0]->post_title : 'Not Found!';
+    
+            // Get the father's name, check if it's not empty
+            $father_name = get_post_meta($students[0]->ID, 'cbedu_result_std_father_name', true);
+            $father_name = !empty($father_name) ? $father_name : 'Not Found!';
+    
+            // Output both names as JSON
+            wp_send_json([
+                'studentName' => esc_html($student_name),
+                'fathersName' => esc_html($father_name)
+            ]);
         } else {
-            echo 'Not Found!';
+            wp_send_json(['studentName' => 'Not Found!', 'fathersName' => 'Not Found!']);
         }
-
+    
         wp_die(); // This is required to terminate immediately and return a proper response
     }
+    
 }
 
 function convert_marks_to_grade($marks)
