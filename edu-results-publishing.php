@@ -56,6 +56,9 @@ class CBEDUResultPublishing
         $this->initialize();
 
         $this->register_ajax_handlers();
+
+        // Enqueue necessary scripts and localize
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
     }
 
     public function getTextDomain()
@@ -129,6 +132,23 @@ class CBEDUResultPublishing
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('cbedu_register_number_nonce')
         ));
+    }
+
+    public function enqueue_scripts($hook_suffix) {
+        global $post;
+
+        if ($hook_suffix === 'post-new.php' || $hook_suffix === 'post.php') {
+            if (get_post_type($post) === 'cbedu_results') {
+                wp_enqueue_script('jquery-ui-autocomplete');
+                wp_enqueue_style('jquery-ui-css', 'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
+                wp_enqueue_script('cbedu-autocomplete-js', plugin_dir_url(__FILE__) . '/assets/js/autocomplete.js', array('jquery', 'jquery-ui-autocomplete'), '1.0.0', true);
+                wp_localize_script('cbedu-autocomplete-js', 'cbedu_ajax_autocomplete_object', array(
+                    'ajax_url' => admin_url('admin-ajax.php'),
+                    // Pass the nonce here
+                    'auto_complete_nonce' => wp_create_nonce('cbedu_auto_complete_nonce')
+                ));
+            }
+        }
     }
 
     public function loadTextDomain()

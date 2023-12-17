@@ -25,6 +25,9 @@ class CBEDUCustomFields
         $this->register_result_fields(); // Call the register_result_fields() method
 
         add_action( 'admin_notices', array($this, 'cbedu_admin_notices'));
+
+        add_action('wp_ajax_add_search_registration_numbers', array($this, 'add_search_registration_numbers'));
+      //  add_action('wp_ajax_nopriv_add_search_registration_numbers', array($this, 'add_search_registration_numbers'));
     }
 
     /**
@@ -309,7 +312,7 @@ class CBEDUCustomFields
     ?>
         <table>
             <?php
-                $this->render_registration_number_dropdown($post);  
+                $this->render_registration_number_input($post);  
             ?>
             <tr>
                 <td><label for="cbedu_result_std_name">Student Name:</label></td>
@@ -370,30 +373,16 @@ class CBEDUCustomFields
      * @throws Some_Exception_Class If there is an error retrieving the registration number or the students.
      * @return void
      */
-    private function render_registration_number_dropdown($post)
+    private function render_registration_number_input($post)
     {
         // Get current value
         $current_value = get_post_meta($post->ID, 'cbedu_result_registration_number', true);
-
-        // Query all students to get their registration numbers
-        $args = array(
-            'post_type' => 'cbedu_students',
-            'posts_per_page' => -1
-        );
-        $students = get_posts($args);
-
+    
         echo '<tr><td><label for="cbedu_result_registration_number">Registration Number:</label></td>';
-        echo '<td><select id="cbedu_result_registration_number" name="cbedu_result_registration_number">';
-        echo '<option value="">Select a Registration Number</option>';
-
-        foreach ($students as $student) {
-            $registration_number = get_post_meta($student->ID, 'cbedu_result_std_registration_number', true);
-            $selected = $current_value == $registration_number ? 'selected' : '';
-            echo '<option value="' . esc_attr($registration_number) . '" ' . $selected . '>' . esc_html($registration_number) . '</option>';
-        }
-
-        echo '</select></td></tr>';   
+        echo '<td><input type="text" id="cbedu_result_registration_number" name="cbedu_result_registration_number" class="cbedu-registration-number-autocomplete" value="' . esc_attr($current_value) . '" placeholder="Start typing...">';
+        echo '</td></tr>';   
     }
+    
 
     /**
      * Saves the result fields for a given post ID.
@@ -605,5 +594,42 @@ class CBEDUCustomFields
         }
         return $location;
     }
+
+    
+    public function add_search_registration_numbers() {
+        // Verify the nonce
+        check_ajax_referer('cbedu_auto_complete_nonce', 'AutoNonce');
+    
+        $term = sanitize_text_field($_POST['term']);
+    
+        $args = array(
+            'post_type' => 'cbedu_students',
+            'posts_per_page' => -1,
+            'meta_query' => array(
+                array(
+                    'key' => 'cbedu_result_std_registration_number',
+                    'value' => $term,
+                    'compare' => 'LIKE'
+                )
+            )
+        );
+    
+        $query = new \WP_Query($args);
+        $results = array();
+    
+        if ($query->have_posts()) {
+            while ($query->have_posts()) {
+                $query->the_post();
+                $registration_number = get_post_meta(get_the_ID(), 'cbedu_result_std_registration_number', true);
+                $results[] = array('label' => get_the_title(), 'value' => $registration_number);
+            }
+        }
+    
+        wp_reset_postdata();
+        wp_send_json($results);
+        wp_die();
+    }
+    
+
     
 }
