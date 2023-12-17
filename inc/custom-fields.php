@@ -6,6 +6,14 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 class CBEDUCustomFields
 {
 
+    /**
+     * Constructs a new instance of the class.
+     *
+     * Initializes the class by calling the register_student_fields(), register_subject_fields(),
+     * and register_result_fields() methods.
+     *
+     * @throws Some_Exception_Class description of exception
+     */
     public function __construct()
     {
 
@@ -17,12 +25,23 @@ class CBEDUCustomFields
         $this->register_result_fields(); // Call the register_result_fields() method
     }
 
+    /**
+     * Registers the student fields.
+     *
+     * @return void
+     */
     public function register_student_fields()
     {
-        add_action('add_meta_boxes', array($this, 'add_student_fields_meta_box'));
+        add_action('add_meta_boxes', array($this, 'add_student_fields_meta_box'));  
+
         add_action('save_post', array($this, 'save_student_fields'));
     }
 
+    /**
+     * Adds the student fields meta box.
+     *
+     * @return void
+     */
     public function add_student_fields_meta_box()
     {
         add_meta_box(
@@ -36,6 +55,13 @@ class CBEDUCustomFields
         );
     }
 
+    /**
+     * Renders the student fields meta box.
+     *
+     * @param object $post The post object.
+     * @throws None.
+     * @return None.
+     */
     public function render_student_fields_meta_box($post)
     {
         // Retrieve existing values for custom fields
@@ -101,6 +127,11 @@ class CBEDUCustomFields
     <?php
     }
 
+    /**
+     * Save the custom field values when the post is saved.
+     *
+     * @param int $post_id The post ID.
+     */
     public function save_student_fields($post_id)
     {
         // Save the custom field values when the post is saved
@@ -143,9 +174,14 @@ class CBEDUCustomFields
     public function register_subject_fields()
     {
         add_action('add_meta_boxes', array($this, 'add_subject_fields_meta_box'));
-        add_action('save_post', array($this, 'save_subject_fields'));
+        add_action('save_post', array($this, 'save_subject_fields'));       
     }
 
+    /**
+     * Adds a meta box for subject fields.
+     *
+     * @return void
+     */
     public function add_subject_fields_meta_box()
     {
         add_meta_box(
@@ -158,6 +194,13 @@ class CBEDUCustomFields
         );
     }
 
+    /**
+     * Renders the subject fields meta box for a given post.
+     *
+     * @param object $post The post object.
+     * @throws None
+     * @return void
+     */
     public function render_subject_fields_meta_box($post)
     {
         // Retrieve existing value for subject code
@@ -178,6 +221,11 @@ class CBEDUCustomFields
     <?php
     }
 
+    /**
+     * Save the subject fields for a given post.
+     *
+     * @param int $post_id The ID of the post being saved.
+     */
     public function save_subject_fields($post_id)
     {
         // Save the custom field value when the post is saved
@@ -193,12 +241,30 @@ class CBEDUCustomFields
     }
 
 
+    /**
+     * Registers the result fields.
+     *
+     * This function adds action hooks to register the result fields meta box and
+     * save the result fields. It also adds a save action to update the title
+     * when the post is saved.
+     *
+     * @throws Some_Exception_Class description of exception
+     */
     public function register_result_fields()
     {
         add_action('add_meta_boxes', array($this, 'add_result_fields_meta_box'));
+
         add_action('save_post', array($this, 'save_result_fields'));
+        // Add a save action to update the title when the post is saved
+        add_action('save_post', array($this, 'update_cbedu_results_title_on_save'));
     }
 
+    /**
+     * Generates the meta box for adding result fields.
+     *
+     * @throws Some_Exception_Class description of exception
+     * @return void
+     */
     public function add_result_fields_meta_box()
     {
         add_meta_box(
@@ -211,6 +277,12 @@ class CBEDUCustomFields
         );
     }
 
+    /**
+     * Render the result fields meta box.
+     *
+     * @param $post The current post object.
+     * @return void
+     */
     public function render_result_fields_meta_box($post)
     {
 
@@ -231,17 +303,16 @@ class CBEDUCustomFields
     ?>
         <table>
             <?php
-
-
-            $this->render_registration_number_dropdown($post);
-
-            echo '<tr><td><label for="cbedu_result_std_name">Student Name:</label></td>';
-            echo '<td><input type="text" id="cbedu_result_std_name" name="cbedu_result_std_name" value="' . esc_attr($student_name) . '" readonly /></td></tr>';
-
-            echo '<tr><td><label for="cbedu_result_std_fathers_name">Father\'s Name:</label></td>';
-            echo '<td><input type="text" id="cbedu_result_std_fathers_name" name="cbedu_result_std_fathers_name" value="' . esc_attr($fathers_name) . '" readonly /></td></tr>';
-
+                $this->render_registration_number_dropdown($post);  
             ?>
+            <tr>
+                <td><label for="cbedu_result_std_name">Student Name:</label></td>
+                <td><input type="text" style="padding: 7px 10px;width: 100%;" id="cbedu_result_std_name" name="cbedu_result_std_name" value="<?php echo esc_attr($student_name) ?>" readonly /></td>
+            </tr>
+            <tr>
+                <td><label for="cbedu_result_std_fathers_name">Father's Name:</label></td>
+                <td><input type="text" style="padding: 7px 10px;width: 100%;" id="cbedu_result_std_fathers_name" name="cbedu_result_std_fathers_name" value="<?php echo esc_attr($fathers_name); ?>" readonly /></td>
+            </tr>
             <tr>
                 <td>
                     <label for="cbedu_result_std_student_type">Student Type:</label>
@@ -282,6 +353,13 @@ class CBEDUCustomFields
     <?php
     }
 
+    /**
+     * Renders the registration number dropdown for a given post.
+     *
+     * @param object $post The post object.
+     * @throws Some_Exception_Class If there is an error retrieving the registration number or the students.
+     * @return void
+     */
     private function render_registration_number_dropdown($post)
     {
         // Get current value
@@ -304,11 +382,14 @@ class CBEDUCustomFields
             echo '<option value="' . esc_attr($registration_number) . '" ' . $selected . '>' . esc_html($registration_number) . '</option>';
         }
 
-        echo '</select></td></tr>';
-    ?>
-<?php
+        echo '</select></td></tr>';   
     }
 
+    /**
+     * Saves the result fields for a given post ID.
+     *
+     * @param int $post_id The ID of the post.
+     */
     public function save_result_fields($post_id)
     {
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
@@ -343,37 +424,16 @@ class CBEDUCustomFields
         }
 
 
-        // Check if the post type is 'cbedu_results' then update the title based on the registration number
-        if (get_post_type($post_id) == 'cbedu_results') {
-            // Get the registration number from the 'cbedu_results' post meta
-            $registration_number = get_post_meta($post_id, 'cbedu_result_registration_number', true);
 
-            // Find the 'cbedu_students' post with this registration number
-            $student_posts = get_posts(array(
-                'post_type' => 'cbedu_students',
-                'meta_key' => 'cbedu_result_std_registration_number', // Adjust if needed
-                'meta_value' => $registration_number,
-                'posts_per_page' => 1
-            ));
-
-
-            if (!empty($student_posts)) {
-                $student_post_title = $student_posts[0]->post_title;
-               
-                
-                // Check if the title is different from the current title of 'cbedu_results' post
-                if (get_the_title($post_id) !== $student_post_title) {
-                    // Update the title of 'cbedu_results' post                
-                    wp_update_post(array(
-                        'ID'         => $post_id,
-                        'post_title' => $student_post_title
-                    ));
-                }
-            }
-        }
     }
 
 
+    /**
+     * Retrieves the details of a student based on their registration number.
+     *
+     * @param string $registration_number The registration number of the student.
+     * @return array An array containing the student's name and father's name.
+     */
     private function get_student_details_by_registration_number($registration_number)
     {
         if (empty($registration_number)) {
@@ -400,5 +460,44 @@ class CBEDUCustomFields
         }
 
         return array('studentName' => 'Not Found!', 'fathersName' => 'Not Found!');
+    }
+
+   /**
+    * Updates the title of the 'cbedu_results' post based on the registration number.
+    *
+    * @param int $post_id The ID of the post being saved.
+    */
+   public function update_cbedu_results_title_on_save( $post_id ) {
+
+       // Check for autosave, permissions, and post type
+       if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+       if ( ! current_user_can( 'edit_post', $post_id ) ) return;
+       if ( get_post_type( $post_id ) !== 'cbedu_results' ) return;       
+       
+            // Get the registration number from the 'cbedu_results' post meta
+            $registration_number = get_post_meta($post_id, 'cbedu_result_registration_number', true);
+
+            // Find the 'cbedu_students' post with this registration number
+            $student_posts = get_posts(array(
+                'post_type' => 'cbedu_students',
+                'meta_key' => 'cbedu_result_std_registration_number', // Adjust if needed
+                'meta_value' => $registration_number,
+                'posts_per_page' => 1
+            ));
+
+
+            if (!empty($student_posts)) {
+                $student_post_title = $student_posts[0]->post_title;
+               
+                
+                // Check if the title is different from the current title of 'cbedu_results' post
+                if (get_the_title($post_id) !== $student_post_title) {
+                    // Update the title of 'cbedu_results' post                
+                    wp_update_post(array(
+                        'ID'         => $post_id,
+                        'post_title' => $student_post_title
+                    ));
+                }
+            }        
     }
 }
