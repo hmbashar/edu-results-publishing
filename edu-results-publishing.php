@@ -136,7 +136,7 @@ class CBEDUResultPublishing
             if (get_post_type($post) === 'cbedu_results') {
                 
                 wp_enqueue_style('cbedu-autocomplete-ui-css', plugin_dir_url(__FILE__) . 'assets/css/autocomplete.css');
-                wp_enqueue_script('cbedu-autocomplete-js', plugin_dir_url(__FILE__) . '/assets/js/autocomplete.js', array('jquery', 'jquery-ui-autocomplete'), '1.0.0', true);
+                wp_enqueue_script('cbedu-autocomplete-js', plugin_dir_url(__FILE__) . 'assets/js/autocomplete.js', array('jquery', 'jquery-ui-autocomplete'), '1.0.0', true);
                 wp_localize_script('cbedu-autocomplete-js', 'cbedu_ajax_autocomplete_object', array(
                     'ajax_url' => admin_url('admin-ajax.php'),
                     // Pass the nonce here
