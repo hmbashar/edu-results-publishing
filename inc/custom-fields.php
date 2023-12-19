@@ -570,7 +570,7 @@ class CBEDUCustomFields
         if ( ! isset( $_GET['cbedu_registration_error'] ) ) return;
         ?>
         <div class="notice notice-error">
-            <p><?php _e( 'Error: Registration number must be unique.', 'cbedu' ); ?></p>
+            <p><?php _e( 'Error: Registration number must be unique.', 'edu-results' ); ?></p>
         </div>
         <?php
     }
