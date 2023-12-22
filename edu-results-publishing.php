@@ -258,7 +258,6 @@ class CBEDUResultPublishing
 
         // Retrieve and sanitize the registration number
         $registration_number = isset($_POST['registration_number']) ? sanitize_text_field($_POST['registration_number']) : '';
-
         // Check if the examination term is set and sanitize it
         $cbedu_examination = isset($_POST['examination']) ? sanitize_text_field($_POST['examination']) : '';
         // Check if the year is set and sanitize it
@@ -292,19 +291,15 @@ class CBEDUResultPublishing
                     'terms'    => $cbedu_department_group,
                 ),
             ),
-        );
-
-         // Add meta query if registration number is set
-        if (!empty($registration_number)) {
-            $args['meta_query'] = array(
+            'meta_query' => array(
                 array(
                     'key' => 'cbedu_result_registration_number',
                     'value' => $registration_number,
                     'compare' => '='
                 )
-            );
-        }
-    
+            ),
+        );
+
         // Execute the query
         $query = new WP_Query($args);
 

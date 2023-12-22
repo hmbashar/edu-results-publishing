@@ -117,7 +117,7 @@ class CBEDUResultsShortcode
             <!-- Registration Number Input -->
             <div class="cbedu-results-search-form-single-element">
                 <label for="registration_number">Registration Number:</label>
-                <input type="text" name="registration_number" id="registration_number" placeholder="<?php echo esc_attr($placeholder); ?>">
+                <input type="text" name="registration_number" id="registration_number" placeholder="<?php echo esc_attr($placeholder); ?>" required>
             </div>
 
 
