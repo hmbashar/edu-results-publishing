@@ -120,6 +120,13 @@ class CBEDUResultsShortcode
                 <input type="text" name="registration_number" id="registration_number" placeholder="<?php echo esc_attr($placeholder); ?>" required>
             </div>
 
+            <!-- Roll Input -->
+            <div class="cbedu-results-search-form-single-element">
+                <label for="roll">Roll:</label>
+                <input type="text" name="roll" id="roll" placeholder="Enter Roll" required>
+            </div>
+
+
 
                 <!-- Submit Button -->
                 <div class="cbedu-results-search-form-single-element cbedu-results-search-form-submit">

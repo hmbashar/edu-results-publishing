@@ -293,7 +293,7 @@ class CBEDUResultPublishing
             ),
             'meta_query' => array(
                 array(
-                    'key' => 'cbedu_result_registration_number',
+                    'key' => 'cbedu_result_std_registration_number',
                     'value' => $registration_number,
                     'compare' => '='
                 )

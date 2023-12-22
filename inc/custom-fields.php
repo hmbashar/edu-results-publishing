@@ -440,7 +440,7 @@ class CBEDUCustomFields
         // Generate a nonce
         $nonce = wp_create_nonce('cbedu_register_number_nonce');
         // Get current value of the selected registration number
-        $current_reg_number = get_post_meta($post->ID, 'cbedu_result_registration_number', true);
+        $current_reg_number = get_post_meta($post->ID, 'cbedu_result_std_registration_number', true);
         // Fetch student's name based on the current registration number
         // Fetch student's details based on the current registration number
         $student_details = $this->get_student_details_by_registration_number($current_reg_number);
@@ -519,10 +519,10 @@ class CBEDUCustomFields
     private function render_registration_number_input($post)
     {
         // Get current value
-        $current_value = get_post_meta($post->ID, 'cbedu_result_registration_number', true);
+        $current_value = get_post_meta($post->ID, 'cbedu_result_std_registration_number', true);
 
-        echo '<tr><td><label for="cbedu_result_registration_number">Registration Number:</label></td>';
-        echo '<td><input style="padding: 7px 10px;width: 100%;" type="text" id="cbedu_result_registration_number" name="cbedu_result_registration_number" class="cbedu-registration-number-autocomplete" value="' . esc_attr($current_value) . '" placeholder="Start typing...">';
+        echo '<tr><td><label for="cbedu_result_std_registration_number">Registration Number:</label></td>';
+        echo '<td><input style="padding: 7px 10px;width: 100%;" type="text" id="cbedu_result_std_registration_number" name="cbedu_result_std_registration_number" class="cbedu-registration-number-autocomplete" value="' . esc_attr($current_value) . '" placeholder="Start typing...">';
         echo '</td></tr>';
     }
 
@@ -561,8 +561,8 @@ class CBEDUCustomFields
         }
 
         // Save Registration Number from dropdown
-        if (isset($_POST['cbedu_result_registration_number'])) {
-            update_post_meta($post_id, 'cbedu_result_registration_number', sanitize_text_field($_POST['cbedu_result_registration_number']));
+        if (isset($_POST['cbedu_result_std_registration_number'])) {
+            update_post_meta($post_id, 'cbedu_result_std_registration_number', sanitize_text_field($_POST['cbedu_result_std_registration_number']));
         }
     }
 
@@ -621,7 +621,7 @@ class CBEDUCustomFields
         if (get_post_type($post_id) !== 'cbedu_results') return;
 
         // Get the registration number from the 'cbedu_results' post meta
-        $registration_number = get_post_meta($post_id, 'cbedu_result_registration_number', true);
+        $registration_number = get_post_meta($post_id, 'cbedu_result_std_registration_number', true);
 
         // Find the 'cbedu_students' post with this registration number
         $student_posts = get_posts(array(

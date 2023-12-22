@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-    $('#cbedu_result_registration_number').autocomplete({
+    $('#cbedu_result_std_registration_number').autocomplete({
         source: function(request, response) {
             $.ajax({
                 url: cbedu_ajax_autocomplete_object.ajax_url,
