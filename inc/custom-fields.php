@@ -72,7 +72,7 @@ class CBEDUCustomFields
     {
         wp_nonce_field('cbedu_save_student_nonce_action', 'cbedu_save_student_nonce');
 
-        // Retrieve existing values for custom fields
+
         $id_number = get_post_meta($post->ID, 'cbedu_result_std_id', true);
         $roll = get_post_meta($post->ID, 'cbedu_result_std_roll', true);
         $std_registration_number = get_post_meta($post->ID, 'cbedu_result_std_registration_number', true);
@@ -93,7 +93,6 @@ class CBEDUCustomFields
         $birth_registration_number = get_post_meta($post->ID, 'cbedu_result_std_birth_registration_number', true);
         $nid_number = get_post_meta($post->ID, 'cbedu_result_std_nid_number', true);
 
-        // Output HTML inputs for each field
 
         // Output HTML inputs for each field
 ?>
@@ -181,11 +180,6 @@ class CBEDUCustomFields
                     </select>
                 </td>
             </tr>
-
-            <tr>
-                <td><label for="cbedu_result_std_address">Address:</label></td>
-                <td><input class="regular-text" type="text" id="cbedu_result_std_address" name="cbedu_result_std_address" value="<?php echo esc_attr($address); ?>" /></td>
-            </tr>
             <tr>
                 <td><label for="cbedu_result_std_guardian_phone">Guardian Phone Number:</label></td>
                 <td><input class="regular-text" type="text" id="cbedu_result_std_guardian_phone" name="cbedu_result_std_guardian_phone" value="<?php echo esc_attr($guardian_phone); ?>" /></td>
@@ -214,6 +208,13 @@ class CBEDUCustomFields
                 <td><label for="cbedu_result_std_nid_number">NID Number:</label></td>
                 <td><input class="regular-text" type="text" id="cbedu_result_std_nid_number" name="cbedu_result_std_nid_number" value="<?php echo esc_attr($nid_number); ?>" /></td>
             </tr>
+            <tr>
+                <td><label for="cbedu_result_std_address">Address:</label></td>
+                <td>
+                    <textarea id="cbedu_result_std_address" name="cbedu_result_std_address" rows="4" cols="50"><?php echo esc_textarea(get_post_meta($post->ID, 'cbedu_result_std_address', true)); ?></textarea>
+                </td>
+            </tr>
+
         </table>
     <?php
     }
@@ -277,12 +278,7 @@ class CBEDUCustomFields
         // Update Blood Group
         if (isset($_POST['cbedu_result_std_blood_group'])) {
             update_post_meta($post_id, 'cbedu_result_std_blood_group', sanitize_text_field($_POST['cbedu_result_std_blood_group']));
-        }        
-
-        // Update Address
-        if (isset($_POST['cbedu_result_std_address'])) {
-            update_post_meta($post_id, 'cbedu_result_std_address', sanitize_text_field($_POST['cbedu_result_std_address']));
-        }
+        }     
 
         // Update Guardian Phone Number
         if (isset($_POST['cbedu_result_std_guardian_phone'])) {
@@ -318,6 +314,11 @@ class CBEDUCustomFields
         if (isset($_POST['cbedu_result_std_nid_number'])) {
             update_post_meta($post_id, 'cbedu_result_std_nid_number', sanitize_text_field($_POST['cbedu_result_std_nid_number']));
         }
+
+        // Update Address
+        if (isset($_POST['cbedu_result_std_address'])) {
+            update_post_meta($post_id, 'cbedu_result_std_address', sanitize_textarea_field($_POST['cbedu_result_std_address']));
+        }   
     }
 
     // New methods for subject fields
