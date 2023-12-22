@@ -252,45 +252,51 @@ class CBEDUResultPublishing
      *
      */
     public function cbedu_handle_form_submission() {
-        
+    
         // Check nonce for security
         check_ajax_referer('cbedu_ajax_search_result_nonce', 'nonce');
-
-        // Retrieve and sanitize the registration number
-        $registration_number = isset($_POST['registration_number']) ? sanitize_text_field($_POST['registration_number']) : '';
-        // Retrieve and sanitize roll number
-        $roll_number = isset($_POST['roll']) ? sanitize_text_field($_POST['roll']) : '';
-        // Check if the examination term is set and sanitize it
-        $cbedu_examination = isset($_POST['examination']) ? sanitize_text_field($_POST['examination']) : '';
-        // Check if the year is set and sanitize it
-        $cbedu_year = isset($_POST['year']) ? sanitize_text_field($_POST['year']) : '';
-        $cbedu_board = isset($_POST['board']) ? sanitize_text_field($_POST['board']) : '';
-        $cbedu_department_group = isset($_POST['department_group']) ? sanitize_text_field($_POST['department_group']) : '';
-
+    
+        // Server-side validation for required fields
+        $required_fields = array('registration_number', 'roll', 'examination', 'year', 'board', 'department_group');
+        foreach ($required_fields as $field) {
+            if (empty($_POST[$field])) {
+                echo '<p>Error: Field "' . esc_html($field) . '" is required.</p>';
+                wp_die();
+            }
+        }
+    
+        // Sanitize and assign input values
+        $registration_number = sanitize_text_field($_POST['registration_number']);
+        $roll_number = sanitize_text_field($_POST['roll']);
+        $cbedu_examination = sanitize_text_field($_POST['examination']);
+        $cbedu_year = sanitize_text_field($_POST['year']);
+        $cbedu_board = sanitize_text_field($_POST['board']);
+        $cbedu_department_group = sanitize_text_field($_POST['department_group']);
+    
         // Prepare the query arguments
         $args = array(
             'post_type' => 'cbedu_results',
-            'posts_per_page' => -1, // Retrieve all posts
+            'posts_per_page' => -1,
             'tax_query' => array(
                 array(
                     'taxonomy' => 'cbedu_examinations',
-                    'field'    => 'slug',
-                    'terms'    => $cbedu_examination,
-                ), 
+                    'field' => 'slug',
+                    'terms' => $cbedu_examination,
+                ),
                 array(
                     'taxonomy' => 'cbedu_session_years',
-                    'field'    => 'slug',
-                    'terms'    => $cbedu_year,
-                ),           
+                    'field' => 'slug',
+                    'terms' => $cbedu_year,
+                ),
                 array(
                     'taxonomy' => 'cbedu_boards',
-                    'field'    => 'slug',
-                    'terms'    => $cbedu_board,
-                ),            
+                    'field' => 'slug',
+                    'terms' => $cbedu_board,
+                ),
                 array(
                     'taxonomy' => 'cbedu_department_group',
-                    'field'    => 'slug',
-                    'terms'    => $cbedu_department_group,
+                    'field' => 'slug',
+                    'terms' => $cbedu_department_group,
                 ),
             ),
             'meta_query' => array(
@@ -306,17 +312,14 @@ class CBEDUResultPublishing
                 ),
             ),
         );
-
-        // Execute the query for cbedu_results
+    
+        // Execute the query
         $query = new WP_Query($args);
-
-        // Check if there are posts
+    
+        // Output the results
         if ($query->have_posts()) {
-            // Loop through the posts
             while ($query->have_posts()) {
                 $query->the_post();
-                
-                // Output each post, for example, the title and content
                 echo '<div class="cbedu-result">';            
                 echo '<h3>' . get_the_title() . '</h3>';
                 echo '<div>' . get_the_content() . '</div>';
@@ -325,14 +328,14 @@ class CBEDUResultPublishing
         } else {
             echo '<p>No results found for the selected examination.</p>';
         }
-
+    
         // Reset post data
         wp_reset_postdata();
-
-        // Required to terminate immediately and return a proper response
+    
+        // Terminate the script and return a proper response
         wp_die();
-
-    }   
+    }
+    
     
 }
 
