@@ -73,8 +73,7 @@ class CBEDUCustomFields
         wp_nonce_field('cbedu_save_student_nonce_action', 'cbedu_save_student_nonce');
 
 
-        $id_number = get_post_meta($post->ID, 'cbedu_result_std_id', true);
-        $roll = get_post_meta($post->ID, 'cbedu_result_std_roll', true);
+        $id_number = get_post_meta($post->ID, 'cbedu_result_std_id', true);        
         $std_registration_number = get_post_meta($post->ID, 'cbedu_result_std_registration_number', true);
         $father_name = get_post_meta($post->ID, 'cbedu_result_std_father_name', true);
         $mother_name = get_post_meta($post->ID, 'cbedu_result_std_mother_name', true);
@@ -103,14 +102,6 @@ class CBEDUCustomFields
                 </td>
                 <td>
                     <input class="regular-text" style="padding: 7px 10px;" type="text" id="cbedu_result_std_id" name="cbedu_result_std_id" value="<?php echo esc_attr($id_number); ?>" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="cbedu_result_std_roll">Roll:</label>
-                </td>
-                <td>
-                    <input class="regular-text" style="padding: 7px 10px;" type="text" id="cbedu_result_std_roll" name="cbedu_result_std_roll" value="<?php echo esc_attr($roll); ?>" />
                 </td>
             </tr>
             <tr>
@@ -211,7 +202,7 @@ class CBEDUCustomFields
             <tr>
                 <td><label for="cbedu_result_std_address">Address:</label></td>
                 <td>
-                    <textarea id="cbedu_result_std_address" name="cbedu_result_std_address" rows="4" cols="50"><?php echo esc_textarea(get_post_meta($post->ID, 'cbedu_result_std_address', true)); ?></textarea>
+                    <textarea id="cbedu_result_std_address" name="cbedu_result_std_address" rows="4" cols="50"><?php echo esc_textarea($address); ?></textarea>
                 </td>
             </tr>
 
@@ -234,11 +225,6 @@ class CBEDUCustomFields
         // Update ID number
         if (isset($_POST['cbedu_result_std_id'])) {
             update_post_meta($post_id, 'cbedu_result_std_id', sanitize_text_field($_POST['cbedu_result_std_id']));
-        }
-
-        // Update roll
-        if (isset($_POST['cbedu_result_std_roll'])) {
-            update_post_meta($post_id, 'cbedu_result_std_roll', sanitize_text_field($_POST['cbedu_result_std_roll']));
         }
 
         // Update Registration Number
@@ -441,7 +427,7 @@ class CBEDUCustomFields
         $nonce = wp_create_nonce('cbedu_register_number_nonce');
         // Get current value of the selected registration number
         $current_reg_number = get_post_meta($post->ID, 'cbedu_result_std_registration_number', true);
-        // Fetch student's name based on the current registration number
+        $roll = get_post_meta($post->ID, 'cbedu_result_std_roll', true);
         // Fetch student's details based on the current registration number
         $student_details = $this->get_student_details_by_registration_number($current_reg_number);
         $student_name = $student_details['studentName'];
@@ -457,6 +443,14 @@ class CBEDUCustomFields
             <?php
             $this->render_registration_number_input($post);
             ?>
+            <tr>
+                <td>
+                    <label for="cbedu_result_std_roll">Roll:</label>
+                </td>
+                <td>
+                    <input class="regular-text" style="padding: 7px 10px;" type="text" id="cbedu_result_std_roll" name="cbedu_result_std_roll" value="<?php echo esc_attr($roll); ?>" />
+                </td>
+            </tr>
             <tr>
                 <td><label for="cbedu_result_std_name">Student Name:</label></td>
                 <td><input type="text" style="padding: 7px 10px;width: 100%;" id="cbedu_result_std_name" name="cbedu_result_std_name" value="<?php echo esc_attr($student_name) ?>" readonly /></td>
@@ -536,6 +530,11 @@ class CBEDUCustomFields
     {
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
             return;
+        }
+
+        // Update Roll
+        if (isset($_POST['cbedu_result_std_roll'])) {
+            update_post_meta($post_id, 'cbedu_result_std_roll', sanitize_text_field($_POST['cbedu_result_std_roll']));
         }
 
         // Update Student Type

@@ -258,6 +258,8 @@ class CBEDUResultPublishing
 
         // Retrieve and sanitize the registration number
         $registration_number = isset($_POST['registration_number']) ? sanitize_text_field($_POST['registration_number']) : '';
+        // Retrieve and sanitize roll number
+        $roll_number = isset($_POST['roll']) ? sanitize_text_field($_POST['roll']) : '';
         // Check if the examination term is set and sanitize it
         $cbedu_examination = isset($_POST['examination']) ? sanitize_text_field($_POST['examination']) : '';
         // Check if the year is set and sanitize it
@@ -296,11 +298,16 @@ class CBEDUResultPublishing
                     'key' => 'cbedu_result_std_registration_number',
                     'value' => $registration_number,
                     'compare' => '='
-                )
+                ), 
+                array(
+                    'key' => 'cbedu_result_std_roll',
+                    'value' => $roll_number,
+                    'compare' => '='
+                ),
             ),
         );
 
-        // Execute the query
+        // Execute the query for cbedu_results
         $query = new WP_Query($args);
 
         // Check if there are posts
@@ -325,9 +332,7 @@ class CBEDUResultPublishing
         // Required to terminate immediately and return a proper response
         wp_die();
 
-
-    }
-    
+    }   
     
 }
 

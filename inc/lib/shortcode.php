@@ -99,7 +99,7 @@ class CBEDUResultsShortcode
                         ?>
                     </select>
                 </div>
-  
+
                 <!-- Department/Group Dropdown -->
                 <div class="cbedu-results-search-form-single-element">
                     <label for="department_group">Department/Group:</label>
@@ -114,18 +114,17 @@ class CBEDUResultsShortcode
                     </select>
                 </div>
 
-            <!-- Registration Number Input -->
-            <div class="cbedu-results-search-form-single-element">
-                <label for="registration_number">Registration Number:</label>
-                <input type="text" name="registration_number" id="registration_number" placeholder="<?php echo esc_attr($placeholder); ?>" required>
-            </div>
+                <!-- Registration Number Input -->
+                <div class="cbedu-results-search-form-single-element">
+                    <label for="registration_number">Registration Number:</label>
+                    <input type="text" name="registration_number" id="registration_number" placeholder="<?php echo esc_attr($placeholder); ?>" required>
+                </div>
 
-            <!-- Roll Input -->
-            <div class="cbedu-results-search-form-single-element">
-                <label for="roll">Roll:</label>
-                <input type="text" name="roll" id="roll" placeholder="Enter Roll" required>
-            </div>
-
+                <!-- Roll Input -->
+                <div class="cbedu-results-search-form-single-element">
+                    <label for="roll">Roll:</label>
+                    <input type="text" name="roll" id="roll" placeholder="Enter Roll" required>
+                </div>
 
 
                 <!-- Submit Button -->
@@ -137,10 +136,10 @@ class CBEDUResultsShortcode
             <!-- CBEDU Results Display -->
             <div id="cbedu-results-display"></div>
         </div>
-<?php 
-  
+<?php
 
-return ob_get_clean();
+
+        return ob_get_clean();
     }
 
     /**
