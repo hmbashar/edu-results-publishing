@@ -56,83 +56,102 @@ class CBEDUResultsShortcode
         extract($attributes); // Extract the attributes into variables
         ob_start(); ?>
         <div class="cbedu-results-search-form-area">
-            <form action="<?php echo esc_url(get_permalink()); ?>" method="post" id="cbedu-results-form">
+            <form action="javascript:void(0)" method="post" id="cbedu-results-form">
                 <!-- Examination Dropdown -->
-                <div class="cbedu-results-search-form-single-element">
-                    <label for="examination">Examination:</label>
-                    <select name="examination" id="examination" required>
-                        <option value="">Select Examination</option>
-                        <?php
-                        $examinations = get_terms('cbedu_examinations', array('hide_empty' => false));
-                        foreach ($examinations as $examination) {
-                            echo '<option value="' . esc_attr($examination->slug) . '">' . esc_html($examination->name) . '</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
+                <div class="cbedu-results-search-form-single-element-area">
+                    <div class="cbedu-results-search-form-single-element">
+                        <label for="examination">Examination:</label>
+                        <select name="examination" id="examination">
+                            <option value="">Select Examination</option>
+                            <?php
+                            $examinations = get_terms('cbedu_examinations', array('hide_empty' => false));
+                            foreach ($examinations as $examination) {
+                                echo '<option value="' . esc_attr($examination->slug) . '">' . esc_html($examination->name) . '</option>';
+                            }
+                            ?>
+                        </select>                    
+                    </div>
+                    <div class="cbedu-error-message" id="cbedu-examination-error"></div>
+                </div><!--/ Examination Dropdown -->
 
 
                 <!-- Year Dropdown -->
-                <div class="cbedu-results-search-form-single-element">
-                    <label for="year">Year:</label>
-                    <select name="year" id="year" required>
-                        <option value="">Select Year</option>
-                        <?php
-                        $years = get_terms('cbedu_session_years', array('hide_empty' => false));
-                        foreach ($years as $year) {
-                            echo '<option value="' . esc_attr($year->slug) . '">' . esc_html($year->name) . '</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
+                <div class="cbedu-results-search-form-single-element-area">
+                    <div class="cbedu-results-search-form-single-element">
+                        <label for="year">Year:</label>
+                        <select name="year" id="year">
+                            <option value="">Select Year</option>
+                            <?php
+                            $years = get_terms('cbedu_session_years', array('hide_empty' => false));
+                            foreach ($years as $year) {
+                                echo '<option value="' . esc_attr($year->slug) . '">' . esc_html($year->name) . '</option>';
+                            }
+                            ?>
+                        </select>                    
+                    </div>
+                    <div class="cbedu-error-message" id="cbedu-year-error"></div>
+                </div><!--/ Year Dropdown -->
 
                 <!-- Board Dropdown -->
-                <div class="cbedu-results-search-form-single-element">
-                    <label for="board">Board:</label>
-                    <select name="board" id="board" required>
-                        <option value="">Select Board</option>
-                        <?php
-                        $boards = get_terms('cbedu_boards', array('hide_empty' => false));
-                        foreach ($boards as $board) {
-                            echo '<option value="' . esc_attr($board->slug) . '">' . esc_html($board->name) . '</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
+                <div class="cbedu-results-search-form-single-element-area">
+                    <div class="cbedu-results-search-form-single-element">
+                        <label for="board">Board:</label>
+                        <select name="board" id="board">
+                            <option value="">Select Board</option>
+                            <?php
+                            $boards = get_terms('cbedu_boards', array('hide_empty' => false));
+                            foreach ($boards as $board) {
+                                echo '<option value="' . esc_attr($board->slug) . '">' . esc_html($board->name) . '</option>';
+                            }
+                            ?>
+                        </select>                    
+                    </div>
+                    <div class="cbedu-error-message" id="cbedu-board-error"></div>
+                </div><!--/ Board Dropdown -->
 
                 <!-- Department/Group Dropdown -->
-                <div class="cbedu-results-search-form-single-element">
-                    <label for="department_group">Department/Group:</label>
-                    <select name="department_group" id="department_group" required>
-                        <option value="">Select Department/Group</option>
-                        <?php
-                        $groups = get_terms('cbedu_department_group', array('hide_empty' => false));
-                        foreach ($groups as $group) {
-                            echo '<option value="' . esc_attr($group->slug) . '">' . esc_html($group->name) . '</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
+                <div class="cbedu-results-search-form-single-element-area">
+                    <div class="cbedu-results-search-form-single-element">
+                        <label for="department_group">Department/Group:</label>
+                        <select name="department_group" id="department_group">
+                            <option value="">Select Department/Group</option>
+                            <?php
+                            $groups = get_terms('cbedu_department_group', array('hide_empty' => false));
+                            foreach ($groups as $group) {
+                                echo '<option value="' . esc_attr($group->slug) . '">' . esc_html($group->name) . '</option>';
+                            }
+                            ?>
+                        </select>                    
+                    </div>
+                    <div class="cbedu-error-message" id="cbedu-department-group-error"></div>
+                </div><!--/ Department/Group Dropdown -->
 
                 <!-- Registration Number Input -->
-                <div class="cbedu-results-search-form-single-element">
-                    <label for="registration_number">Registration Number:</label>
-                    <input type="text" name="registration_number" id="registration_number" placeholder="<?php echo esc_attr($placeholder); ?>" required>
-                </div>
+                <div class="cbedu-results-search-form-single-element-area">
+                    <div class="cbedu-results-search-form-single-element">
+                        <label for="registration_number">Registration Number:</label>
+                        <input type="text" name="registration_number" id="registration_number" placeholder="<?php echo esc_attr($placeholder); ?>">                    
+                    </div>
+                    <div class="cbedu-error-message" id="cbedu-registration-number-error"></div>
+                </div><!--/ Registration Number Input -->
 
                 <!-- Roll Input -->
-                <div class="cbedu-results-search-form-single-element">
-                    <label for="roll">Roll:</label>
-                    <input type="text" name="roll" id="roll" placeholder="Enter Roll" required>
-                </div>
+                <div class="cbedu-results-search-form-single-element-area">
+                    <div class="cbedu-results-search-form-single-element">
+                        <label for="roll">Roll:</label>
+                        <input type="text" name="roll" id="roll" placeholder="Enter Roll">                    
+                    </div>
+                    <div class="cbedu-error-message" id="cbedu-roll-error"></div>
+                </div><!--/ Roll Input -->
 
-
+                
                 <!-- Submit Button -->
                 <div class="cbedu-results-search-form-single-element cbedu-results-search-form-submit">
                     <input type="submit" value="<?php echo esc_attr($button_text); ?>">
                 </div>
-            </form>
-
+                
+            </form>       
+           
             <!-- CBEDU Results Display -->
             <div id="cbedu-results-display"></div>
         </div>

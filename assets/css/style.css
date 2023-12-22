@@ -102,6 +102,10 @@ td {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     gap: 10px;    
 }
+.cbedu-results-search-form-single-element-area {
+    display: flex;
+    flex-direction: column;
+}
 .cbedu-results-search-form-single-element {
     display: flex;
     gap: 20px;
@@ -114,4 +118,10 @@ td {
 .cbedu-results-search-form-single-element.cbedu-results-search-form-submit {
     display: flex;
     justify-content: center;
+}
+.cbedu-error-message {
+    color: red;
+    margin-top: 5px;
+    font-size: 0.9em;
+    align-self: center;
 }

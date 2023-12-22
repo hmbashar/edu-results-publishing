@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
-    var debounceTimer;
+    let debounceTimer;
     $('#cbedu_result_std_registration_number').on('keyup', function() {
-        var registrationNumber = $(this).val();
+        let registrationNumber = $(this).val();
 
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(function() {
