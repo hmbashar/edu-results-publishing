@@ -72,6 +72,55 @@ class CBEDUResultsShortcode
                 </div>
 
 
+                <!-- Year Dropdown -->
+                <div class="cbedu-results-search-form-single-element">
+                    <label for="year">Year:</label>
+                    <select name="year" id="year" required>
+                        <option value="">Select Year</option>
+                        <?php
+                        $years = get_terms('cbedu_session_years', array('hide_empty' => false));
+                        foreach ($years as $year) {
+                            echo '<option value="' . esc_attr($year->slug) . '">' . esc_html($year->name) . '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+
+                <!-- Board Dropdown -->
+                <div class="cbedu-results-search-form-single-element">
+                    <label for="board">Board:</label>
+                    <select name="board" id="board" required>
+                        <option value="">Select Board</option>
+                        <?php
+                        $boards = get_terms('cbedu_boards', array('hide_empty' => false));
+                        foreach ($boards as $board) {
+                            echo '<option value="' . esc_attr($board->slug) . '">' . esc_html($board->name) . '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+  
+                <!-- Department/Group Dropdown -->
+                <div class="cbedu-results-search-form-single-element">
+                    <label for="department_group">Department/Group:</label>
+                    <select name="department_group" id="department_group" required>
+                        <option value="">Select Department/Group</option>
+                        <?php
+                        $groups = get_terms('cbedu_department_group', array('hide_empty' => false));
+                        foreach ($groups as $group) {
+                            echo '<option value="' . esc_attr($group->slug) . '">' . esc_html($group->name) . '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+
+            <!-- Registration Number Input -->
+            <div class="cbedu-results-search-form-single-element">
+                <label for="registration_number">Registration Number:</label>
+                <input type="text" name="registration_number" id="registration_number" placeholder="<?php echo esc_attr($placeholder); ?>">
+            </div>
+
+
                 <!-- Submit Button -->
                 <div class="cbedu-results-search-form-single-element cbedu-results-search-form-submit">
                     <input type="submit" value="<?php echo esc_attr($button_text); ?>">
