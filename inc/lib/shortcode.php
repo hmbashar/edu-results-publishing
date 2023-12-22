@@ -61,7 +61,7 @@ class CBEDUResultsShortcode
                 <div class="cbedu-results-search-form-single-element-area">
                     <div class="cbedu-results-search-form-single-element">
                         <label for="examination">Examination:</label>
-                        <select name="examination" id="examination">
+                        <select name="examination" id="examination" required>
                             <option value="">Select Examination</option>
                             <?php
                             $examinations = get_terms('cbedu_examinations', array('hide_empty' => false));
@@ -79,7 +79,7 @@ class CBEDUResultsShortcode
                 <div class="cbedu-results-search-form-single-element-area">
                     <div class="cbedu-results-search-form-single-element">
                         <label for="year">Year:</label>
-                        <select name="year" id="year">
+                        <select name="year" id="year" required>
                             <option value="">Select Year</option>
                             <?php
                             $years = get_terms('cbedu_session_years', array('hide_empty' => false));
@@ -96,7 +96,7 @@ class CBEDUResultsShortcode
                 <div class="cbedu-results-search-form-single-element-area">
                     <div class="cbedu-results-search-form-single-element">
                         <label for="board">Board:</label>
-                        <select name="board" id="board">
+                        <select name="board" id="board" required>
                             <option value="">Select Board</option>
                             <?php
                             $boards = get_terms('cbedu_boards', array('hide_empty' => false));
@@ -113,7 +113,7 @@ class CBEDUResultsShortcode
                 <div class="cbedu-results-search-form-single-element-area">
                     <div class="cbedu-results-search-form-single-element">
                         <label for="department_group">Department/Group:</label>
-                        <select name="department_group" id="department_group">
+                        <select name="department_group" id="department_group" required>
                             <option value="">Select Department/Group</option>
                             <?php
                             $groups = get_terms('cbedu_department_group', array('hide_empty' => false));
@@ -130,7 +130,7 @@ class CBEDUResultsShortcode
                 <div class="cbedu-results-search-form-single-element-area">
                     <div class="cbedu-results-search-form-single-element">
                         <label for="registration_number">Registration Number:</label>
-                        <input type="text" name="registration_number" id="registration_number" placeholder="<?php echo esc_attr($placeholder); ?>">                    
+                        <input type="text" name="registration_number" id="registration_number" placeholder="<?php echo esc_attr($placeholder); ?>" required>                    
                     </div>
                     <div class="cbedu-error-message" id="cbedu-registration-number-error"></div>
                 </div><!--/ Registration Number Input -->
@@ -139,7 +139,7 @@ class CBEDUResultsShortcode
                 <div class="cbedu-results-search-form-single-element-area">
                     <div class="cbedu-results-search-form-single-element">
                         <label for="roll">Roll:</label>
-                        <input type="text" name="roll" id="roll" placeholder="Enter Roll">                    
+                        <input type="text" name="roll" id="roll" placeholder="Enter Roll" required>                    
                     </div>
                     <div class="cbedu-error-message" id="cbedu-roll-error"></div>
                 </div><!--/ Roll Input -->
