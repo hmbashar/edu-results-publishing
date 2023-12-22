@@ -56,6 +56,7 @@ class CBEDUResultPublishing
         $this->initialize();
 
         $this->register_ajax_handlers();
+
     }
 
     public function getTextDomain()
@@ -157,6 +158,13 @@ class CBEDUResultPublishing
     public function cbedu_results_assets_enqueue()
     {
         wp_enqueue_style('cbedu-results-style', plugins_url('/assets/css/style.css', __FILE__));
+        
+        //for ajax search
+        wp_enqueue_script('cbedu-ajax-search-result', plugins_url('/assets/js/ajax-search-result.js', __FILE__), array('jquery'), '1.0.0', true);
+        wp_localize_script('cbedu-ajax-search-result', 'cbedu_ajax_results_object', array(
+            'ajaxurl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('cbedu_ajax_search_result_nonce') // Create a nonce for security
+        ));
     }
 
     public function cbedu_custom_post_publish_message($messages)
@@ -191,6 +199,9 @@ class CBEDUResultPublishing
     {
         add_action('wp_ajax_get_student_details_by_registration', array($this, 'get_student_details_by_registration_callback'));
         add_action('wp_ajax_nopriv_get_student_details_by_registration', array($this, 'get_student_details_by_registration_callback'));
+
+        add_action('wp_ajax_cbedu_handle_form_submission', array($this, 'cbedu_handle_form_submission')); // ajax search result
+        add_action('wp_ajax_nopriv_cbedu_handle_form_submission', array($this, 'cbedu_handle_form_submission')); //ajax search result
     }
 
 
@@ -235,7 +246,54 @@ class CBEDUResultPublishing
         wp_die(); // This is required to terminate immediately and return a proper response
     }
 
-    
+    public function cbedu_handle_form_submission() {
+        check_ajax_referer('cbedu_ajax_search_result_nonce', 'nonce');
+
+    // Check if the examination term is set and sanitize it
+    $examination = isset($_POST['examination']) ? sanitize_text_field($_POST['examination']) : '';
+
+    // Prepare the query arguments
+    $args = array(
+        'post_type' => 'cbedu_results',
+        'posts_per_page' => -1, // Retrieve all posts
+        'tax_query' => array(
+            array(
+                'taxonomy' => 'cbedu_examinations',
+                'field'    => 'slug',
+                'terms'    => $examination
+            ),
+        ),
+    );
+  
+    // Execute the query
+    $query = new WP_Query($args);
+
+    // Check if there are posts
+    if ($query->have_posts()) {
+        // Loop through the posts
+        while ($query->have_posts()) {
+            $query->the_post();
+            
+            // Output each post, for example, the title and content
+            echo '<div class="cbedu-result">';            
+            echo '<h3>' . get_the_title() . '</h3>';
+            echo '<div>' . get_the_content() . '</div>';
+            echo '</div>';
+        }
+    } else {
+        echo '<p>No results found for the selected examination.</p>';
+    }
+
+    // Reset post data
+    wp_reset_postdata();
+
+    // Required to terminate immediately and return a proper response
+    wp_die();
+
+
+
+
+    }
     
     
 }
