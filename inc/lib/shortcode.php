@@ -21,7 +21,7 @@ class CBEDUResultsShortcode
      * @param string|null $content The content within the shortcode.
      * @return string The generated output of the shortcode.
      */
-    public function render_shortcode($atts, $content = null)
+    public function render_result_details_shortcode($atts, $content = null)
     {
         ob_start();
         ?>
@@ -37,6 +37,7 @@ class CBEDUResultsShortcode
         return ob_get_clean();
     }
 
+
     /**
      * Registers a shortcode for displaying educational results.
      *
@@ -48,6 +49,6 @@ class CBEDUResultsShortcode
 
     public function register_shortcode()
     {
-        add_shortcode('cbedu_results', array($this, 'render_shortcode'));
+        add_shortcode('cbedu_result_details', array($this, 'render_result_details_shortcode'));
     }
 }

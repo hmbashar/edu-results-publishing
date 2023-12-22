@@ -24,10 +24,10 @@ class CBEDUCustomFields
 
         $this->register_result_fields(); // Call the register_result_fields() method
 
-        add_action( 'admin_notices', array($this, 'cbedu_admin_notices'));
+        add_action('admin_notices', array($this, 'cbedu_admin_notices'));
 
         add_action('wp_ajax_add_search_registration_numbers', array($this, 'add_search_registration_numbers'));
-      //  add_action('wp_ajax_nopriv_add_search_registration_numbers', array($this, 'add_search_registration_numbers'));
+        //  add_action('wp_ajax_nopriv_add_search_registration_numbers', array($this, 'add_search_registration_numbers'));
     }
 
     /**
@@ -37,7 +37,7 @@ class CBEDUCustomFields
      */
     public function register_student_fields()
     {
-        add_action('add_meta_boxes', array($this, 'add_student_fields_meta_box'));  
+        add_action('add_meta_boxes', array($this, 'add_student_fields_meta_box'));
 
         add_action('save_post', array($this, 'save_student_fields'));
         add_action('save_post', array($this, 'cbedu_check_unique_registration_number'));
@@ -70,7 +70,7 @@ class CBEDUCustomFields
      */
     public function render_student_fields_meta_box($post)
     {
-        wp_nonce_field( 'cbedu_save_student_nonce_action', 'cbedu_save_student_nonce' );
+        wp_nonce_field('cbedu_save_student_nonce_action', 'cbedu_save_student_nonce');
 
         // Retrieve existing values for custom fields
         $id_number = get_post_meta($post->ID, 'cbedu_result_std_id', true);
@@ -79,6 +79,21 @@ class CBEDUCustomFields
         $father_name = get_post_meta($post->ID, 'cbedu_result_std_father_name', true);
         $mother_name = get_post_meta($post->ID, 'cbedu_result_std_mother_name', true);
         $dob = get_post_meta($post->ID, 'cbedu_result_std_dob', true);
+
+        $gender = get_post_meta($post->ID, 'cbedu_result_std_gender', true);
+        $phone = get_post_meta($post->ID, 'cbedu_result_std_phone', true);
+        $email = get_post_meta($post->ID, 'cbedu_result_std_email', true);
+        $blood_group = get_post_meta($post->ID, 'cbedu_result_std_blood_group', true);
+        $address = get_post_meta($post->ID, 'cbedu_result_std_address', true);
+        $guardian_phone = get_post_meta($post->ID, 'cbedu_result_std_guardian_phone', true);
+        $fathers_qualification = get_post_meta($post->ID, 'cbedu_result_std_fathers_qualification', true);
+        $fathers_occupation = get_post_meta($post->ID, 'cbedu_result_std_fathers_occupation', true);
+        $mothers_occupation = get_post_meta($post->ID, 'cbedu_result_std_mothers_occupation', true);
+        $mothers_qualification = get_post_meta($post->ID, 'cbedu_result_std_mothers_qualification', true);
+        $birth_registration_number = get_post_meta($post->ID, 'cbedu_result_std_birth_registration_number', true);
+        $nid_number = get_post_meta($post->ID, 'cbedu_result_std_nid_number', true);
+
+        // Output HTML inputs for each field
 
         // Output HTML inputs for each field
 ?>
@@ -131,6 +146,74 @@ class CBEDUCustomFields
                     <input class="regular-text" style="padding: 7px 10px;" type="date" id="cbedu_result_std_dob" name="cbedu_result_std_dob" value="<?php echo esc_attr($dob); ?>" />
                 </td>
             </tr>
+            <tr>
+                <td><label for="cbedu_result_std_gender">Gender:</label></td>
+                <td>
+                    <select id="cbedu_result_std_gender" name="cbedu_result_std_gender">
+                        <option value="Male" <?php selected($gender, 'Male'); ?>>Male</option>
+                        <option value="Female" <?php selected($gender, 'Female'); ?>>Female</option>
+                        <option value="Other" <?php selected($gender, 'Other'); ?>>Other</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td><label for="cbedu_result_std_phone">Phone Number:</label></td>
+                <td><input class="regular-text" type="text" id="cbedu_result_std_phone" name="cbedu_result_std_phone" value="<?php echo esc_attr($phone); ?>" /></td>
+            </tr>
+            <tr>
+                <td><label for="cbedu_result_std_email">Email Address:</label></td>
+                <td><input class="regular-text" type="email" id="cbedu_result_std_email" name="cbedu_result_std_email" value="<?php echo esc_attr($email); ?>" /></td>
+            </tr>
+            <tr>
+                <td><label for="cbedu_result_std_blood_group">Blood Group:</label></td>
+                <td>
+                    <select id="cbedu_result_std_blood_group" name="cbedu_result_std_blood_group">
+                        <option value="">Select Blood Group</option>
+                        <option value="A+" <?php selected($blood_group, 'A+'); ?>>A+</option>
+                        <option value="A-" <?php selected($blood_group, 'A-'); ?>>A-</option>
+                        <option value="B+" <?php selected($blood_group, 'B+'); ?>>B+</option>
+                        <option value="B-" <?php selected($blood_group, 'B-'); ?>>B-</option>
+                        <option value="AB+" <?php selected($blood_group, 'AB+'); ?>>AB+</option>
+                        <option value="AB-" <?php selected($blood_group, 'AB-'); ?>>AB-</option>
+                        <option value="O+" <?php selected($blood_group, 'O+'); ?>>O+</option>
+                        <option value="O-" <?php selected($blood_group, 'O-'); ?>>O-</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td><label for="cbedu_result_std_address">Address:</label></td>
+                <td><input class="regular-text" type="text" id="cbedu_result_std_address" name="cbedu_result_std_address" value="<?php echo esc_attr($address); ?>" /></td>
+            </tr>
+            <tr>
+                <td><label for="cbedu_result_std_guardian_phone">Guardian Phone Number:</label></td>
+                <td><input class="regular-text" type="text" id="cbedu_result_std_guardian_phone" name="cbedu_result_std_guardian_phone" value="<?php echo esc_attr($guardian_phone); ?>" /></td>
+            </tr>
+            <tr>
+                <td><label for="cbedu_result_std_fathers_qualification">Father's Qualification:</label></td>
+                <td><input class="regular-text" type="text" id="cbedu_result_std_fathers_qualification" name="cbedu_result_std_fathers_qualification" value="<?php echo esc_attr($fathers_qualification); ?>" /></td>
+            </tr>
+            <tr>
+                <td><label for="cbedu_result_std_fathers_occupation">Father's Occupation:</label></td>
+                <td><input class="regular-text" type="text" id="cbedu_result_std_fathers_occupation" name="cbedu_result_std_fathers_occupation" value="<?php echo esc_attr($fathers_occupation); ?>" /></td>
+            </tr>
+            <tr>
+                <td><label for="cbedu_result_std_mothers_occupation">Mother's Occupation:</label></td>
+                <td><input class="regular-text" type="text" id="cbedu_result_std_mothers_occupation" name="cbedu_result_std_mothers_occupation" value="<?php echo esc_attr($mothers_occupation); ?>" /></td>
+            </tr>
+            <tr>
+                <td><label for="cbedu_result_std_mothers_qualification">Mother's Qualification:</label></td>
+                <td><input class="regular-text" type="text" id="cbedu_result_std_mothers_qualification" name="cbedu_result_std_mothers_qualification" value="<?php echo esc_attr($mothers_qualification); ?>" /></td>
+            </tr>
+            <tr>
+                <td><label for="cbedu_result_std_birth_registration_number">Birth Registration Number:</label></td>
+                <td><input class="regular-text" type="text" id="cbedu_result_std_birth_registration_number" name="cbedu_result_std_birth_registration_number" value="<?php echo esc_attr($birth_registration_number); ?>" /></td>
+            </tr>
+            <tr>
+                <td><label for="cbedu_result_std_nid_number">NID Number:</label></td>
+                <td><input class="regular-text" type="text" id="cbedu_result_std_nid_number" name="cbedu_result_std_nid_number" value="<?php echo esc_attr($nid_number); ?>" /></td>
+            </tr>
         </table>
     <?php
     }
@@ -176,13 +259,72 @@ class CBEDUCustomFields
         if (isset($_POST['cbedu_result_std_dob'])) {
             update_post_meta($post_id, 'cbedu_result_std_dob', sanitize_text_field($_POST['cbedu_result_std_dob']));
         }
+        // Update Gender
+        if (isset($_POST['cbedu_result_std_gender'])) {
+            update_post_meta($post_id, 'cbedu_result_std_gender', sanitize_text_field($_POST['cbedu_result_std_gender']));
+        }
+
+        // Update Phone Number
+        if (isset($_POST['cbedu_result_std_phone'])) {
+            update_post_meta($post_id, 'cbedu_result_std_phone', sanitize_text_field($_POST['cbedu_result_std_phone']));
+        }
+
+        // Update Email Address
+        if (isset($_POST['cbedu_result_std_email'])) {
+            update_post_meta($post_id, 'cbedu_result_std_email', sanitize_email($_POST['cbedu_result_std_email']));
+        }
+
+        // Update Blood Group
+        if (isset($_POST['cbedu_result_std_blood_group'])) {
+            update_post_meta($post_id, 'cbedu_result_std_blood_group', sanitize_text_field($_POST['cbedu_result_std_blood_group']));
+        }        
+
+        // Update Address
+        if (isset($_POST['cbedu_result_std_address'])) {
+            update_post_meta($post_id, 'cbedu_result_std_address', sanitize_text_field($_POST['cbedu_result_std_address']));
+        }
+
+        // Update Guardian Phone Number
+        if (isset($_POST['cbedu_result_std_guardian_phone'])) {
+            update_post_meta($post_id, 'cbedu_result_std_guardian_phone', sanitize_text_field($_POST['cbedu_result_std_guardian_phone']));
+        }
+
+        // Update Father's Qualification
+        if (isset($_POST['cbedu_result_std_fathers_qualification'])) {
+            update_post_meta($post_id, 'cbedu_result_std_fathers_qualification', sanitize_text_field($_POST['cbedu_result_std_fathers_qualification']));
+        }
+
+        // Update Father's Occupation
+        if (isset($_POST['cbedu_result_std_fathers_occupation'])) {
+            update_post_meta($post_id, 'cbedu_result_std_fathers_occupation', sanitize_text_field($_POST['cbedu_result_std_fathers_occupation']));
+        }
+
+        // Update Mother's Occupation
+        if (isset($_POST['cbedu_result_std_mothers_occupation'])) {
+            update_post_meta($post_id, 'cbedu_result_std_mothers_occupation', sanitize_text_field($_POST['cbedu_result_std_mothers_occupation']));
+        }
+
+        // Update Mother's Qualification
+        if (isset($_POST['cbedu_result_std_mothers_qualification'])) {
+            update_post_meta($post_id, 'cbedu_result_std_mothers_qualification', sanitize_text_field($_POST['cbedu_result_std_mothers_qualification']));
+        }
+
+        // Update Birth Registration Number
+        if (isset($_POST['cbedu_result_std_birth_registration_number'])) {
+            update_post_meta($post_id, 'cbedu_result_std_birth_registration_number', sanitize_text_field($_POST['cbedu_result_std_birth_registration_number']));
+        }
+
+        // Update NID Number
+        if (isset($_POST['cbedu_result_std_nid_number'])) {
+            update_post_meta($post_id, 'cbedu_result_std_nid_number', sanitize_text_field($_POST['cbedu_result_std_nid_number']));
+        }
     }
 
     // New methods for subject fields
     public function register_subject_fields()
     {
         add_action('add_meta_boxes', array($this, 'add_subject_fields_meta_box'));
-        add_action('save_post', array($this, 'save_subject_fields'));       
+        add_action('save_post', array($this, 'save_subject_fields'));
     }
 
     /**
@@ -312,7 +454,7 @@ class CBEDUCustomFields
     ?>
         <table>
             <?php
-                $this->render_registration_number_input($post);  
+            $this->render_registration_number_input($post);
             ?>
             <tr>
                 <td><label for="cbedu_result_std_name">Student Name:</label></td>
@@ -321,7 +463,7 @@ class CBEDUCustomFields
             <tr>
                 <td><label for="cbedu_result_std_fathers_name">Father's Name:</label></td>
                 <td><input type="text" style="padding: 7px 10px;width: 100%;" id="cbedu_result_std_fathers_name" name="cbedu_result_std_fathers_name" value="<?php echo esc_attr($fathers_name); ?>" readonly /></td>
-            </tr>            
+            </tr>
             <tr>
                 <td><label for="cbedu_result_std_mothers_name">Mother's Name:</label></td>
                 <td><input type="text" style="padding: 7px 10px;width: 100%;" id="cbedu_result_std_mothers_name" name="cbedu_result_std_mothers_name" value="<?php echo esc_attr($mothers_name); ?>" readonly /></td>
@@ -377,12 +519,12 @@ class CBEDUCustomFields
     {
         // Get current value
         $current_value = get_post_meta($post->ID, 'cbedu_result_registration_number', true);
-    
+
         echo '<tr><td><label for="cbedu_result_registration_number">Registration Number:</label></td>';
         echo '<td><input style="padding: 7px 10px;width: 100%;" type="text" id="cbedu_result_registration_number" name="cbedu_result_registration_number" class="cbedu-registration-number-autocomplete" value="' . esc_attr($current_value) . '" placeholder="Start typing...">';
-        echo '</td></tr>';   
+        echo '</td></tr>';
     }
-    
+
 
     /**
      * Saves the result fields for a given post ID.
@@ -421,9 +563,6 @@ class CBEDUCustomFields
         if (isset($_POST['cbedu_result_registration_number'])) {
             update_post_meta($post_id, 'cbedu_result_registration_number', sanitize_text_field($_POST['cbedu_result_registration_number']));
         }
-
-
-
     }
 
 
@@ -434,145 +573,150 @@ class CBEDUCustomFields
      * @return array An array containing the student's name and father's name.
      */
     private function get_student_details_by_registration_number($registration_number)
-{
-    if (empty($registration_number)) {
+    {
+        if (empty($registration_number)) {
+            return array('studentName' => 'Not Found!', 'fathersName' => 'Not Found!', 'mothersName' => 'Not Found!');
+        }
+
+        $args = array(
+            'post_type' => 'cbedu_students',
+            'meta_key' => 'cbedu_result_std_registration_number',
+            'meta_value' => $registration_number,
+            'posts_per_page' => 1
+        );
+
+        $students = get_posts($args);
+        if (!empty($students)) {
+            $student_name = !empty($students[0]->post_title) ? $students[0]->post_title : 'Not Found!';
+            $father_name = get_post_meta($students[0]->ID, 'cbedu_result_std_father_name', true);
+            $father_name = !empty($father_name) ? $father_name : 'Not Found!';
+
+            // Fetch the mother's name
+            $mother_name = get_post_meta($students[0]->ID, 'cbedu_result_std_mother_name', true);
+            $mother_name = !empty($mother_name) ? $mother_name : 'Not Found!';
+
+            return array(
+                'studentName' => $student_name,
+                'fathersName' => $father_name,
+                'mothersName' => $mother_name // Added mother's name
+            );
+        }
+
         return array('studentName' => 'Not Found!', 'fathersName' => 'Not Found!', 'mothersName' => 'Not Found!');
     }
 
-    $args = array(
-        'post_type' => 'cbedu_students',
-        'meta_key' => 'cbedu_result_std_registration_number',
-        'meta_value' => $registration_number,
-        'posts_per_page' => 1
-    );
 
-    $students = get_posts($args);
-    if (!empty($students)) {
-        $student_name = !empty($students[0]->post_title) ? $students[0]->post_title : 'Not Found!';
-        $father_name = get_post_meta($students[0]->ID, 'cbedu_result_std_father_name', true);
-        $father_name = !empty($father_name) ? $father_name : 'Not Found!';
-        
-        // Fetch the mother's name
-        $mother_name = get_post_meta($students[0]->ID, 'cbedu_result_std_mother_name', true);
-        $mother_name = !empty($mother_name) ? $mother_name : 'Not Found!';
+    /**
+     * Updates the title of the 'cbedu_results' post based on the registration number.
+     *
+     * @param int $post_id The ID of the post being saved.
+     */
+    public function update_cbedu_results_title_on_save($post_id)
+    {
 
-        return array(
-            'studentName' => $student_name,
-            'fathersName' => $father_name,
-            'mothersName' => $mother_name // Added mother's name
-        );
+        // Check for autosave, permissions, and post type
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+        if (!current_user_can('edit_post', $post_id)) return;
+        if (get_post_type($post_id) !== 'cbedu_results') return;
+
+        // Get the registration number from the 'cbedu_results' post meta
+        $registration_number = get_post_meta($post_id, 'cbedu_result_registration_number', true);
+
+        // Find the 'cbedu_students' post with this registration number
+        $student_posts = get_posts(array(
+            'post_type' => 'cbedu_students',
+            'meta_key' => 'cbedu_result_std_registration_number', // Adjust if needed
+            'meta_value' => $registration_number,
+            'posts_per_page' => 1
+        ));
+
+
+        if (!empty($student_posts)) {
+            $student_post_title = $student_posts[0]->post_title;
+
+
+            // Check if the title is different from the current title of 'cbedu_results' post
+            if (get_the_title($post_id) !== $student_post_title) {
+                // Update the title of 'cbedu_results' post                
+                wp_update_post(array(
+                    'ID'         => $post_id,
+                    'post_title' => $student_post_title
+                ));
+            }
+        }
     }
 
-    return array('studentName' => 'Not Found!', 'fathersName' => 'Not Found!', 'mothersName' => 'Not Found!');
-}
-
-
-   /**
-    * Updates the title of the 'cbedu_results' post based on the registration number.
-    *
-    * @param int $post_id The ID of the post being saved.
-    */
-   public function update_cbedu_results_title_on_save( $post_id ) {
-
-       // Check for autosave, permissions, and post type
-       if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
-       if ( ! current_user_can( 'edit_post', $post_id ) ) return;
-       if ( get_post_type( $post_id ) !== 'cbedu_results' ) return;       
-       
-            // Get the registration number from the 'cbedu_results' post meta
-            $registration_number = get_post_meta($post_id, 'cbedu_result_registration_number', true);
-
-            // Find the 'cbedu_students' post with this registration number
-            $student_posts = get_posts(array(
-                'post_type' => 'cbedu_students',
-                'meta_key' => 'cbedu_result_std_registration_number', // Adjust if needed
-                'meta_value' => $registration_number,
-                'posts_per_page' => 1
-            ));
-
-
-            if (!empty($student_posts)) {
-                $student_post_title = $student_posts[0]->post_title;
-               
-                
-                // Check if the title is different from the current title of 'cbedu_results' post
-                if (get_the_title($post_id) !== $student_post_title) {
-                    // Update the title of 'cbedu_results' post                
-                    wp_update_post(array(
-                        'ID'         => $post_id,
-                        'post_title' => $student_post_title
-                    ));
-                }
-            }        
-    }
-
-   /**
-    * Checks if the registration number of a student is unique before saving the post.
-    *
-    * @param int $post_id The ID of the post being saved.
-    *
-    * @return void
-    */
-   public function cbedu_check_unique_registration_number( $post_id ) {
+    /**
+     * Checks if the registration number of a student is unique before saving the post.
+     *
+     * @param int $post_id The ID of the post being saved.
+     *
+     * @return void
+     */
+    public function cbedu_check_unique_registration_number($post_id)
+    {
         // Check for autosave
-        if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
-    
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+
         // Check the post type
-        if ( get_post_type( $post_id ) !== 'cbedu_students' ) return;
-            
+        if (get_post_type($post_id) !== 'cbedu_students') return;
+
         // Verify the nonce before proceeding.
-        if ( ! isset( $_POST['cbedu_save_student_nonce'] ) || 
-            ! wp_verify_nonce( $_POST['cbedu_save_student_nonce'], 'cbedu_save_student_nonce_action' ) ) {
+        if (
+            !isset($_POST['cbedu_save_student_nonce']) ||
+            !wp_verify_nonce($_POST['cbedu_save_student_nonce'], 'cbedu_save_student_nonce_action')
+        ) {
             return;
         }
-    
+
         // Get the registration number from the submitted form
-        if ( isset( $_POST['cbedu_result_std_registration_number'] ) ) {
-            $registration_number = sanitize_text_field( $_POST['cbedu_result_std_registration_number'] );
-    
+        if (isset($_POST['cbedu_result_std_registration_number'])) {
+            $registration_number = sanitize_text_field($_POST['cbedu_result_std_registration_number']);
+
             // Search for posts with the same registration number
             $query = new \WP_Query(array(
                 'post_type' => 'cbedu_students',
                 'meta_key' => 'cbedu_result_std_registration_number',
                 'meta_value' => $registration_number,
-                'post__not_in' => array( $post_id ), // Exclude the current post
+                'post__not_in' => array($post_id), // Exclude the current post
                 'posts_per_page' => 1
-            ) );
-    
-            if ( $query->found_posts > 0 ) {
-                 // Set a custom error flag in the post meta.
-                update_post_meta( $post_id, '_cbedu_registration_error', '1' );
-                
+            ));
+
+            if ($query->found_posts > 0) {
+                // Set a custom error flag in the post meta.
+                update_post_meta($post_id, '_cbedu_registration_error', '1');
+
                 // Unhook this function to prevent infinite loop
-                remove_action( 'save_post', array($this, 'cbedu_check_unique_registration_number') );
-    
+                remove_action('save_post', array($this, 'cbedu_check_unique_registration_number'));
+
                 // Update the post to revert the title change
-                wp_update_post( array(
+                wp_update_post(array(
                     'ID' => $post_id,
                     'post_status' => 'draft' // Optional: Change the post status
-                ) );
-    
+                ));
+
                 // Re-hook the function
-                add_action( 'save_post',array($this, 'cbedu_check_unique_registration_number'));
-    
+                add_action('save_post', array($this, 'cbedu_check_unique_registration_number'));
+
                 // Show error message
-                add_filter( 'redirect_post_location', array($this, 'cbedu_modify_redirect_location'), 10, 2 );
+                add_filter('redirect_post_location', array($this, 'cbedu_modify_redirect_location'), 10, 2);
             }
         }
     }
-    
-   /**
-    * Displays an error notice if the 'cbedu_registration_error' query parameter is set.
-    *
-    * @return void
-    */
-   public function cbedu_admin_notices() {
-        if ( ! isset( $_GET['cbedu_registration_error'] ) ) return;
-        ?>
+
+    /**
+     * Displays an error notice if the 'cbedu_registration_error' query parameter is set.
+     *
+     * @return void
+     */
+    public function cbedu_admin_notices()
+    {
+        if (!isset($_GET['cbedu_registration_error'])) return;
+    ?>
         <div class="notice notice-error">
-            <p><?php _e( 'Error: Registration number must be unique.', 'edu-results' ); ?></p>
+            <p><?php _e('Error: Registration number must be unique.', 'edu-results'); ?></p>
         </div>
-        <?php
+<?php
     }
 
     /**
@@ -582,26 +726,28 @@ class CBEDUCustomFields
      * @param int $post_id The ID of the post.
      * @return mixed The modified redirect location.
      */
-    public function cbedu_modify_redirect_location( $location, $post_id ) {
+    public function cbedu_modify_redirect_location($location, $post_id)
+    {
         // Check if our custom query var is set to show the error message.
-        if ( get_post_meta( $post_id, '_cbedu_registration_error', true ) ) {
+        if (get_post_meta($post_id, '_cbedu_registration_error', true)) {
             // Remove the default message query arg if your error is set.
-            $location = remove_query_arg( 'message', $location );
+            $location = remove_query_arg('message', $location);
             // Add your custom error message.
-            $location = add_query_arg( 'cbedu_registration_error', '1', $location );
+            $location = add_query_arg('cbedu_registration_error', '1', $location);
             // Delete the error meta to prevent the error from persisting on refresh.
-            delete_post_meta( $post_id, '_cbedu_registration_error' );
+            delete_post_meta($post_id, '_cbedu_registration_error');
         }
         return $location;
     }
 
-    
-    public function add_search_registration_numbers() {
+
+    public function add_search_registration_numbers()
+    {
         // Verify the nonce
         check_ajax_referer('cbedu_auto_complete_nonce', 'AutoNonce');
-    
+
         $term = sanitize_text_field($_POST['term']);
-    
+
         $args = array(
             'post_type' => 'cbedu_students',
             'posts_per_page' => -1,
@@ -613,10 +759,10 @@ class CBEDUCustomFields
                 )
             )
         );
-    
+
         $query = new \WP_Query($args);
         $results = array();
-    
+
         if ($query->have_posts()) {
             while ($query->have_posts()) {
                 $query->the_post();
@@ -624,12 +770,9 @@ class CBEDUCustomFields
                 $results[] = array('label' => get_the_title(), 'value' => $registration_number);
             }
         }
-    
+
         wp_reset_postdata();
         wp_send_json($results);
         wp_die();
     }
-    
-
-    
 }
