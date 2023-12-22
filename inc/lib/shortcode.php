@@ -151,7 +151,10 @@ class CBEDUResultsShortcode
                 </div>
                 
             </form>       
-           
+
+            <div id="cbedu-ajax-result-preloader" style="display: none;">
+                <div class="cbedu-ajax-preloader-ellipsis"><div></div><div></div><div></div><div></div></div>
+            </div>
             <!-- CBEDU Results Display -->
             <div id="cbedu-results-display"></div>
         </div>

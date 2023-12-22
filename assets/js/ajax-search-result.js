@@ -25,6 +25,7 @@ jQuery(document).ready(function($) {
 
         // Proceed with AJAX if all fields are valid
         if (isValid) {
+            $('#cbedu-ajax-result-preloader').show(); // Show the preloader
             let formData = $(this).serialize() + '&nonce=' + cbedu_ajax_results_object.nonce;
             $.ajax({
                 type: "POST",
@@ -32,6 +33,9 @@ jQuery(document).ready(function($) {
                 data: formData + '&action=cbedu_handle_form_submission',
                 success: function(response) {
                     $('#cbedu-results-display').html(response);
+                },
+                complete: function() {
+                    $('#cbedu-ajax-result-preloader').hide(); // Hide the preloader after the AJAX request is complete
                 }
             });
         }

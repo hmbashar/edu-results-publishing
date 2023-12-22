@@ -125,3 +125,59 @@ td {
     font-size: 0.9em;
     align-self: center;
 }
+
+.cbedu-ajax-preloader-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .cbedu-ajax-preloader-ellipsis div {
+    position: absolute;
+    top: 33px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #1f79ff;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+  .cbedu-ajax-preloader-ellipsis div:nth-child(1) {
+    left: 8px;
+    animation: cbedu-ellipsis1 0.6s infinite;
+  }
+  .cbedu-ajax-preloader-ellipsis div:nth-child(2) {
+    left: 8px;
+    animation: cbedu-ellipsis2 0.6s infinite;
+  }
+  .cbedu-ajax-preloader-ellipsis div:nth-child(3) {
+    left: 32px;
+    animation: cbedu-ellipsis2 0.6s infinite;
+  }
+  .cbedu-ajax-preloader-ellipsis div:nth-child(4) {
+    left: 56px;
+    animation: cbedu-ellipsis3 0.6s infinite;
+  }
+  @keyframes cbedu-ellipsis1 {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes cbedu-ellipsis3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+  @keyframes cbedu-ellipsis2 {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(24px, 0);
+    }
+  }  
