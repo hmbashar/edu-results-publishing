@@ -162,6 +162,9 @@ class CBEDUResultPublishing
             'ajaxurl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('cbedu_ajax_search_result_nonce') // Create a nonce for security
         ));
+
+        //script for print
+        wp_enqueue_script('cbedu-print-js', plugins_url('/assets/js/print.js', __FILE__), array('jquery'), '1.0.0', true);
     }
 
     public function cbedu_custom_post_publish_message($messages)
@@ -426,8 +429,10 @@ class CBEDUResultPublishing
                                         </tr>
                                     </table>
                                 </div><!--/ Student Information-->
-                            </div>                        
-
+                            </div>
+                            <div class="cbedu-print-button-container">
+                                <button onclick="cbeduPrintResult('cbedu-result-table')">Print</button>
+                            </div>                         
                         </div>
                         <?php
                     }
