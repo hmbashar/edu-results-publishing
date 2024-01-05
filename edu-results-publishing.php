@@ -51,12 +51,11 @@ class CBEDUResultPublishing
 
         // Register text domain for translation
         add_action('plugins_loaded', array($this, 'loadTextDomain'));
-     
+
         // Initialize the plugin
         $this->initialize();
 
         $this->register_ajax_handlers();
-
     }
 
     public function getTextDomain()
@@ -135,7 +134,7 @@ class CBEDUResultPublishing
         //for autocomplete jquery in results post type with registration number
         if ($hook_suffix === 'post-new.php' || $hook_suffix === 'post.php') {
             if (get_post_type($post) === 'cbedu_results') {
-                
+
                 wp_enqueue_style('cbedu-autocomplete-ui-css', plugin_dir_url(__FILE__) . 'assets/css/autocomplete.css');
                 wp_enqueue_script('cbedu-autocomplete-js', plugin_dir_url(__FILE__) . 'assets/js/autocomplete.js', array('jquery', 'jquery-ui-autocomplete'), '1.0.0', true);
                 wp_localize_script('cbedu-autocomplete-js', 'cbedu_ajax_autocomplete_object', array(
@@ -145,8 +144,6 @@ class CBEDUResultPublishing
                 ));
             }
         }
-
-
     }
 
 
@@ -158,7 +155,7 @@ class CBEDUResultPublishing
     public function cbedu_results_assets_enqueue()
     {
         wp_enqueue_style('cbedu-results-style', plugins_url('/assets/css/style.css', __FILE__));
-        
+
         //for ajax search
         wp_enqueue_script('cbedu-ajax-search-result', plugins_url('/assets/js/ajax-search-result.js', __FILE__), array('jquery'), '1.0.0', true);
         wp_localize_script('cbedu-ajax-search-result', 'cbedu_ajax_results_object', array(
@@ -209,30 +206,30 @@ class CBEDUResultPublishing
     {
         // Check nonce for security
         check_ajax_referer('cbedu_register_number_nonce', 'security');
-    
+
         $registration_number = sanitize_text_field($_POST['registration_number']);
-        
+
         $args = array(
             'post_type' => 'cbedu_students',
             'meta_key' => 'cbedu_result_std_registration_number',
             'meta_value' => $registration_number,
             'posts_per_page' => 1
-        );        
-    
+        );
+
         $students = get_posts($args);
-    
+
         if (!empty($students)) {
             // Get the student's name, check if it's not empty
             $student_name = !empty($students[0]->post_title) ? $students[0]->post_title : 'Not Found!';
-    
+
             // Get the father's name, check if it's not empty
             $father_name = get_post_meta($students[0]->ID, 'cbedu_result_std_father_name', true);
             $father_name = !empty($father_name) ? $father_name : 'Not Found!';
-    
+
             // Get the father's name, check if it's not empty
             $mother_name = get_post_meta($students[0]->ID, 'cbedu_result_std_mother_name', true);
             $mother_name = !empty($mother_name) ? $mother_name : 'Not Found!';
-    
+
             // Output both names as JSON
             wp_send_json([
                 'studentName' => esc_html($student_name),
@@ -242,7 +239,7 @@ class CBEDUResultPublishing
         } else {
             wp_send_json(['studentName' => 'Not Found!', 'fathersName' => 'Not Found!', 'mothersName' => 'Not Found!']);
         }
-    
+
         wp_die(); // This is required to terminate immediately and return a proper response
     }
 
@@ -251,8 +248,7 @@ class CBEDUResultPublishing
      * result form ajax callback function
      *
      */
-    public function cbedu_handle_form_submission() {
-    
+    function cbedu_handle_form_submission() {
         // Check nonce for security
         check_ajax_referer('cbedu_ajax_search_result_nonce', 'nonce');
     
@@ -273,7 +269,7 @@ class CBEDUResultPublishing
         $cbedu_board = sanitize_text_field($_POST['board']);
         $cbedu_department_group = sanitize_text_field($_POST['department_group']);
     
-        // Prepare the query arguments
+        // Prepare the query arguments for 'cbedu_results'
         $args = array(
             'post_type' => 'cbedu_results',
             'posts_per_page' => -1,
@@ -304,7 +300,7 @@ class CBEDUResultPublishing
                     'key' => 'cbedu_result_std_registration_number',
                     'value' => $registration_number,
                     'compare' => '='
-                ), 
+                ),
                 array(
                     'key' => 'cbedu_result_std_roll',
                     'value' => $roll_number,
@@ -313,29 +309,141 @@ class CBEDUResultPublishing
             ),
         );
     
-        // Execute the query
+        // Execute the query for 'cbedu_results'
         $query = new WP_Query($args);
     
         // Output the results
         if ($query->have_posts()) {
             while ($query->have_posts()) {
                 $query->the_post();
-                echo '<div class="cbedu-result">';            
-                echo '<h3>' . get_the_title() . '</h3>';
-                echo '<div>' . get_the_content() . '</div>';
-                echo '</div>';
+
+                $collageName = get_option('cbedu_results_collage_name');
+
+                $rs_std_roll = get_post_meta(get_the_ID(), 'cbedu_result_std_roll', true);
+                $rs_std_reg_number = get_post_meta(get_the_ID(), 'cbedu_result_std_registration_number', true);
+                $rs_std_type = get_post_meta(get_the_ID(), 'cbedu_result_std_student_type', true);
+                $rs_std_result_status = get_post_meta(get_the_ID(), 'cbedu_result_std_result_status', true);
+                $rs_std_gpa = get_post_meta(get_the_ID(), 'cbedu_result_std_gpa', true);
+    
+
+                 // Fetch taxonomy term names
+                $session_year_terms = wp_get_post_terms(get_the_ID(), 'cbedu_session_years', array('fields' => 'names'));
+                $examination_terms = wp_get_post_terms(get_the_ID(), 'cbedu_examinations', array('fields' => 'names'));
+                $board_terms = wp_get_post_terms(get_the_ID(), 'cbedu_boards', array('fields' => 'names'));
+                $department_group_terms = wp_get_post_terms(get_the_ID(), 'cbedu_department_group', array('fields' => 'names'));
+
+                // Convert term arrays to strings
+                $session_year = !empty($session_year_terms) ? implode(', ', $session_year_terms) : '';
+                $examination = !empty($examination_terms) ? implode(', ', $examination_terms) : '';
+                $board = !empty($board_terms) ? implode(', ', $board_terms) : '';
+                $department_group = !empty($department_group_terms) ? implode(', ', $department_group_terms) : '';
+
+
+                // New Query: Find corresponding student in 'cbedu_students'
+                $student_args = array(
+                    'post_type' => 'cbedu_students',
+                    'posts_per_page' => 1,
+                    'meta_query' => array(
+                        array(
+                            'key' => 'cbedu_result_std_registration_number',
+                            'value' => $registration_number,
+                            'compare' => '='
+                        )
+                    )
+                );
+    
+                $student_query = new WP_Query($student_args);
+    
+                if ($student_query->have_posts()) {
+                    while ($student_query->have_posts()) {
+                        $student_query->the_post();
+    
+                        // Fetch all student details
+                        $st_father_name = get_post_meta(get_the_ID(), 'cbedu_result_std_father_name', true);
+                        $st_mother_name = get_post_meta(get_the_ID(), 'cbedu_result_std_mother_name', true);
+                        $st_std_id = get_post_meta(get_the_ID(), 'cbedu_result_std_id', true);                        
+                        $st_std_dob = get_post_meta(get_the_ID(), 'cbedu_result_std_dob', true);
+                        $st_std_gender = get_post_meta(get_the_ID(), 'cbedu_result_std_gender', true);
+                        
+    
+                        // Display the results in a table
+                        ?>
+                        <div class="cbedu-ajax-result-area" id="cbedu-result-table">
+                            <div class="cbedu-ajax-result">
+                                <!--Student Information-->
+                                <div class="cbedu-result-student-information-area">
+                                    <div class="cbedu-result-student-information-heading">
+                                        <h4>Student Information</h4>
+                                    </div>
+                                    <table>
+                                        <tr>
+                                            <th>Roll:</th>
+                                            <td><?php echo esc_html($rs_std_roll); ?></td>
+                                            <th>Registration Number:</th>
+                                            <td><?php echo esc_html($rs_std_reg_number); ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Name:</th>
+                                            <td><?php the_title(); ?></td>
+                                            <th>ID:</th>
+                                            <td><?php echo esc_html($st_std_id); ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Father's Name:</th>
+                                            <td><?php echo esc_html($st_father_name); ?></td>
+                                            <th>Mother's Name:</th>
+                                            <td><?php echo esc_html($st_mother_name); ?></td>                                            
+                                        </tr> 
+                                        <tr>
+                                            <th>Board:</th>
+                                            <td><?php echo esc_html($board); ?></td>
+                                            <th>Group:</th>
+                                            <td><?php echo esc_html($department_group); ?></td>                                            
+                                        </tr>
+                                        <tr>
+                                            <th>Session:</th>
+                                            <td><?php echo esc_html($session_year); ?></td>
+                                            <th>Result:</th>
+                                            <td><?php echo esc_html($rs_std_result_status); ?></td>                                            
+                                        </tr>
+                                        <tr>
+                                            <th>Gender:</th>
+                                            <td><?php echo esc_html($st_std_gender); ?></td>
+                                            <th>DOB:</th>
+                                            <td><?php echo esc_html($st_std_dob); ?></td>                                            
+                                        </tr> 
+                                        <tr>
+                                            <th>Student Type:</th>
+                                            <td><?php echo esc_html($rs_std_type); ?></td>
+                                            <th>Institute:</th>
+                                            <td><?php echo esc_html($collageName); ?></td>                                            
+                                        </tr> 
+                                        <tr>
+                                            <th>Examinations:</th>
+                                            <td><?php echo esc_html($examination); ?></td>
+                                            <th>GPA:</th>
+                                            <td><?php echo esc_html($rs_std_gpa); ?></td>                                            
+                                        </tr>
+                                    </table>
+                                </div><!--/ Student Information-->
+                            </div>                        
+
+                        </div>
+                        <?php
+                    }
+                }
+    
+                wp_reset_postdata(); // Reset student query
             }
         } else {
             echo '<p>No results found for the selected examination.</p>';
         }
     
-        // Reset post data
-        wp_reset_postdata();
+        wp_reset_postdata(); // Reset main query
     
-        // Terminate the script and return a proper response
-        wp_die();
-    }
-    
+        wp_die(); // Terminate the script and return a proper response
+    }    
+
     
 }
 
