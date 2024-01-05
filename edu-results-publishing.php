@@ -429,11 +429,11 @@ class CBEDUResultPublishing
                                         </tr>
                                     </table>
                                 </div><!--/ Student Information-->
-                            </div>
-                            <div class="cbedu-print-button-container">
-                                <button onclick="cbeduPrintResult('cbedu-result-table')">Print</button>
-                            </div>                         
+                            </div>                                                   
                         </div>
+                        <div class="cbedu-print-button-container">
+                            <button onclick="cbeduPrintResult('cbedu-result-table')">Print</button>
+                        </div>  
                         <?php
                     }
                 }
