@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Plugin Name: EDU Results Publishing
  * Author: MD Abul Bashar
@@ -51,6 +50,9 @@ class CBEDUResultPublishing
 
         // Register text domain for translation
         add_action('plugins_loaded', array($this, 'loadTextDomain'));
+
+        //add custom description afeter title for the result post type
+        add_action('edit_form_after_title', array($this, 'add_custom_description_after_title'));
 
         // Initialize the plugin
         $this->initialize();
@@ -111,13 +113,24 @@ class CBEDUResultPublishing
     public function changeTitlePlaceholder($title)
     {
         $screen = get_current_screen();
-        if ($screen->post_type == $this->prefix . 'results' || $screen->post_type == $this->prefix . 'students') {
-            $title = 'Enter Student Name';
-        } elseif ($screen->post_type == $this->prefix . 'subjects') {
-            $title = 'Enter Subject Name'; // Placeholder for Subjects post type
+        if ($screen->post_type == $this->prefix . 'results') {
+            $title = __('Student Name', 'edu-results'); 
+        }elseif ($screen->post_type == $this->prefix . 'students') {
+            $title = __('Enter Student Name', 'edu-results');
+        } 
+        elseif ($screen->post_type == $this->prefix . 'subjects') {
+            $title = __('Enter Subject Name', 'edu-results'); // Placeholder for Subjects post type
         }
         return $title;
     }
+   public function add_custom_description_after_title() {        
+        $screen = get_current_screen();    
+        if ($screen->post_type == $this->prefix . 'results') {
+            echo '<div style="margin-top: 10px; font-style: italic;font-weight:bold">';
+            echo '<p>' . __('The name will be automatically shown based on the student\'s registration number after publish the post.', 'edu-results') . '</p>';
+            echo '</div>';
+        }
+    }    
 
     public function cbedu_result_assets_enque_admin($hook_suffix)
     {
