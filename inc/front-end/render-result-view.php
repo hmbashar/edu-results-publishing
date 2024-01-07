@@ -8,6 +8,13 @@ $cbedu_result = new WP_Query(
     )
 );
 $collageName = get_option('cbedu_results_collage_name');
+$collageRegistrationNumber = get_option('cbedu_results_collage_registration_number');
+$collagePhone = get_option('cbedu_results_collage_phone_number');
+$collageEmail = get_option('cbedu_results_collage_email_address');
+$collageAddress = get_option('cbedu_results_collage_address');
+$collageWebsite = get_option('cbedu_results_collage_website_url');
+$collageBannerHeading = get_option('cbedu_results_banner_heading');
+
 
 
 if ($cbedu_result->have_posts()) :
@@ -46,17 +53,17 @@ if ($cbedu_result->have_posts()) :
                         </div>
                         <div class="cbedu-result-collage-information">
                             <div class="cbedu-result-collage-sub-heading">
-                                <h4>Collage Registration: 256569874598</h4>
+                                <h4><?php _e('Collage Registration: ', 'edu-results'); echo esc_html($collageRegistrationNumber); ?></h4>
                             </div>
                             <div class="cbedu-result-collage-info">
-                                <p>Phone: 0123456789</p>
-                                <p>Email: admin@example.com</p>
+                                <p><?php _e('Phone: ', 'edu-results'); echo esc_html($collagePhone); ?></p>
+                                <p><?php _e('Email: ', 'edu-results'); echo esc_html($collageEmail); ?></p>
                             </div>
                             <div class="cbedu-result-collage-info">
-                                <p>Address: 123 Main Street, New York, United States</p>
+                                <p><?php _e('Address: ', 'edu-results'); echo esc_html($collageAddress); ?></p>
                             </div>
                             <div class="cbedu-result-collage-info">
-                                <p>Website: www.example.com</p>
+                                <p><?php _e('Website: ', 'edu-results'); echo esc_html($collageWebsite); ?></p>
                             </div>
                         </div>
                         <div class="cbedu-result-collage-std-image">
@@ -70,83 +77,83 @@ if ($cbedu_result->have_posts()) :
                         </div>
                     </div>
                     <div class="cbedu-result-banner-heading">
-                        <h3>SSC/Dakil/Equivalent Result 2023</h3>
+                        <h3><?php echo esc_html($collageBannerHeading); ?></h3>
                     </div>
                 </div><!--/ Banner Area-->
                 <!--Student Information-->
                 <div class="cbedu-result-student-information-area">
                     <div class="cbedu-result-student-information-heading">
-                        <h4>Student Information</h4>
+                        <h4><?php _e('Student Information', 'edu-results'); ?></h4>
                     </div>
                     <table>
                         <tr>
-                            <th>Roll:</th>
+                            <th><?php _e('Roll:', 'edu-results'); ?></th>
                             <td>
                                 <?php echo esc_html($cbedu_std_roll); ?>
                             </td>
-                            <th>Registration Number:</th>
+                            <th><?php _e('Registration Number:', 'edu-results'); ?></th>
                             <td>
                                 <?php echo esc_html($cbedu_std_reg_number); ?>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                Name:
+                                <?php _e('Name:', 'edu-results'); ?>
                             </th>
                             <td>
                                 <?php the_title(); ?>
                             </td>
-                            <td>
-                                Father:
-                            </td>
+                            <th>
+                                <?php _e('Father:', 'edu-results'); ?>
+                            </th>
                             <td>
                                 <?php echo esc_html($cbedu_std_f_name); ?>
                             </td>
                         </tr>
                         <tr>
-                            <td>Board:</td>
+                            <th><?php _e('Board:', 'edu-results'); ?></th>
                             <td>
                                 <?php echo esc_html($cbedu_std_board); ?>
                             </td>
-                            <td>Group:</td>
+                            <th><?php _e('Group:', 'edu-results'); ?></th>
                             <td>
                                 <?php echo esc_html($cbedu_std_group); ?>
                             </td>
                         </tr>
                         <tr>
-                            <td>DOB:</td>
+                            <th><?php _e('DOB:', 'edu-results'); ?></th>
                             <td>
                                 <?php echo esc_html($cbedu_std_dob); ?>
                             </td>
-                            <th>Institute</th>
+                            <th><?php _e('Institute', 'edu-results'); ?></th>
                             <td>
                                 <?php echo esc_html($collageName); ?>
                             </td>
                         </tr>
                         <tr>
-                            <td>
-                                Monther Name:
-                            </td>
+                            <th>
+                                <?php _e('Monther Name:', 'edu-results'); ?>
+                            </th>
                             <td>
                                 <?php echo esc_html($cbedu_std_m_name); ?>
                             </td>
-                            <th>GPA</th>
+                            <th><?php _e('GPA', 'edu-results'); ?></th>
                             <td>
                                 <?php echo esc_html($cbedu_std_gpa); ?>
                             </td>
                         </tr>
                         <tr>
-                            <th>ID:</th>
+                            <th><?php _e('ID:', 'edu-results'); ?></th>
                             <td>
                                 <?php echo esc_html($cbedu_std_id); ?>
                             </td>
-                            <th>Result</th>
+                            <th><?php _e('Result', 'edu-results'); ?></th>
                             <td>
                                 <?php echo esc_html($cbedu_std_re_status); ?>
                             </td>
                         </tr>
                         <tr>
-                            <th>Student Type: </th>
+                            <th><?php _e('Student Type:', 'edu-results'); ?> </th>
                             <td>
                                 <?php echo esc_html($cbedu_std_type); ?>
                             </td>
@@ -158,16 +165,16 @@ if ($cbedu_result->have_posts()) :
                 <div class="cbedu-result-student-subject-area">
                     <div class="cbedu-result-student-subject">
                         <div class="cbedu-result-student-subject-heading">
-                            <h4>Result Sheet</h4>
+                            <h4><?php _e('Result Sheet', 'edu-results'); ?></h4>
                         </div>
                         <table>
                             <tr>
-                                <th>Code</th>
-                                <th>Name of Subjects</th>
-                                <th>Letter Mark</th>
-                                <th>Letter Grade</th>
-                                <th class="cbedu-table-gpa">GPA <abbr title="Without additional subject">(WAS)</abbr></th>
-                                <th>GPA</th>
+                                <th><?php _e('Subject', 'edu-results'); ?></th>
+                                <th><?php _e('Name of Subjects', 'edu-results'); ?></th>
+                                <th><?php _e('Marks', 'edu-results'); ?></th>
+                                <th><?php _e('Letter Grade', 'edu-results'); ?></th>
+                                <th class="cbedu-table-gpa"><?php _e('GPA', 'edu-results'); ?> <abbr title="Without additional subject"><?php _e('(WAS)', 'edu-results'); ?></abbr></th>
+                                <th><?php _e('GPA', 'edu-results'); ?></th>
                             </tr>
                             <?php
 

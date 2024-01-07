@@ -445,27 +445,27 @@ class CBEDUCustomFields
             ?>
             <tr>
                 <td>
-                    <label for="cbedu_result_std_roll">Roll:</label>
+                    <label for="cbedu_result_std_roll"><?php esc_html_e('Roll:', 'edu-results'); ?></label>
                 </td>
                 <td>
                     <input class="regular-text" style="padding: 7px 10px;" type="text" id="cbedu_result_std_roll" name="cbedu_result_std_roll" value="<?php echo esc_attr($roll); ?>" />
                 </td>
             </tr>
             <tr>
-                <td><label for="cbedu_result_std_name">Student Name:</label></td>
+                <td><label for="cbedu_result_std_name"><?php esc_html_e('Student Name:', 'edu-results'); ?></label></td>
                 <td><input type="text" style="padding: 7px 10px;width: 100%;" id="cbedu_result_std_name" name="cbedu_result_std_name" value="<?php echo esc_attr($student_name) ?>" readonly /></td>
             </tr>
             <tr>
-                <td><label for="cbedu_result_std_fathers_name">Father's Name:</label></td>
+                <td><label for="cbedu_result_std_fathers_name"><?php esc_html_e('Father\'s Name:', 'edu-results'); ?></label></td>
                 <td><input type="text" style="padding: 7px 10px;width: 100%;" id="cbedu_result_std_fathers_name" name="cbedu_result_std_fathers_name" value="<?php echo esc_attr($fathers_name); ?>" readonly /></td>
             </tr>
             <tr>
-                <td><label for="cbedu_result_std_mothers_name">Mother's Name:</label></td>
+                <td><label for="cbedu_result_std_mothers_name"><?php esc_html_e('Mother\'s Name:', 'edu-results'); ?></label></td>
                 <td><input type="text" style="padding: 7px 10px;width: 100%;" id="cbedu_result_std_mothers_name" name="cbedu_result_std_mothers_name" value="<?php echo esc_attr($mothers_name); ?>" readonly /></td>
             </tr>
             <tr>
                 <td>
-                    <label for="cbedu_result_std_student_type">Student Type:</label>
+                    <label for="cbedu_result_std_student_type"><?php esc_html_e('Student Type:', 'edu-results'); ?></label>
                 </td>
                 <td>
                     <input class="regular-text" style="padding: 7px 10px;" type="text" id="cbedu_result_std_student_type" name="cbedu_result_std_student_type" value="<?php echo esc_attr($student_type); ?>" />
@@ -473,19 +473,19 @@ class CBEDUCustomFields
             </tr>
             <tr style="margin-top: 10px;margin-bottom:10px;">
                 <td>
-                    <label>Result Status:</label>
+                    <label><?php esc_html_e('Result Status:', 'edu-results'); ?></label>
                 </td>
                 <td>
                     <input type="radio" id="cbedu_result_std_result_status_passed" name="cbedu_result_std_result_status" value="Passed" <?php checked($result_status, 'Passed'); ?> />
-                    <label for="cbedu_result_std_result_status_passed" style="margin-right: 10px;">Passed</label>
+                    <label for="cbedu_result_std_result_status_passed" style="margin-right: 10px;"><?php esc_html_e('Passed', 'edu-results'); ?></label>
 
                     <input type="radio" id="cbedu_result_std_result_status_failed" name="cbedu_result_std_result_status" value="Failed" <?php checked($result_status, 'Failed'); ?> />
-                    <label for="cbedu_result_std_result_status_failed">Failed</label>
+                    <label for="cbedu_result_std_result_status_failed"><?php esc_html_e('Failed', 'edu-results'); ?></label>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="cbedu_result_std_gpa">GPA:</label>
+                    <label for="cbedu_result_std_gpa"><?php esc_html_e('GPA:', 'edu-results'); ?></label>
                 </td>
                 <td>
                     <input class="regular-text" style="padding: 7px 10px;" type="text" id="cbedu_result_std_gpa" name="cbedu_result_std_gpa" value="<?php echo esc_attr($gpa); ?>" />
@@ -493,7 +493,7 @@ class CBEDUCustomFields
             </tr>
             <tr>
                 <td>
-                    <label for="cbedu_result_std_was_gpa">GPA <abbr title="Without additional subject">(WAS)</abbr>:</label>
+                    <label for="cbedu_result_std_was_gpa"><?php _e('GPA <abbr title="Without additional subject">(WAS)</abbr>:', 'edu-results'); ?></label>
                 </td>
                 <td>
                     <input class="regular-text" style="padding: 7px 10px;" type="text" id="cbedu_result_std_was_gpa" name="cbedu_result_std_was_gpa" value="<?php echo esc_attr($was_gpa); ?>" />
@@ -514,11 +514,15 @@ class CBEDUCustomFields
     {
         // Get current value
         $current_value = get_post_meta($post->ID, 'cbedu_result_std_registration_number', true);
-
-        echo '<tr><td><label for="cbedu_result_std_registration_number">Registration Number:</label></td>';
+    
+        // Translatable string with text domain
+        $label = __('Registration Number:', 'edu-results');
+    
+        echo '<tr><td><label for="cbedu_result_std_registration_number">' . esc_html($label) . '</label></td>';
         echo '<td><input style="padding: 7px 10px;width: 100%;" type="text" id="cbedu_result_std_registration_number" name="cbedu_result_std_registration_number" class="cbedu-registration-number-autocomplete" value="' . esc_attr($current_value) . '" placeholder="Start typing...">';
         echo '</td></tr>';
     }
+    
 
 
     /**

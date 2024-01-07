@@ -47,6 +47,7 @@
 .cbedu-result-collage-info {
   display: flex;
   justify-content: center;
+  gap: 10px;
 }
 
 .cbedu-result-collage-info p {

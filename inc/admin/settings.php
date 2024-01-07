@@ -71,13 +71,19 @@ class CBEDUResultSettings
         register_setting('cbedu_results_settings_group', 'cbedu_results_collage_since_year', 'sanitize_text_field');
 
         // Add a new option for Collage Address
-        register_setting('cbedu_results_settings_group', 'cbedu_results_collage_address', 'sanitize_text_field');
+        register_setting('cbedu_results_settings_group', 'cbedu_results_collage_address', 'sanitize_textarea_field');
 
         // Add a new option for Collage Phone Number
         register_setting('cbedu_results_settings_group', 'cbedu_results_collage_phone_number', 'sanitize_text_field');
 
         // Add a new option for Collage Email Address
         register_setting('cbedu_results_settings_group', 'cbedu_results_collage_email_address', 'sanitize_email');
+        
+        // Register a new option for College Website URL
+        register_setting('cbedu_results_settings_group', 'cbedu_results_collage_website_url', 'esc_url_raw');
+        
+        // Register a new option for Result Page Banner Heading
+        register_setting('cbedu_results_settings_group', 'cbedu_results_banner_heading', 'sanitize_text_field');
 
 
         add_settings_field(
@@ -122,14 +128,6 @@ class CBEDUResultSettings
         );
 
         add_settings_field(
-            'cbedu_results_collage_address',
-            'Collage Address',
-            array($this, 'collageAddressFieldCallback'),
-            'cbedu_results_settings',
-            'cbedu_results_settings_section'
-        );
-
-        add_settings_field(
             'cbedu_results_collage_phone_number',
             'Collage Phone Number',
             array($this, 'collagePhoneNumberFieldCallback'),
@@ -141,6 +139,31 @@ class CBEDUResultSettings
             'cbedu_results_collage_email_address',
             'Collage Email Address',
             array($this, 'collageEmailAddressFieldCallback'),
+            'cbedu_results_settings',
+            'cbedu_results_settings_section'
+        );
+        //field for College Website URL
+        add_settings_field(
+            'cbedu_results_collage_website_url',
+            'College Website URL',
+            array($this, 'collageWebsiteUrlFieldCallback'),
+            'cbedu_results_settings',
+            'cbedu_results_settings_section'
+        );
+
+        // Add new settings field for Result Page Banner Heading
+        add_settings_field(
+            'cbedu_results_banner_heading',
+            'Result Page Banner Heading',
+            array($this, 'resultPageBannerHeadingCallback'),
+            'cbedu_results_settings',
+            'cbedu_results_settings_section'
+        );
+
+        add_settings_field(
+            'cbedu_results_collage_address',
+            'Collage Address',
+            array($this, 'collageAddressFieldCallback'),
             'cbedu_results_settings',
             'cbedu_results_settings_section'
         );
@@ -226,8 +249,9 @@ class CBEDUResultSettings
     public function collageAddressFieldCallback()
     {
         $collageAddress = get_option('cbedu_results_collage_address');
-        echo '<input type="text" name="cbedu_results_collage_address" value="' . esc_attr($collageAddress) . '" />';
+        echo '<textarea name="cbedu_results_collage_address" rows="5" cols="50">' . esc_textarea($collageAddress) . '</textarea>';
     }
+    
 
     public function collagePhoneNumberFieldCallback()
     {
@@ -239,5 +263,18 @@ class CBEDUResultSettings
     {
         $collageEmailAddress = get_option('cbedu_results_collage_email_address');
         echo '<input type="email" name="cbedu_results_collage_email_address" value="' . esc_attr($collageEmailAddress) . '" />';
+    }
+
+
+    public function collageWebsiteUrlFieldCallback()
+    {
+        $collageWebsiteUrl = get_option('cbedu_results_collage_website_url');
+        echo '<input type="url" name="cbedu_results_collage_website_url" value="' . esc_url($collageWebsiteUrl) . '" />';
+    }
+
+    public function resultPageBannerHeadingCallback()
+    {
+        $bannerHeading = get_option('cbedu_results_banner_heading');
+        echo '<input type="text" name="cbedu_results_banner_heading" value="' . esc_attr($bannerHeading) . '" />';
     }
 }

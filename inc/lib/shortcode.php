@@ -50,8 +50,8 @@ class CBEDUResultsShortcode
     public function render_result_search_form_shortcode($atts)
     {
         $attributes = shortcode_atts(array(
-            'placeholder' => 'Enter Registration Number',
-            'button_text' => 'Search Results',
+            'placeholder' => __('Enter Registration Number', 'edu-results'),
+            'button_text' => __('Search Results', 'edu-results'),
         ), $atts);
         extract($attributes); // Extract the attributes into variables
         ob_start(); ?>
@@ -60,9 +60,9 @@ class CBEDUResultsShortcode
                 <!-- Examination Dropdown -->
                 <div class="cbedu-results-search-form-single-element-area">
                     <div class="cbedu-results-search-form-single-element">
-                        <label for="examination">Examination:</label>
+                        <label for="examination"><?php _e('Examination:', 'edu-results'); ?></label>
                         <select name="examination" id="examination" required>
-                            <option value="">Select Examination</option>
+                            <option value=""><?php _e('Select Examination', 'edu-results'); ?></option>
                             <?php
                             $examinations = get_terms('cbedu_examinations', array('hide_empty' => false));
                             foreach ($examinations as $examination) {
@@ -78,14 +78,14 @@ class CBEDUResultsShortcode
                 <!-- Year Dropdown -->
                 <div class="cbedu-results-search-form-single-element-area">
                     <div class="cbedu-results-search-form-single-element">
-                        <label for="year">Year:</label>
+                        <label for="year"><?php _e('Year:', 'edu-results'); ?></label>
                         <select name="year" id="year" required>
-                            <option value="">Select Year</option>
+                            <option value=""><?php _e('Select Year', 'edu-results'); ?></option>
                             <?php
-                            $years = get_terms('cbedu_session_years', array('hide_empty' => false));
-                            foreach ($years as $year) {
-                                echo '<option value="' . esc_attr($year->slug) . '">' . esc_html($year->name) . '</option>';
-                            }
+                                $years = get_terms('cbedu_session_years', array('hide_empty' => false));
+                                foreach ($years as $year) {
+                                    echo '<option value="' . esc_attr($year->slug) . '">' . esc_html($year->name) . '</option>';
+                                }
                             ?>
                         </select>                    
                     </div>
@@ -95,14 +95,14 @@ class CBEDUResultsShortcode
                 <!-- Board Dropdown -->
                 <div class="cbedu-results-search-form-single-element-area">
                     <div class="cbedu-results-search-form-single-element">
-                        <label for="board">Board:</label>
+                        <label for="board"><?php _e('Board:', 'edu-results'); ?></label>
                         <select name="board" id="board" required>
-                            <option value="">Select Board</option>
+                            <option value=""><?php _e('Select Board', 'edu-results'); ?></option>
                             <?php
-                            $boards = get_terms('cbedu_boards', array('hide_empty' => false));
-                            foreach ($boards as $board) {
-                                echo '<option value="' . esc_attr($board->slug) . '">' . esc_html($board->name) . '</option>';
-                            }
+                                $boards = get_terms('cbedu_boards', array('hide_empty' => false));
+                                foreach ($boards as $board) {
+                                    echo '<option value="' . esc_attr($board->slug) . '">' . esc_html($board->name) . '</option>';
+                                }
                             ?>
                         </select>                    
                     </div>
@@ -112,14 +112,14 @@ class CBEDUResultsShortcode
                 <!-- Department/Group Dropdown -->
                 <div class="cbedu-results-search-form-single-element-area">
                     <div class="cbedu-results-search-form-single-element">
-                        <label for="department_group">Department/Group:</label>
+                        <label for="department_group"><?php _e('Department/Group:', 'edu-results'); ?></label>
                         <select name="department_group" id="department_group" required>
-                            <option value="">Select Department/Group</option>
+                            <option value=""><?php _e('Select Department/Group', 'edu-results'); ?></option>
                             <?php
-                            $groups = get_terms('cbedu_department_group', array('hide_empty' => false));
-                            foreach ($groups as $group) {
-                                echo '<option value="' . esc_attr($group->slug) . '">' . esc_html($group->name) . '</option>';
-                            }
+                                $groups = get_terms('cbedu_department_group', array('hide_empty' => false));
+                                foreach ($groups as $group) {
+                                    echo '<option value="' . esc_attr($group->slug) . '">' . esc_html($group->name) . '</option>';
+                                }
                             ?>
                         </select>                    
                     </div>
@@ -129,7 +129,7 @@ class CBEDUResultsShortcode
                 <!-- Registration Number Input -->
                 <div class="cbedu-results-search-form-single-element-area">
                     <div class="cbedu-results-search-form-single-element">
-                        <label for="registration_number">Registration Number:</label>
+                        <label for="registration_number"><?php _e('Registration Number:', 'edu-results'); ?></label>
                         <input type="text" name="registration_number" id="registration_number" placeholder="<?php echo esc_attr($placeholder); ?>" required>                    
                     </div>
                     <div class="cbedu-error-message" id="cbedu-registration-number-error"></div>
@@ -138,7 +138,7 @@ class CBEDUResultsShortcode
                 <!-- Roll Input -->
                 <div class="cbedu-results-search-form-single-element-area">
                     <div class="cbedu-results-search-form-single-element">
-                        <label for="roll">Roll:</label>
+                        <label for="roll"><?php _e('Roll:', 'edu-results'); ?></label>
                         <input type="text" name="roll" id="roll" placeholder="Enter Roll" required>                    
                     </div>
                     <div class="cbedu-error-message" id="cbedu-roll-error"></div>
