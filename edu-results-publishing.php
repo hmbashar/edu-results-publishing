@@ -72,18 +72,43 @@ class CBEDUResultPublishing
 
     private function initialize()
     {
-        // Register custom post types
-        $custom_post_type = new \cbedu\inc\lib\CBEDU_CUSTOM_POSTS($this->prefix);
-        // Register custom taxonomies
-        $custom_post_type = new \cbedu\inc\lib\CBEDU_CUSTOM_TAXONOMY($this->prefix);
-        // Instantiate other classes
-        $repeaterCustomFields = new \cbedu\inc\RepeaterCF\CBEDURepeaterCustomFields($this);
-
-        $adminSettingsFields = new \cbedu\inc\admin\settings\CBEDUResultSettings($this);
-        $customFields = new \cbedu\inc\custom_fields\CBEDUCustomFields();
-        $resultsShortcode = new \cbedu\inc\lib\CBEDUResultsShortcode();
+        // Register custom post types and taxonomies
+        $this->initializePostTypesAndTaxonomies();
+    
+        // Initialize other components
+        $this->initializeComponents();
     }
-
+    
+    private function initializePostTypesAndTaxonomies()
+    {
+        if (class_exists('\cbedu\inc\lib\CBEDU_CUSTOM_POSTS')) {
+            new \cbedu\inc\lib\CBEDU_CUSTOM_POSTS($this->prefix);
+        }
+    
+        if (class_exists('\cbedu\inc\lib\CBEDU_CUSTOM_TAXONOMY')) {
+            new \cbedu\inc\lib\CBEDU_CUSTOM_TAXONOMY($this->prefix);
+        }
+    }
+    
+    private function initializeComponents()
+    {
+        if (class_exists('\cbedu\inc\RepeaterCF\CBEDURepeaterCustomFields')) {
+            new \cbedu\inc\RepeaterCF\CBEDURepeaterCustomFields($this);
+        }
+    
+        if (class_exists('\cbedu\inc\admin\settings\CBEDUResultSettings')) {
+            new \cbedu\inc\admin\settings\CBEDUResultSettings($this);
+        }
+    
+        if (class_exists('\cbedu\inc\custom_fields\CBEDUCustomFields')) {
+            new \cbedu\inc\custom_fields\CBEDUCustomFields();
+        }
+    
+        if (class_exists('\cbedu\inc\lib\CBEDUResultsShortcode')) {
+            new \cbedu\inc\lib\CBEDUResultsShortcode();
+        }
+    }
+    
     public function addPluginActionLinks($links)
     {
         $donateLink = '<a href="https://www.buymeacoffee.com/hmbashar" target="_blank">' . __('Donate', 'edu-results') . '</a>';
@@ -236,15 +261,15 @@ class CBEDUResultPublishing
 
         if (!empty($students)) {
             // Get the student's name, check if it's not empty
-            $student_name = !empty($students[0]->post_title) ? $students[0]->post_title : 'Not Found!';
+            $student_name = !empty($students[0]->post_title) ? $students[0]->post_title : __('Not Found!', 'edu-results');
 
             // Get the father's name, check if it's not empty
             $father_name = get_post_meta($students[0]->ID, 'cbedu_result_std_father_name', true);
-            $father_name = !empty($father_name) ? $father_name : 'Not Found!';
+            $father_name = !empty($father_name) ? $father_name : __('Not Found!', 'edu-results');
 
             // Get the father's name, check if it's not empty
             $mother_name = get_post_meta($students[0]->ID, 'cbedu_result_std_mother_name', true);
-            $mother_name = !empty($mother_name) ? $mother_name : 'Not Found!';
+            $mother_name = !empty($mother_name) ? $mother_name : __('Not Found!', 'edu-results');
 
             // Output both names as JSON
             wp_send_json([
@@ -389,55 +414,55 @@ class CBEDUResultPublishing
                                 <!--Student Information-->
                                 <div class="cbedu-result-student-information-area">
                                     <div class="cbedu-result-student-information-heading">
-                                        <h4>Student Information</h4>
+                                        <h4><?php _e('Student Information', 'edu-results'); ?></h4>
                                     </div>
                                     <table>
                                         <tr>
-                                            <th>Roll:</th>
+                                            <th><?php _e('Roll', 'edu-results'); ?></th>
                                             <td><?php echo esc_html($rs_std_roll); ?></td>
-                                            <th>Registration Number:</th>
+                                            <th><?php _e('Registration Number', 'edu-results'); ?></th>
                                             <td><?php echo esc_html($rs_std_reg_number); ?></td>
                                         </tr>
                                         <tr>
-                                            <th>Name:</th>
+                                            <th><?php _e('Student Name', 'edu-results'); ?></th>
                                             <td><?php the_title(); ?></td>
-                                            <th>ID:</th>
+                                            <th><?php _e('Student ID', 'edu-results'); ?></th>
                                             <td><?php echo esc_html($st_std_id); ?></td>
                                         </tr>
                                         <tr>
-                                            <th>Father's Name:</th>
+                                            <th><?php _e('Father Name', 'edu-results'); ?></th>
                                             <td><?php echo esc_html($st_father_name); ?></td>
-                                            <th>Mother's Name:</th>
+                                            <th><?php _e('Mother Name', 'edu-results'); ?></th>
                                             <td><?php echo esc_html($st_mother_name); ?></td>                                            
                                         </tr> 
                                         <tr>
-                                            <th>Board:</th>
+                                            <th><?php _e('Board', 'edu-results'); ?></th>
                                             <td><?php echo esc_html($board); ?></td>
-                                            <th>Group:</th>
+                                            <th><?php _e('Department Group', 'edu-results'); ?></th>
                                             <td><?php echo esc_html($department_group); ?></td>                                            
                                         </tr>
                                         <tr>
-                                            <th>Session:</th>
+                                            <th><?php _e('Session', 'edu-results'); ?></th>
                                             <td><?php echo esc_html($session_year); ?></td>
-                                            <th>Result:</th>
+                                            <th><?php _e('Result Status', 'edu-results'); ?></th>
                                             <td><?php echo esc_html($rs_std_result_status); ?></td>                                            
                                         </tr>
                                         <tr>
-                                            <th>Gender:</th>
+                                            <th><?php _e('Gender', 'edu-results'); ?></th>
                                             <td><?php echo esc_html($st_std_gender); ?></td>
-                                            <th>DOB:</th>
+                                            <th><?php _e('Date of Birth', 'edu-results'); ?></th>
                                             <td><?php echo esc_html($st_std_dob); ?></td>                                            
                                         </tr> 
                                         <tr>
-                                            <th>Student Type:</th>
+                                            <th><?php _e('Student Type', 'edu-results'); ?></th>
                                             <td><?php echo esc_html($rs_std_type); ?></td>
-                                            <th>Institute:</th>
+                                            <th><?php _e('Institute Name', 'edu-results'); ?></th>
                                             <td><?php echo esc_html($collageName); ?></td>                                            
                                         </tr> 
                                         <tr>
-                                            <th>Examinations:</th>
+                                            <th><?php _e('Examination', 'edu-results'); ?></th>
                                             <td><?php echo esc_html($examination); ?></td>
-                                            <th>GPA:</th>
+                                            <th><?php _e('GPA', 'edu-results'); ?></th>
                                             <td><?php echo esc_html($rs_std_gpa); ?></td>                                            
                                         </tr>
                                     </table>
@@ -445,7 +470,7 @@ class CBEDUResultPublishing
                             </div>                                                   
                         </div>
                         <div class="cbedu-print-button-container">
-                            <button onclick="cbeduPrintResult('cbedu-result-table')">Print</button>
+                            <button onclick="cbeduPrintResult('cbedu-result-table')"><?php _e('Print', 'edu-results'); ?></button>
                         </div>  
                         <?php
                     }
