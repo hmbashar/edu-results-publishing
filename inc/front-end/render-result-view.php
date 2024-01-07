@@ -14,6 +14,7 @@ $collageEmail = get_option('cbedu_results_collage_email_address');
 $collageAddress = get_option('cbedu_results_collage_address');
 $collageWebsite = get_option('cbedu_results_collage_website_url');
 $collageBannerHeading = get_option('cbedu_results_banner_heading');
+$collageLogo = get_option('cbedu_results_logo');
 
 
 
@@ -44,27 +45,43 @@ if ($cbedu_result->have_posts()) :
             <div class="cbedu-result-render-area">
                 <!--Banner Area-->
                 <div class="cbedu-result-ver-banner-area">
-                    <div class="cbedu-result-ver-name">
-                        <h2><?php echo esc_html($collageName); ?></h2>
-                    </div>
-                    <div class="cbedu-result-sheet-header-info">
-                        <div class="cbedu-result-sheet-collage-logo">
-                            <img src="<?php echo esc_url(get_option('cbedu_results_logo')); ?>" alt="Collage Logo">
+                    <?php if(!empty($collageName)): ?>
+                        <div class="cbedu-result-ver-name">
+                            <h2><?php echo esc_html($collageName); ?></h2>
                         </div>
+                    <?php endif; ?>
+                    <div class="cbedu-result-sheet-header-info">
+                        <?php if(!empty($collageLogo)) : ?>
+                            <div class="cbedu-result-sheet-collage-logo">
+                                <img src="<?php echo esc_url($collageLogo); ?>" alt="Collage Logo">
+                            </div>
+                        <?php endif; ?>
                         <div class="cbedu-result-collage-information">
-                            <div class="cbedu-result-collage-sub-heading">
-                                <h4><?php _e('Collage Registration: ', 'edu-results'); echo esc_html($collageRegistrationNumber); ?></h4>
-                            </div>
-                            <div class="cbedu-result-collage-info">
-                                <p><?php _e('Phone: ', 'edu-results'); echo esc_html($collagePhone); ?></p>
-                                <p><?php _e('Email: ', 'edu-results'); echo esc_html($collageEmail); ?></p>
-                            </div>
-                            <div class="cbedu-result-collage-info">
-                                <p><?php _e('Address: ', 'edu-results'); echo esc_html($collageAddress); ?></p>
-                            </div>
-                            <div class="cbedu-result-collage-info">
-                                <p><?php _e('Website: ', 'edu-results'); echo esc_html($collageWebsite); ?></p>
-                            </div>
+                            <?php if(!empty($collageRegistrationNumber)) : ?>
+                                <div class="cbedu-result-collage-sub-heading">
+                                    <h4><?php _e('Collage Registration: ', 'edu-results'); echo esc_html($collageRegistrationNumber); ?></h4>
+                                </div>
+                            <?php endif; ?>
+                            <?php if(!empty($collagePhone) && !empty($collageEmail)) : ?>
+                                <div class="cbedu-result-collage-info">
+                                    <?php if(!empty($collagePhone)) : ?>
+                                        <p><?php _e('Phone: ', 'edu-results'); echo esc_html($collagePhone); ?></p>
+                                    <?php endif; ?>
+                                    <?php if(!empty($collageEmail)) : ?>
+                                        <p><?php _e('Email: ', 'edu-results'); echo esc_html($collageEmail); ?></p>
+                                    <?php endif; ?>                                    
+                                </div>
+                            <?php endif; ?>
+                            <?php if(!empty($collageAddress)) : ?>
+                                <div class="cbedu-result-collage-info">
+                                    <p><?php _e('Address: ', 'edu-results'); echo esc_html($collageAddress); ?></p>
+                                </div>
+                            <?php endif; ?>
+                            <?php if(!empty($collageWebsite)) : ?>
+                                <div class="cbedu-result-collage-info">
+                                    <p><?php _e('Website: ', 'edu-results'); echo esc_html($collageWebsite); ?></p>
+                                </div>
+                            <?php endif; ?>
                         </div>
                         <div class="cbedu-result-collage-std-image">
                             <?php
