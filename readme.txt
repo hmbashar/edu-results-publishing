@@ -18,6 +18,51 @@ This plugin is a powerful tool designed to simplify the process of publishing ex
 
 Gone are the days of manual result publication; our plugin streamlines the entire process, saving time and effort for educational institutions of all sizes. Whether you're a small school or a large university, this plugin is tailored to meet your needs.
 
+
+= **Features List** =
+
+= College Information Display =
+- **College Name**: Displays the name of the college.
+- **College Registration Number**: Showcases the college's official registration number.
+- **College Contact Details**: Lists the college's phone number and email address.
+- **College Address**: Provides the physical address of the college.
+- **College Website URL**: Directs to the college's official website.
+- **College Logo**: Features the college's logo.
+- **Result Page Banner Heading**: Offers a customizable heading for the result page banner.
+
+= Student Personal Information Display =
+- **Student Roll Number and Registration Number**: Displays roll and registration numbers.
+- **Student's Name**: Retrieved from the post title.
+- **Parental Details**: Names of the student's parents.
+- **DOB, Board, and Group Information**: Date of birth, board name, and group.
+- **Student ID and Result Status**: Unique ID and result status.
+- **Student Type**: Classification of the student type.
+
+= Student's Photo Display =
+- Capable of displaying the student's photo, either from a post thumbnail or a default image.
+
+= Student Academic Information Display =
+- **Student's GPA**: Displays Grade Point Average (GPA) and GPA without additional subjects.
+- **Subjects Information**: Lists subjects along with marks, letter grades, and GPA.
+
+= Dynamic Subject Result Table =
+- Generates a table dynamically showing each subject with marks, letter grades, and GPA.
+
+= How to Use? = 
+
+1. Install and activate the plugin.
+2. Access the WordPress dashboard.
+3. First You need to add Subjects
+4. Add Session, Examinations, Boards, Departments
+5. Add Students
+Note: The Session, Examinations, Boards, Departments isn't required for the student's (It's Optional), it's required only for Results, 
+6. Add Results
+7. [cbedu_search_form] use shortcode for display search form.
+Note: template isn't required but it will be better view with the full-width
+more feature are coming. just wait.... and stay with us. also elementor version is coming soon...
+
+Thank You.
+
 == Frequently Asked Questions ==
 
 
@@ -25,18 +70,19 @@ Gone are the days of manual result publication; our plugin streamlines the entir
 
 1. Install and activate the plugin.
 2. Access the WordPress dashboard.
-3. Create a new 'edu_results' post.
-4. Enter student information and subject scores.
-5. Publish the post to make results accessible.
-6. Use the shortcode [edu_results]
+3. First You need to add Subjects
+4. Add Session, Examinations, Boards, Departments
+5. Add Students
+Note: The Session, Examinations, Boards, Departments isn't required for the student's (It's Optional), it's required only for Results, 
+6. Add Results
+7. [cbedu_search_form] use shortcode for display search form.
+Note: template isn't required but it will be better view with the full-width
+more feature are coming. just wait.... and stay with us. also elementor version is coming soon...
+
+Thank You.
+
 
 = Can I customize the result fields? =
-
-Yes, you can create custom fields for student data such as ID numbers, names, and more.
-
-= What does this plugin support? =
-
-It supports subject-wise scores, date of birth (DOB), GPA calculation, result status, and more.
 
 
 == Screenshots ==
