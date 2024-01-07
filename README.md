@@ -60,6 +60,8 @@ Gone are the days of manual result publication; our plugin streamlines the entir
 
 Thank you.
 
+https://www.youtube.com/watch?v=GS50XOJcpvA
+
 ## Frequently Asked Questions
 
 ### How do I publish student results?
