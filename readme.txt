@@ -86,8 +86,12 @@ Thank You.
 
 
 == Screenshots ==
-1. metabox
-
+1. Search form
+2. Student fields
+3. Subject fields
+4. Session, Examinations, Boards, Departments fields
+5. Results fields
+6. Plugin Settings
 
 == Changelog ==
 
