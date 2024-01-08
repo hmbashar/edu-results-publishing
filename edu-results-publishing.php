@@ -6,7 +6,7 @@
  * Description: This plugin is for student exam results publishing.
  * Tags: Result, WP Result Plugin, EDU Results
  * Text Domain: edu-results
- * Version: 1.0
+ * Version: 1.0.1
  * License: GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Domain Path: /languages
@@ -351,12 +351,12 @@ class CBEDUResultPublishing
         );
     
         // Execute the query for 'cbedu_results'
-        $query = new WP_Query($args);
+        $ResultQuery = new WP_Query($args);
     
         // Output the results
-        if ($query->have_posts()) {
-            while ($query->have_posts()) {
-                $query->the_post();
+        if ($ResultQuery->have_posts()) {
+            while ($ResultQuery->have_posts()) {
+                $ResultQuery->the_post();
 
                 $collageName = get_option('cbedu_results_collage_name');
 
@@ -366,6 +366,10 @@ class CBEDUResultPublishing
                 $rs_std_result_status = get_post_meta(get_the_ID(), 'cbedu_result_std_result_status', true);
                 $rs_std_gpa = get_post_meta(get_the_ID(), 'cbedu_result_std_gpa', true);
     
+                //Student subjects result
+                $cbedu_std_all_subjects_result = get_post_meta(get_the_ID(), 'cbedu_subjects_results', true);
+                $cbedu_std_gpa = get_post_meta(get_the_ID(), 'cbedu_result_std_gpa', true);
+                $cbedu_std_was_gpa = get_post_meta(get_the_ID(), 'cbedu_result_std_was_gpa', true);
 
                  // Fetch taxonomy term names
                 $session_year_terms = wp_get_post_terms(get_the_ID(), 'cbedu_session_years', array('fields' => 'names'));
@@ -467,6 +471,77 @@ class CBEDUResultPublishing
                                         </tr>
                                     </table>
                                 </div><!--/ Student Information-->
+
+                                <!--Student Subjects Information-->
+                                <div class="cbedu-result-student-subject-area">
+                                    <div class="cbedu-result-student-subject">
+                                        <div class="cbedu-result-student-subject-heading">
+                                            <h4><?php _e('Result Sheet', 'edu-results'); ?></h4>
+                                        </div>
+                                        <table>
+                                            <tr>
+                                                <th><?php _e('Subject', 'edu-results'); ?></th>
+                                                <th><?php _e('Name of Subjects', 'edu-results'); ?></th>
+                                                <th><?php _e('Marks', 'edu-results'); ?></th>
+                                                <th><?php _e('Letter Grade', 'edu-results'); ?></th>
+                                                <th class="cbedu-table-gpa"><?php _e('GPA', 'edu-results'); ?> <abbr title="Without additional subject"><?php _e('(WAS)', 'edu-results'); ?></abbr></th>
+                                                <th><?php _e('GPA', 'edu-results'); ?></th>
+                                            </tr>
+                                            <?php
+
+                                            // Check if there are subject results
+                                            if (!empty($cbedu_std_all_subjects_result) && is_array($cbedu_std_all_subjects_result)) {
+                                                // Calculate the total number of rows for the rowspan
+                                                $rowSpan = count($cbedu_std_all_subjects_result);
+                                                // Initialize a variable to track the first row
+                                                $isFirstRow = true;
+
+
+                                                foreach ($cbedu_std_all_subjects_result as $subject_result) {
+                                                    if (isset($subject_result['subject_name']) && isset($subject_result['subject_value'])) {
+                                                        $subject_name = esc_html($subject_result['subject_name']);
+                                                        $marks = intval(esc_html($subject_result['subject_value'])); // Assuming the marks are stored in 'subject_value'
+                                                        list($letter_grade, $grade_point) = CBEDUResultPublishing::convert_marks_to_grade($marks);
+
+                                                        // Fetch subject code based on subject name
+                                                        $subject_posts = get_posts(array(
+                                                            'post_type' => 'cbedu_subjects',
+                                                            'title'     => $subject_name,
+                                                            'posts_per_page' => 1
+                                                        ));
+
+                                                        $subject_code = '';
+                                                        if (!empty($subject_posts)) {
+                                                            $subject_code = get_post_meta($subject_posts[0]->ID, 'cbedu_subject_code', true);
+                                                        }
+
+                                            ?>
+                                                        <tr>
+                                                            <td><?php echo esc_html($subject_code); ?></td>
+                                                            <td><?php echo esc_html($subject_name); ?></td>
+                                                            <td><?php echo esc_html($marks); ?></td>
+                                                            <td><?php echo esc_html($letter_grade); ?></td>
+                                                            <?php if ($isFirstRow) { ?>
+                                                                <td rowspan="<?php echo $rowSpan; ?>" class="highlight"><?php echo esc_html($cbedu_std_was_gpa); ?></td>
+                                                                <td rowspan="<?php echo $rowSpan; ?>" class="highlight"><?php echo esc_html($cbedu_std_gpa); ?></td>
+                                                                <?php
+                                                                // Set to false so the rowspan is not repeated in subsequent rows
+                                                                $isFirstRow = false;
+                                                                ?>
+                                                            <?php } ?>
+                                                        </tr>
+
+                                            <?php
+
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div><!--/ Student Subjects Information-->
                             </div>                                                   
                         </div>
                         <div class="cbedu-print-button-container">
