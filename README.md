@@ -2,7 +2,7 @@
 
 **Contributors:** hmbashar  
 **Donate link:** [Buy me a coffee](https://www.buymeacoffee.com/hmbashar)  
-**Tags:** Result, WP Result Plugin, EDU Results  
+**Tags:** Tags: Result, WP Result Plugin, EDU Results, academic, student, education, examination, report card, gradebook, transcript, college management, university result  
 **Requires at least:** 4.7  
 **Tested up to:** 6.4.2  
 **Stable tag:** 1.0.1  
@@ -96,6 +96,9 @@ Thank you.
 9. Results Sheet
 
 ## Changelog
+
+### 1.0.1
+- Added Subject with Marksheet in ajax search result page.
 
 ### 1.0
 - Just release the version, Initial release with result publishing features.
