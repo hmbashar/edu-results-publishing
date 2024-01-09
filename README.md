@@ -91,6 +91,9 @@ Thank you.
 4. Session, Examinations, Boards, Departments fields
 5. Results fields
 6. Plugin Settings
+7. Student Information on result page
+8. Search form with Result
+9. Results Sheet
 
 ## Changelog
 

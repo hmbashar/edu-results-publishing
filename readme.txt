@@ -95,6 +95,9 @@ https://www.youtube.com/watch?v=GS50XOJcpvA
 4. Session, Examinations, Boards, Departments fields
 5. Results fields
 6. Plugin Settings
+7. Student Information on result page
+8. Search Form with Result Sheet
+9. Result Sheet
 
 == Changelog ==
 
