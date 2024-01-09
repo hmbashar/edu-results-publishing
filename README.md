@@ -18,7 +18,7 @@ This plugin is a powerful tool designed to simplify the process of publishing ex
 
 Gone are the days of manual result publication; our plugin streamlines the entire process, saving time and effort for educational institutions of all sizes. Whether you're a small school or a large university, this plugin is tailored to meet your needs.
 
-[WordPress Directory](https://wordpress.org/plugins/edu-results-publishing){:target="_blank"}
+[WordPress Directory](https://wordpress.org/plugins/edu-results-publishing)
 
 ### **Features List**
 
@@ -85,23 +85,24 @@ Thank you.
 
 ## Screenshots
 
-1. [Search form](https://raw.githubusercontent.com/hmbashar/edu-results-publishing/master/screenshots/screenshot-1.png){:target="_blank"}
+1. [Search form](https://raw.githubusercontent.com/hmbashar/edu-results-publishing/master/screenshots/screenshot-1.png)
 
-2. [Student fields](https://raw.githubusercontent.com/hmbashar/edu-results-publishing/master/screenshots/screenshot-2.png){:target="_blank"}
+2. [Student fields](https://raw.githubusercontent.com/hmbashar/edu-results-publishing/master/screenshots/screenshot-2.png)
 
-3. [Subject fields](https://raw.githubusercontent.com/hmbashar/edu-results-publishing/master/screenshots/screenshot-3.png){:target="_blank"}
+3. [Subject fields](https://raw.githubusercontent.com/hmbashar/edu-results-publishing/master/screenshots/screenshot-3.png)
 
-4. [Session, Examinations, Boards, Departments fields](https://raw.githubusercontent.com/hmbashar/edu-results-publishing/master/screenshots/screenshot-4.png){:target="_blank"}
+4. [Session, Examinations, Boards, Departments fields](https://raw.githubusercontent.com/hmbashar/edu-results-publishing/master/screenshots/screenshot-4.png)
 
-5. [Results fields](https://raw.githubusercontent.com/hmbashar/edu-results-publishing/master/screenshots/screenshot-5.png){:target="_blank"}
+5. [Results fields](https://raw.githubusercontent.com/hmbashar/edu-results-publishing/master/screenshots/screenshot-5.png)
 
-6. [Plugin Settings](https://raw.githubusercontent.com/hmbashar/edu-results-publishing/master/screenshots/screenshot-6.png){:target="_blank"}
+6. [Plugin Settings](https://raw.githubusercontent.com/hmbashar/edu-results-publishing/master/screenshots/screenshot-6.png)
 
-7. [Student Information on result page](https://raw.githubusercontent.com/hmbashar/edu-results-publishing/master/screenshots/screenshot-7.png){:target="_blank"}
+7. [Student Information on result page](https://raw.githubusercontent.com/hmbashar/edu-results-publishing/master/screenshots/screenshot-7.png)
 
-8. [Search form with Result](https://raw.githubusercontent.com/hmbashar/edu-results-publishing/master/screenshots/screenshot-8.png){:target="_blank"}
+8. [Search form with Result](https://raw.githubusercontent.com/hmbashar/edu-results-publishing/master/screenshots/screenshot-8.png)
 
-9. [Results Sheet](https://raw.githubusercontent.com/hmbashar/edu-results-publishing/master/screenshots/screenshot-9.png){:target="_blank"}
+9. [Results Sheet](https://raw.githubusercontent.com/hmbashar/edu-results-publishing/master/screenshots/screenshot-9.png)
+
 
 ## Changelog
 
