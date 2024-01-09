@@ -18,6 +18,8 @@ This plugin is a powerful tool designed to simplify the process of publishing ex
 
 Gone are the days of manual result publication; our plugin streamlines the entire process, saving time and effort for educational institutions of all sizes. Whether you're a small school or a large university, this plugin is tailored to meet your needs.
 
+<a href="https://github.com/hmbashar/edu-results-publishing" target="_blank">Github</a>
+
 
 = **Features List** =
 
