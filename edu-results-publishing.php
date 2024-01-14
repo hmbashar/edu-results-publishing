@@ -107,6 +107,12 @@ class CBEDUResultPublishing
         if (class_exists('\cbedu\inc\lib\CBEDUResultsShortcode')) {
             new \cbedu\inc\lib\CBEDUResultsShortcode();
         }
+
+         // Initialize CBEDUCustomFunctions
+        if (class_exists('\cbedu\inc\lib\CBEDUCustomFunctions\CBEDUCustomFunctions')) {
+            new \cbedu\inc\lib\CBEDUCustomFunctions\CBEDUCustomFunctions($this->prefix);
+        }
+        
     }
     
     public function addPluginActionLinks($links)
@@ -577,6 +583,9 @@ require_once CBEDU_RESULT_DIR . 'inc/lib/shortcode.php';
 require_once CBEDU_RESULT_DIR . 'inc/lib/custom-posts.php';
 
 require_once CBEDU_RESULT_DIR . 'inc/lib/custom-taxonomy.php';
+
+require_once CBEDU_RESULT_DIR . 'inc/lib/custom-functions.php';
+
 
 //init the main class
 $CBEDUResultPublishing = new CBEDUResultPublishing();
