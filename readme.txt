@@ -20,6 +20,7 @@ Gone are the days of manual result publication; our plugin streamlines the entir
 
 <a href="https://github.com/hmbashar/edu-results-publishing" target="_blank">Github</a>
 
+Use the shortcode `[cbedu_search_form]` for displaying the search form. Note: A template isn't required but it will be a better view with the full-width. More features are coming. Just wait.... and stay with us. Also, the Elementor version is coming soon.
 
 = **Features List** =
 
@@ -65,6 +66,9 @@ more feature are coming. just wait.... and stay with us. also elementor version 
 
 Thank You.
 
+https://www.youtube.com/watch?v=GS50XOJcpvA
+
+
 == Frequently Asked Questions ==
 
 
@@ -77,7 +81,7 @@ Thank You.
 5. Add Students
 Note: The Session, Examinations, Boards, Departments isn't required for the student's (It's Optional), it's required only for Results, 
 6. Add Results
-7. [cbedu_search_form] use shortcode for display search form.
+7. `[cbedu_search_form]` use shortcode for display search form.
 Note: template isn't required but it will be better view with the full-width
 more feature are coming. just wait.... and stay with us. also elementor version is coming soon...
 

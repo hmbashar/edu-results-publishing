@@ -74,8 +74,7 @@ https://www.youtube.com/watch?v=GS50XOJcpvA
 4. Add Session, Examinations, Boards, Departments.
 5. Add Students. Note: The Session, Examinations, Boards, Departments aren't required for the students (It's Optional), it's required only for Results.
 6. Add Results.
-7. Use the shortcode `[cbedu_search_form]` for displaying the search form. Note: A template isn't required but it will be a better view with the full-width.
-   More features are coming. Just wait.... and stay with us. Also, the Elementor version is coming soon...
+7. Use the shortcode `[cbedu_search_form]` for displaying the search form. Note: A template isn't required but it will be a better view with the full-width. More features are coming. Just wait.... and stay with us. Also, the Elementor version is coming soon.
 
 Thank you.
 
