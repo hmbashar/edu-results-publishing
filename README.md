@@ -5,7 +5,7 @@
 **Tags:** Tags: Result, WP Result Plugin, EDU Results, academic, student, education, examination, report card, gradebook, transcript, college management, university result  
 **Requires at least:** 4.7  
 **Tested up to:** 6.4.2  
-**Stable tag:** 1.0.1  
+**Stable tag:** 1.0.2  
 **Requires PHP:** 7.0  
 **License:** GPLv2 or later  
 **License URI:** [GNU General Public License v2.0](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -105,6 +105,9 @@ Thank you.
 
 
 ## Changelog
+
+### 1.0.2
+- Taxonomy Required for result publishing
 
 ### 1.0.1
 - Added Subject with Marksheet in ajax search result page.
