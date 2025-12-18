@@ -28,6 +28,47 @@ class CBEDUCustomFields
 
         add_action('wp_ajax_add_search_registration_numbers', array($this, 'add_search_registration_numbers'));
         //  add_action('wp_ajax_nopriv_add_search_registration_numbers', array($this, 'add_search_registration_numbers'));
+        
+        // Hook to handle auto-draft deletion
+        add_action('admin_init', array($this, 'handle_auto_draft_deletion'));
+    }
+    
+    /**
+     * Handle auto-draft deletion via admin actions
+     */
+    public function handle_auto_draft_deletion()
+    {
+        // Check if we're trying to delete an auto-draft
+        if (isset($_GET['action']) && $_GET['action'] === 'trash' && isset($_GET['post'])) {
+            $post_id = intval($_GET['post']);
+            $post = get_post($post_id);
+            
+            if ($post && $post->post_status === 'auto-draft' && 
+                in_array($post->post_type, array('cbedu_students', 'cbedu_subjects', 'cbedu_results'))) {
+                
+                // Force delete auto-draft instead of trashing
+                wp_delete_post($post_id, true);
+                
+                // Redirect back to the list
+                wp_redirect(admin_url('edit.php?post_type=' . $post->post_type . '&deleted=1'));
+                exit;
+            }
+        }
+        
+        // Handle bulk deletion
+        if (isset($_GET['action']) && $_GET['action'] === 'trash' && isset($_GET['post']) && is_array($_GET['post'])) {
+            foreach ($_GET['post'] as $post_id) {
+                $post_id = intval($post_id);
+                $post = get_post($post_id);
+                
+                if ($post && $post->post_status === 'auto-draft' && 
+                    in_array($post->post_type, array('cbedu_students', 'cbedu_subjects', 'cbedu_results'))) {
+                    
+                    // Force delete auto-draft instead of trashing
+                    wp_delete_post($post_id, true);
+                }
+            }
+        }
     }
 
     /**
@@ -41,8 +82,38 @@ class CBEDUCustomFields
 
         add_action('save_post', array($this, 'save_student_fields'));
         add_action('save_post', array($this, 'cbedu_check_unique_registration_number'));        
+        
         // Clean up auto-draft posts
         add_action('wp_scheduled_delete', array($this, 'cleanup_auto_drafts'));
+        
+        // Allow deletion of auto-draft posts
+        add_filter('user_has_cap', array($this, 'allow_auto_draft_deletion'), 10, 4);
+    }
+    
+    /**
+     * Allow users to delete auto-draft posts for our custom post types
+     */
+    public function allow_auto_draft_deletion($allcaps, $caps, $args, $user)
+    {
+        // Check if this is a delete operation
+        if (isset($args[0]) && in_array($args[0], array('delete_post', 'delete_posts'))) {
+            // Check if we have a post ID
+            if (isset($args[2])) {
+                $post_id = $args[2];
+                $post = get_post($post_id);
+                
+                // If it's an auto-draft of our custom post types, allow deletion
+                if ($post && in_array($post->post_type, array('cbedu_students', 'cbedu_subjects', 'cbedu_results'))) {
+                    if ($post->post_status === 'auto-draft') {
+                        $allcaps['delete_posts'] = true;
+                        $allcaps['delete_published_posts'] = true;
+                        $allcaps['delete_others_posts'] = true;
+                    }
+                }
+            }
+        }
+        
+        return $allcaps;
     }
     
     /**
@@ -63,7 +134,8 @@ class CBEDUCustomFields
                 AND DATE_SUB(NOW(), INTERVAL 7 DAY) > post_date",
                 $post_type
             ));
-        }    }
+        }
+    }
 
     /**
      * Adds the student fields meta box.
