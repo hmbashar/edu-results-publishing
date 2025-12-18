@@ -33,7 +33,7 @@ define('CBEDU_RESULT_DIR', plugin_dir_path(__FILE__));
 define('CBEDU_PREFIX', 'cbedu_');
 define('CBEDU_VERSION', '1.2.0');
 
-class CBEDUResultPublishing
+final class CBEDUResultPublishing
 {
     // Plugin prefix
     private $prefix;
