@@ -105,6 +105,11 @@ https://www.youtube.com/watch?v=GS50XOJcpvA
 
 == Changelog ==
 
+= 1.2.0 =
+* Enhanced features and improvements
+* Bug fixes and performance optimization
+* Updated compatibility with WordPress 6.9
+
 = 1.0.2 =
 * Taxonomy Required for result publishing
 
