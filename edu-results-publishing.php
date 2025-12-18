@@ -6,7 +6,7 @@
  * Description: This plugin is for student exam results publishing.
  * Tags: Result, WP Result Plugin, EDU Results
  * Text Domain: edu-results
- * Version: 1.0.2
+ * Version: 1.2.0
  * License: GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Domain Path: /languages
@@ -20,13 +20,18 @@
  * @author MD Abul Bashar
  * @link https://facebook.com/hmbashar
  */
+
+namespace CBEDU;
+
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
+
 
 
 //define URL
 define('CBEDU_RESULT_URL', plugin_dir_url(__FILE__));
 define('CBEDU_RESULT_DIR', plugin_dir_path(__FILE__));
 define('CBEDU_PREFIX', 'cbedu_');
+define('CBEDU_VERSION', '1.2.0');
 
 class CBEDUResultPublishing
 {
