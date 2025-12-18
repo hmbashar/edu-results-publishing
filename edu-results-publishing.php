@@ -369,7 +369,7 @@ class CBEDUResultPublishing
         );
     
         // Execute the query for 'cbedu_results'
-        $ResultQuery = new WP_Query($args);
+        $ResultQuery = new \WP_Query($args);
     
         // Output the results
         if ($ResultQuery->have_posts()) {
