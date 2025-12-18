@@ -11,6 +11,8 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Domain Path: /languages
  * Prefix: cbedu_ 
+ * Requires at least: 5.0
+ * Requires PHP: 7.2
  */
 
 

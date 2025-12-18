@@ -1,7 +1,7 @@
 === EDU Results Publishing ===
 Contributors: hmbashar
 Donate link: https://www.buymeacoffee.com/hmbashar
-Tags: Result, WP Result Plugin, EDU Results, academic, student, education, examination, report card, gradebook, transcript, college management, university result
+Tags: Result, WP Result Plugin, EDU Results, academic
 Requires at least: 4.7
 Tested up to: 6.9
 Stable tag: 1.2.0
@@ -102,6 +102,9 @@ https://www.youtube.com/watch?v=GS50XOJcpvA
 7. Student Information on result page
 8. Search Form with Result Sheet
 9. Result Sheet
+10. New Search Form
+11. New Result Sheet style.
+12. New Student fields
 
 == Changelog ==
 
