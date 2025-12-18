@@ -98,11 +98,26 @@
 }
 
 /*------------------------------
-* Search Form
+* Search Form - Modern UI
 ------------------------------*/
 
 .cbedu-results-search-form-area {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cbedu-results-search-form-area h2 {
+  text-align: center;
+  color: #2d3748;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .cbedu-results-search-form-area form {
@@ -111,17 +126,18 @@
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  padding: 30px 25px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  gap: 10px;
+  padding: 40px 35px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  gap: 20px;
 }
 
 .cbedu-results-search-form-single-element-area {
   display: flex;
   flex-direction: column;
+  gap: 8px;
 }
 
 .cbedu-results-search-form-single-element {
@@ -133,39 +149,85 @@
 
 .cbedu-results-search-form-single-element label {
   flex-basis: 30%;
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 15px;
 }
 
 .cbedu-results-search-form-single-element input,
 .cbedu-results-search-form-single-element select,
 .cbedu-results-search-form-single-element input[type="text"] {
-  border: 1px solid #3666;
-  padding: 15px;
+  flex: 1;
+  border: 2px solid #e2e8f0;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  background: #fff;
+  color: #2d3748;
+  font-weight: 500;
+}
+
+.cbedu-results-search-form-single-element input:focus,
+.cbedu-results-search-form-single-element select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  transform: translateY(-1px);
+}
+
+.cbedu-results-search-form-single-element select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  padding-right: 40px;
 }
 
 .cbedu-results-search-form-single-element.cbedu-results-search-form-submit {
   display: flex;
   justify-content: center;
+  margin-top: 10px;
 }
 
 .cbedu-results-search-form-submit input[type="submit"] {
-  padding: 15px 25px;
-  background-color: #1587fc;
+  padding: 16px 50px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #fff;
   font-size: 18px;
-  font-weight: 500;
-  border-radius: 5px;
+  font-weight: 600;
+  border-radius: 10px;
   cursor: pointer;
+  border: none;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .cbedu-results-search-form-submit input[type="submit"]:hover {
-  background-color: #0e52b5;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+}
+
+.cbedu-results-search-form-submit input[type="submit"]:active {
+  transform: translateY(0);
 }
 
 .cbedu-error-message {
-  color: red;
+  color: #e53e3e;
   margin-top: 5px;
-  font-size: 0.9em;
-  align-self: center;
+  font-size: 13px;
+  align-self: flex-start;
+  padding-left: calc(30% + 20px);
+  font-weight: 500;
+}
+
+/* Preloader */
+#cbedu-ajax-result-preloader {
+  text-align: center;
+  padding: 40px 0;
 }
 
 .cbedu-ajax-preloader-ellipsis {
@@ -181,7 +243,7 @@
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  background: #1f79ff;
+  background: #667eea;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 
@@ -204,8 +266,33 @@
   left: 56px;
   animation: cbedu-ellipsis3 0.6s infinite;
 }
-.cbedu-ajax-result-area table th{
-text-align: left;
+
+@media (max-width: 768px) {
+  .cbedu-results-search-form-area form {
+    padding: 25px 20px;
+    gap: 15px;
+  }
+
+  .cbedu-results-search-form-single-element {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .cbedu-results-search-form-single-element label {
+    flex-basis: auto;
+    width: 100%;
+  }
+
+  .cbedu-error-message {
+    padding-left: 0;
+  }
+
+  .cbedu-results-search-form-submit input[type="submit"] {
+    width: 100%;
+    padding: 14px 30px;
+    font-size: 16px;
+  }
 }
 @keyframes cbedu-ellipsis1 {
   0% {
@@ -234,5 +321,329 @@ text-align: left;
 
   100% {
     transform: translate(24px, 0);
+  }
+}
+
+/*------------------------------
+* AJAX Result Display - Modern UI
+------------------------------*/
+
+/* Main Result Container */
+.cbedu-ajax-result-area {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.cbedu-ajax-result {
+  padding: 0;
+}
+
+/* Section Headings */
+.cbedu-result-student-information-heading,
+.cbedu-result-student-subject-heading {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px 30px;
+  margin: 0;
+}
+
+.cbedu-result-student-information-heading h4,
+.cbedu-result-student-subject-heading h4 {
+  color: #fff;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cbedu-result-student-information-heading h4:before {
+  content: "👤";
+  font-size: 24px;
+}
+
+.cbedu-result-student-subject-heading h4:before {
+  content: "📊";
+  font-size: 24px;
+}
+
+/* Student Information Area */
+.cbedu-result-student-information-area {
+  margin-bottom: 30px;
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+  background: #fff;
+}
+
+.cbedu-result-student-information-area table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  background: #fff;
+}
+
+.cbedu-result-student-information-area table tbody tr:nth-child(even) {
+  background: #f8f9ff;
+}
+
+.cbedu-result-student-information-area table tbody tr:hover {
+  background: #f0f2ff;
+  transition: background 0.3s ease;
+}
+
+.cbedu-result-student-information-area th {
+  background: #f7f8fc;
+  color: #2d3748;
+  font-weight: 600;
+  padding: 16px 20px;
+  text-align: left;
+  border-bottom: 2px solid #e2e8f0;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  width: 25%;
+}
+
+.cbedu-result-student-information-area td {
+  padding: 16px 20px;
+  color: #4a5568;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* Subject Result Area */
+.cbedu-result-student-subject-area {
+  background: #fff;
+  border-radius: 0 0 12px 12px;
+  overflow: hidden;
+}
+
+.cbedu-result-student-subject {
+  padding: 0;
+}
+
+.cbedu-result-student-subject table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  background: #fff;
+}
+
+.cbedu-result-student-subject table thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.cbedu-result-student-subject table thead tr th {
+  color: #fff;
+  font-weight: 600;
+  padding: 18px 20px;
+  text-align: center;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+.cbedu-result-student-subject table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.cbedu-result-student-subject table tbody tr:nth-child(even) {
+  background: #f8f9ff;
+}
+
+.cbedu-result-student-subject table tbody tr:hover {
+  background: #e6f2ff;
+  transform: scale(1.01);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+}
+
+.cbedu-result-student-subject table tbody td {
+  padding: 16px 20px;
+  color: #4a5568;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.cbedu-result-student-subject table tbody td:nth-child(1) {
+  font-weight: 700;
+  color: #667eea;
+}
+
+.cbedu-result-student-subject table tbody td:nth-child(2) {
+  text-align: left;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+/* Highlight cells (GPA columns) */
+.cbedu-result-student-subject table tbody td.highlight {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  font-weight: 700;
+  font-size: 18px;
+  color: #2d3748;
+  border-left: 3px solid #667eea;
+  border-right: 3px solid #764ba2;
+}
+
+/* Grade styling */
+.cbedu-result-student-subject table tbody td:nth-child(4) {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* Print Button Container */
+.cbedu-print-button-container {
+  text-align: center;
+  padding: 30px;
+  background: #f7f8fc;
+  border-radius: 0 0 12px 12px;
+}
+
+.cbedu-print-button-container button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  padding: 14px 40px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cbedu-print-button-container button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
+}
+
+.cbedu-print-button-container button:active {
+  transform: translateY(0);
+}
+
+/* Status Badge Styling */
+.cbedu-result-student-information-area td:contains("Passed"),
+.cbedu-result-student-information-area td:contains("Failed") {
+  font-weight: 700;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .cbedu-ajax-result-area {
+    margin: 20px 10px;
+    border-radius: 8px;
+  }
+
+  .cbedu-result-student-information-heading,
+  .cbedu-result-student-subject-heading {
+    padding: 15px 20px;
+  }
+
+  .cbedu-result-student-information-heading h4,
+  .cbedu-result-student-subject-heading h4 {
+    font-size: 16px;
+  }
+
+  .cbedu-result-student-information-area th,
+  .cbedu-result-student-information-area td,
+  .cbedu-result-student-subject table tbody td {
+    padding: 12px 15px;
+    font-size: 13px;
+  }
+
+  .cbedu-result-student-subject table thead tr th {
+    padding: 14px 10px;
+    font-size: 12px;
+  }
+
+  .cbedu-print-button-container {
+    padding: 20px;
+  }
+
+  .cbedu-print-button-container button {
+    padding: 12px 30px;
+    font-size: 14px;
+  }
+
+  /* Stack table on mobile */
+  .cbedu-result-student-information-area table,
+  .cbedu-result-student-information-area thead,
+  .cbedu-result-student-information-area tbody,
+  .cbedu-result-student-information-area th,
+  .cbedu-result-student-information-area td,
+  .cbedu-result-student-information-area tr {
+    display: block;
+  }
+
+  .cbedu-result-student-information-area thead tr {
+    display: none;
+  }
+
+  .cbedu-result-student-information-area tr {
+    margin-bottom: 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .cbedu-result-student-information-area td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .cbedu-result-student-information-area td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 15px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: 600;
+    color: #2d3748;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .cbedu-print-button-container {
+    display: none;
+  }
+
+  .cbedu-ajax-result-area {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+
+  .cbedu-result-student-information-heading,
+  .cbedu-result-student-subject-heading {
+    background: #667eea !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .cbedu-result-student-subject table tbody td.highlight {
+    background: #fed6e3 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    background: #fff;
   }
 }
