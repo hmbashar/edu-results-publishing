@@ -376,24 +376,28 @@ class CBEDUResultPublishing
             while ($ResultQuery->have_posts()) {
                 $ResultQuery->the_post();
 
+                // Store result post ID before nested query
+                $result_post_id = get_the_ID();
+                $result_title = get_the_title();
+
                 $collageName = get_option('cbedu_results_collage_name');
 
-                $rs_std_roll = get_post_meta(get_the_ID(), 'cbedu_result_std_roll', true);
-                $rs_std_reg_number = get_post_meta(get_the_ID(), 'cbedu_result_std_registration_number', true);
-                $rs_std_type = get_post_meta(get_the_ID(), 'cbedu_result_std_student_type', true);
-                $rs_std_result_status = get_post_meta(get_the_ID(), 'cbedu_result_std_result_status', true);
-                $rs_std_gpa = get_post_meta(get_the_ID(), 'cbedu_result_std_gpa', true);
+                $rs_std_roll = get_post_meta($result_post_id, 'cbedu_result_std_roll', true);
+                $rs_std_reg_number = get_post_meta($result_post_id, 'cbedu_result_std_registration_number', true);
+                $rs_std_type = get_post_meta($result_post_id, 'cbedu_result_std_student_type', true);
+                $rs_std_result_status = get_post_meta($result_post_id, 'cbedu_result_std_result_status', true);
+                $rs_std_gpa = get_post_meta($result_post_id, 'cbedu_result_std_gpa', true);
     
                 //Student subjects result
-                $cbedu_std_all_subjects_result = get_post_meta(get_the_ID(), 'cbedu_subjects_results', true);
-                $cbedu_std_gpa = get_post_meta(get_the_ID(), 'cbedu_result_std_gpa', true);
-                $cbedu_std_was_gpa = get_post_meta(get_the_ID(), 'cbedu_result_std_was_gpa', true);
+                $cbedu_std_all_subjects_result = get_post_meta($result_post_id, 'cbedu_subjects_results', true);
+                $cbedu_std_gpa = get_post_meta($result_post_id, 'cbedu_result_std_gpa', true);
+                $cbedu_std_was_gpa = get_post_meta($result_post_id, 'cbedu_result_std_was_gpa', true);
 
                  // Fetch taxonomy term names
-                $session_year_terms = wp_get_post_terms(get_the_ID(), 'cbedu_session_years', array('fields' => 'names'));
-                $examination_terms = wp_get_post_terms(get_the_ID(), 'cbedu_examinations', array('fields' => 'names'));
-                $board_terms = wp_get_post_terms(get_the_ID(), 'cbedu_boards', array('fields' => 'names'));
-                $department_group_terms = wp_get_post_terms(get_the_ID(), 'cbedu_department_group', array('fields' => 'names'));
+                $session_year_terms = wp_get_post_terms($result_post_id, 'cbedu_session_years', array('fields' => 'names'));
+                $examination_terms = wp_get_post_terms($result_post_id, 'cbedu_examinations', array('fields' => 'names'));
+                $board_terms = wp_get_post_terms($result_post_id, 'cbedu_boards', array('fields' => 'names'));
+                $department_group_terms = wp_get_post_terms($result_post_id, 'cbedu_department_group', array('fields' => 'names'));
 
                 // Convert term arrays to strings
                 $session_year = !empty($session_year_terms) ? implode(', ', $session_year_terms) : '';
@@ -415,97 +419,111 @@ class CBEDUResultPublishing
                     )
                 );
     
-                $student_query = new WP_Query($student_args);
+                $student_query = new \WP_Query($student_args);
+                
+                // Initialize student data
+                $st_father_name = '';
+                $st_mother_name = '';
+                $st_std_id = '';
+                $st_std_dob = '';
+                $st_std_gender = '';
     
                 if ($student_query->have_posts()) {
-                    while ($student_query->have_posts()) {
-                        $student_query->the_post();
+                    $student_post = $student_query->posts[0];
     
-                        // Fetch all student details
-                        $st_father_name = get_post_meta(get_the_ID(), 'cbedu_result_std_father_name', true);
-                        $st_mother_name = get_post_meta(get_the_ID(), 'cbedu_result_std_mother_name', true);
-                        $st_std_id = get_post_meta(get_the_ID(), 'cbedu_result_std_id', true);                        
-                        $st_std_dob = get_post_meta(get_the_ID(), 'cbedu_result_std_dob', true);
-                        $st_std_gender = get_post_meta(get_the_ID(), 'cbedu_result_std_gender', true);
+                    // Fetch all student details
+                    $st_father_name = get_post_meta($student_post->ID, 'cbedu_result_std_father_name', true);
+                    $st_mother_name = get_post_meta($student_post->ID, 'cbedu_result_std_mother_name', true);
+                    $st_std_id = get_post_meta($student_post->ID, 'cbedu_result_std_id', true);                        
+                    $st_std_dob = get_post_meta($student_post->ID, 'cbedu_result_std_dob', true);
+                    $st_std_gender = get_post_meta($student_post->ID, 'cbedu_result_std_gender', true);
+                }
+                
+                wp_reset_postdata(); // Reset student query
                         
     
-                        // Display the results in a table
-                        ?>
-                        <div class="cbedu-ajax-result-area" id="cbedu-result-table">
-                            <div class="cbedu-ajax-result">
-                                <!--Student Information-->
-                                <div class="cbedu-result-student-information-area">
-                                    <div class="cbedu-result-student-information-heading">
-                                        <h4><?php _e('Student Information', 'edu-results'); ?></h4>
-                                    </div>
-                                    <table>
-                                        <tr>
-                                            <th><?php _e('Roll', 'edu-results'); ?></th>
-                                            <td><?php echo esc_html($rs_std_roll); ?></td>
-                                            <th><?php _e('Registration Number', 'edu-results'); ?></th>
-                                            <td><?php echo esc_html($rs_std_reg_number); ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th><?php _e('Student Name', 'edu-results'); ?></th>
-                                            <td><?php the_title(); ?></td>
-                                            <th><?php _e('Student ID', 'edu-results'); ?></th>
-                                            <td><?php echo esc_html($st_std_id); ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th><?php _e('Father Name', 'edu-results'); ?></th>
-                                            <td><?php echo esc_html($st_father_name); ?></td>
-                                            <th><?php _e('Mother Name', 'edu-results'); ?></th>
-                                            <td><?php echo esc_html($st_mother_name); ?></td>                                            
-                                        </tr> 
-                                        <tr>
-                                            <th><?php _e('Board', 'edu-results'); ?></th>
-                                            <td><?php echo esc_html($board); ?></td>
-                                            <th><?php _e('Department Group', 'edu-results'); ?></th>
-                                            <td><?php echo esc_html($department_group); ?></td>                                            
-                                        </tr>
-                                        <tr>
-                                            <th><?php _e('Session', 'edu-results'); ?></th>
-                                            <td><?php echo esc_html($session_year); ?></td>
-                                            <th><?php _e('Result Status', 'edu-results'); ?></th>
-                                            <td><?php echo esc_html($rs_std_result_status); ?></td>                                            
-                                        </tr>
-                                        <tr>
-                                            <th><?php _e('Gender', 'edu-results'); ?></th>
-                                            <td><?php echo esc_html($st_std_gender); ?></td>
-                                            <th><?php _e('Date of Birth', 'edu-results'); ?></th>
-                                            <td><?php echo esc_html($st_std_dob); ?></td>                                            
-                                        </tr> 
-                                        <tr>
-                                            <th><?php _e('Student Type', 'edu-results'); ?></th>
-                                            <td><?php echo esc_html($rs_std_type); ?></td>
-                                            <th><?php _e('Institute Name', 'edu-results'); ?></th>
-                                            <td><?php echo esc_html($collageName); ?></td>                                            
-                                        </tr> 
-                                        <tr>
-                                            <th><?php _e('Examination', 'edu-results'); ?></th>
-                                            <td><?php echo esc_html($examination); ?></td>
-                                            <th><?php _e('GPA', 'edu-results'); ?></th>
-                                            <td><?php echo esc_html($rs_std_gpa); ?></td>                                            
-                                        </tr>
-                                    </table>
-                                </div><!--/ Student Information-->
+                // Display the results in a table
+                ?>
+                <div class="cbedu-ajax-result-area" id="cbedu-result-table">
+                    <div class="cbedu-ajax-result">
+                        <!--Student Information-->
+                        <div class="cbedu-result-student-information-area">
+                            <div class="cbedu-result-student-information-heading">
+                                <h4><?php esc_html_e('Student Information', 'edu-results'); ?></h4>
+                            </div>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <th><?php esc_html_e('Roll', 'edu-results'); ?></th>
+                                    <td><?php echo esc_html($rs_std_roll); ?></td>
+                                    <th><?php esc_html_e('Registration Number', 'edu-results'); ?></th>
+                                    <td><?php echo esc_html($rs_std_reg_number); ?></td>
+                                </tr>
+                                <tr>
+                                    <th><?php esc_html_e('Student Name', 'edu-results'); ?></th>
+                                    <td><?php echo esc_html($result_title); ?></td>
+                                    <th><?php esc_html_e('Student ID', 'edu-results'); ?></th>
+                                    <td><?php echo esc_html($st_std_id); ?></td>
+                                </tr>
+                                <tr>
+                                    <th><?php esc_html_e('Father Name', 'edu-results'); ?></th>
+                                    <td><?php echo esc_html($st_father_name); ?></td>
+                                    <th><?php esc_html_e('Mother Name', 'edu-results'); ?></th>
+                                    <td><?php echo esc_html($st_mother_name); ?></td>                                            
+                                </tr> 
+                                <tr>
+                                    <th><?php esc_html_e('Board', 'edu-results'); ?></th>
+                                    <td><?php echo esc_html($board); ?></td>
+                                    <th><?php esc_html_e('Department Group', 'edu-results'); ?></th>
+                                    <td><?php echo esc_html($department_group); ?></td>                                            
+                                </tr>
+                                <tr>
+                                    <th><?php esc_html_e('Session', 'edu-results'); ?></th>
+                                    <td><?php echo esc_html($session_year); ?></td>
+                                    <th><?php esc_html_e('Result Status', 'edu-results'); ?></th>
+                                    <td><?php echo esc_html($rs_std_result_status); ?></td>                                            
+                                </tr>
+                                <tr>
+                                    <th><?php esc_html_e('Gender', 'edu-results'); ?></th>
+                                    <td><?php echo esc_html($st_std_gender); ?></td>
+                                    <th><?php esc_html_e('Date of Birth', 'edu-results'); ?></th>
+                                    <td><?php echo esc_html($st_std_dob); ?></td>                                            
+                                </tr> 
+                                <tr>
+                                    <th><?php esc_html_e('Student Type', 'edu-results'); ?></th>
+                                    <td><?php echo esc_html($rs_std_type); ?></td>
+                                    <th><?php esc_html_e('Institute Name', 'edu-results'); ?></th>
+                                    <td><?php echo esc_html($collageName); ?></td>                                            
+                                </tr> 
+                                <tr>
+                                    <th><?php esc_html_e('Examination', 'edu-results'); ?></th>
+                                    <td><?php echo esc_html($examination); ?></td>
+                                    <th><?php esc_html_e('GPA', 'edu-results'); ?></th>
+                                    <td><?php echo esc_html($rs_std_gpa); ?></td>                                            
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div><!--/ Student Information-->
 
-                                <!--Student Subjects Information-->
-                                <div class="cbedu-result-student-subject-area">
-                                    <div class="cbedu-result-student-subject">
-                                        <div class="cbedu-result-student-subject-heading">
-                                            <h4><?php _e('Result Sheet', 'edu-results'); ?></h4>
-                                        </div>
-                                        <table>
-                                            <tr>
-                                                <th><?php _e('Subject', 'edu-results'); ?></th>
-                                                <th><?php _e('Name of Subjects', 'edu-results'); ?></th>
-                                                <th><?php _e('Marks', 'edu-results'); ?></th>
-                                                <th><?php _e('Letter Grade', 'edu-results'); ?></th>
-                                                <th class="cbedu-table-gpa"><?php _e('GPA', 'edu-results'); ?> <abbr title="Without additional subject"><?php _e('(WAS)', 'edu-results'); ?></abbr></th>
-                                                <th><?php _e('GPA', 'edu-results'); ?></th>
-                                            </tr>
-                                            <?php
+                        <!--Student Subjects Information-->
+                        <div class="cbedu-result-student-subject-area">
+                            <div class="cbedu-result-student-subject">
+                                <div class="cbedu-result-student-subject-heading">
+                                    <h4><?php esc_html_e('Result Sheet', 'edu-results'); ?></h4>
+                                </div>
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th><?php esc_html_e('Subject', 'edu-results'); ?></th>
+                                        <th><?php esc_html_e('Name of Subjects', 'edu-results'); ?></th>
+                                        <th><?php esc_html_e('Marks', 'edu-results'); ?></th>
+                                        <th><?php esc_html_e('Letter Grade', 'edu-results'); ?></th>
+                                        <th class="cbedu-table-gpa"><?php esc_html_e('GPA', 'edu-results'); ?> <abbr title="Without additional subject"><?php esc_html_e('(WAS)', 'edu-results'); ?></abbr></th>
+                                        <th><?php esc_html_e('GPA', 'edu-results'); ?></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
 
                                             // Check if there are subject results
                                             if (!empty($cbedu_std_all_subjects_result) && is_array($cbedu_std_all_subjects_result)) {
@@ -563,16 +581,12 @@ class CBEDUResultPublishing
                             </div>                                                   
                         </div>
                         <div class="cbedu-print-button-container">
-                            <button onclick="cbeduPrintResult('cbedu-result-table')"><?php _e('Print', 'edu-results'); ?></button>
+                            <button onclick="cbeduPrintResult('cbedu-result-table')"><?php esc_html_e('Print', 'edu-results'); ?></button>
                         </div>  
                         <?php
-                    }
-                }
-    
-                wp_reset_postdata(); // Reset student query
             }
         } else {
-            echo '<p>No results found for the selected examination.</p>';
+            echo '<p>' . esc_html__('No results found for the selected examination.', 'edu-results') . '</p>';
         }
     
         wp_reset_postdata(); // Reset main query
