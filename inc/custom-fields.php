@@ -40,8 +40,30 @@ class CBEDUCustomFields
         add_action('add_meta_boxes', array($this, 'add_student_fields_meta_box'));
 
         add_action('save_post', array($this, 'save_student_fields'));
-        add_action('save_post', array($this, 'cbedu_check_unique_registration_number'));
+        add_action('save_post', array($this, 'cbedu_check_unique_registration_number'));        
+        // Clean up auto-draft posts
+        add_action('wp_scheduled_delete', array($this, 'cleanup_auto_drafts'));
     }
+    
+    /**
+     * Clean up old auto-draft posts for cbedu custom post types
+     */
+    public function cleanup_auto_drafts()
+    {
+        global $wpdb;
+        
+        // Delete auto-drafts older than 7 days for our custom post types
+        $post_types = array('cbedu_students', 'cbedu_subjects', 'cbedu_results');
+        
+        foreach ($post_types as $post_type) {
+            $wpdb->query($wpdb->prepare(
+                "DELETE FROM {$wpdb->posts} 
+                WHERE post_type = %s 
+                AND post_status = 'auto-draft' 
+                AND DATE_SUB(NOW(), INTERVAL 7 DAY) > post_date",
+                $post_type
+            ));
+        }    }
 
     /**
      * Adds the student fields meta box.
@@ -703,8 +725,15 @@ class CBEDUCustomFields
         if (!current_user_can('edit_post', $post_id)) return;
         if (get_post_type($post_id) !== 'cbedu_results') return;
 
+        // Skip auto-draft, trash, and inherit posts
+        $post_status = get_post_status($post_id);
+        if (in_array($post_status, array('auto-draft', 'trash', 'inherit'))) return;
+
         // Get the registration number from the 'cbedu_results' post meta
         $registration_number = get_post_meta($post_id, 'cbedu_result_std_registration_number', true);
+
+        // Skip if no registration number is set
+        if (empty($registration_number)) return;
 
         // Find the 'cbedu_students' post with this registration number
         $student_posts = get_posts(array(
@@ -721,11 +750,17 @@ class CBEDUCustomFields
 
             // Check if the title is different from the current title of 'cbedu_results' post
             if (get_the_title($post_id) !== $student_post_title) {
+                // Unhook to prevent infinite loop
+                remove_action('save_post', array($this, 'update_cbedu_results_title_on_save'));
+                
                 // Update the title of 'cbedu_results' post                
                 wp_update_post(array(
                     'ID'         => $post_id,
                     'post_title' => $student_post_title
                 ));
+                
+                // Re-hook the action
+                add_action('save_post', array($this, 'update_cbedu_results_title_on_save'));
             }
         }
     }
