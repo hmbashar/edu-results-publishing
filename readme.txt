@@ -9,7 +9,7 @@ Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin is a powerful tool designed to simplify the process of publishing exam results for educational institutions such as schools, colleges, and universities. With an easy-to-use interface, it empowers administrators and educators to effortlessly manage and showcase academic achievements.
+Simplify exam results publishing for schools, colleges, and universities with an easy-to-use interface for managing academic achievements.
 
 
 == Description ==
