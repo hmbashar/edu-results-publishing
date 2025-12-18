@@ -180,10 +180,17 @@ class CBEDUResultPublishing
             'nonce' => wp_create_nonce('cbedu_register_number_nonce')
         ));
 
-        //for autocomplete jquery in results post type with registration number
+        // Enqueue admin meta fields CSS for custom post types
         if ($hook_suffix === 'post-new.php' || $hook_suffix === 'post.php') {
-            if (get_post_type($post) === 'cbedu_results') {
+            $post_type = get_post_type($post);
+            
+            // Load admin CSS for students, subjects, and results post types
+            if (in_array($post_type, array('cbedu_students', 'cbedu_subjects', 'cbedu_results'))) {
+                wp_enqueue_style('cbedu-admin-meta-fields', CBEDU_RESULT_URL . 'assets/css/admin-meta-fields.css', array(), CBEDU_VERSION);
+            }
 
+            // For autocomplete jquery in results post type with registration number
+            if ($post_type === 'cbedu_results') {
                 wp_enqueue_style('cbedu-autocomplete-ui-css', plugin_dir_url(__FILE__) . 'assets/css/autocomplete.css');
                 wp_enqueue_script('cbedu-autocomplete-js', plugin_dir_url(__FILE__) . 'assets/js/autocomplete.js', array('jquery', 'jquery-ui-autocomplete'), '1.0.0', true);
                 wp_localize_script('cbedu-autocomplete-js', 'cbedu_ajax_autocomplete_object', array(

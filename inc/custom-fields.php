@@ -72,13 +72,12 @@ class CBEDUCustomFields
     {
         wp_nonce_field('cbedu_save_student_nonce_action', 'cbedu_save_student_nonce');
 
-
+        // Get all meta values
         $id_number = get_post_meta($post->ID, 'cbedu_result_std_id', true);        
         $std_registration_number = get_post_meta($post->ID, 'cbedu_result_std_registration_number', true);
         $father_name = get_post_meta($post->ID, 'cbedu_result_std_father_name', true);
         $mother_name = get_post_meta($post->ID, 'cbedu_result_std_mother_name', true);
         $dob = get_post_meta($post->ID, 'cbedu_result_std_dob', true);
-
         $gender = get_post_meta($post->ID, 'cbedu_result_std_gender', true);
         $phone = get_post_meta($post->ID, 'cbedu_result_std_phone', true);
         $email = get_post_meta($post->ID, 'cbedu_result_std_email', true);
@@ -91,122 +90,182 @@ class CBEDUCustomFields
         $mothers_qualification = get_post_meta($post->ID, 'cbedu_result_std_mothers_qualification', true);
         $birth_registration_number = get_post_meta($post->ID, 'cbedu_result_std_birth_registration_number', true);
         $nid_number = get_post_meta($post->ID, 'cbedu_result_std_nid_number', true);
-
-
-        // Output HTML inputs for each field
 ?>
-        <table>
-            <tr>
-                <td>
-                    <label for="cbedu_result_std_id"><?php esc_html_e('ID Number:', 'edu-results'); ?></label>
-                </td>
-                <td>
-                    <input class="regular-text" style="padding: 7px 10px;" type="text" id="cbedu_result_std_id" name="cbedu_result_std_id" value="<?php echo esc_attr($id_number); ?>" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="cbedu_result_std_registration_number"><?php esc_html_e('Registration Number:', 'edu-results'); ?></label>
-                </td>
-                <td>
-                    <input class="regular-text" style="padding: 7px 10px;" type="text" id="cbedu_result_std_registration_number" name="cbedu_result_std_registration_number" value="<?php echo esc_attr($std_registration_number); ?>" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="cbedu_result_std_father_name"><?php esc_html_e('Father Name:', 'edu-results'); ?></label>
-                </td>
-                <td>
-                    <input class="regular-text" style="padding: 7px 10px;" type="text" id="cbedu_result_std_father_name" name="cbedu_result_std_father_name" value="<?php echo esc_attr($father_name); ?>" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="cbedu_result_std_mother_name"><?php esc_html_e('Mother Name:', 'edu-results'); ?></label>
-                </td>
-                <td>
-                    <input class="regular-text" style="padding: 7px 10px;" type="text" id="cbedu_result_std_mother_name" name="cbedu_result_std_mother_name" value="<?php echo esc_attr($mother_name); ?>" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="cbedu_result_std_dob"><?php esc_html_e('Date of Birth:', 'edu-results'); ?></label>
-                </td>
-                <td>
-                    <input class="regular-text" style="padding: 7px 10px;" type="date" id="cbedu_result_std_dob" name="cbedu_result_std_dob" value="<?php echo esc_attr($dob); ?>" />
-                </td>
-            </tr>
-            <tr>
-                <td><label for="cbedu_result_std_gender"><?php esc_html_e('Gender:', 'edu-results'); ?></label></td>
-                <td>
-                    <select id="cbedu_result_std_gender" name="cbedu_result_std_gender">
-                        <option value="Male" <?php selected($gender, 'Male'); ?>><?php esc_html_e('Male', 'edu-results'); ?></option>
-                        <option value="Female" <?php selected($gender, 'Female'); ?>><?php esc_html_e('Female', 'edu-results'); ?></option>
-                        <option value="Other" <?php selected($gender, 'Other'); ?>><?php esc_html_e('Other', 'edu-results'); ?></option>
-                    </select>
-                </td>
-            </tr>
+        <div class="cbedu-meta-box-wrap">
+            <!-- Basic Information Section -->
+            <div class="cbedu-field-section">
+                <h3 class="cbedu-section-header"><?php esc_html_e('Basic Information', 'edu-results'); ?></h3>
+                <div class="cbedu-section-content">
+                    <div class="cbedu-field-row">
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_id">
+                                <?php esc_html_e('ID Number', 'edu-results'); ?>
+                                <span class="required">*</span>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_id" name="cbedu_result_std_id" value="<?php echo esc_attr($id_number); ?>" placeholder="<?php esc_attr_e('Enter student ID', 'edu-results'); ?>" />
+                        </div>
+                        
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_registration_number">
+                                <?php esc_html_e('Registration Number', 'edu-results'); ?>
+                                <span class="required">*</span>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_registration_number" name="cbedu_result_std_registration_number" value="<?php echo esc_attr($std_registration_number); ?>" placeholder="<?php esc_attr_e('Enter registration number', 'edu-results'); ?>" />
+                        </div>
+                    </div>
 
-            <tr>
-                <td><label for="cbedu_result_std_phone"><?php esc_html_e('Phone Number:', 'edu-results'); ?></label></td>
-                <td><input class="regular-text" type="text" id="cbedu_result_std_phone" name="cbedu_result_std_phone" value="<?php echo esc_attr($phone); ?>" /></td>
-            </tr>
-            <tr>
-                <td><label for="cbedu_result_std_email"><?php esc_html_e('Email Address:', 'edu-results'); ?></label></td>
-                <td><input class="regular-text" type="email" id="cbedu_result_std_email" name="cbedu_result_std_email" value="<?php echo esc_attr($email); ?>" /></td>
-            </tr>
-            <tr>
-                <td><label for="cbedu_result_std_blood_group"><?php esc_html_e('Blood Group:', 'edu-results'); ?></label></td>
-                <td>
-                    <select id="cbedu_result_std_blood_group" name="cbedu_result_std_blood_group">
-                        <option value=""><?php esc_html_e('Select Blood Group', 'edu-results'); ?></option>
-                        <option value="A+" <?php selected($blood_group, 'A+'); ?>><?php esc_html_e('A+', 'edu-results'); ?></option>
-                        <option value="A-" <?php selected($blood_group, 'A-'); ?>><?php esc_html_e('A-', 'edu-results'); ?></option>
-                        <option value="B+" <?php selected($blood_group, 'B+'); ?>><?php esc_html_e('B+', 'edu-results'); ?></option>
-                        <option value="B-" <?php selected($blood_group, 'B-'); ?>><?php esc_html_e('B-', 'edu-results'); ?></option>
-                        <option value="AB+" <?php selected($blood_group, 'AB+'); ?>><?php esc_html_e('AB+', 'edu-results'); ?></option>
-                        <option value="AB-" <?php selected($blood_group, 'AB-'); ?>><?php esc_html_e('AB-', 'edu-results'); ?></option>
-                        <option value="O+" <?php selected($blood_group, 'O+'); ?>><?php esc_html_e('O+', 'edu-results'); ?></option>
-                        <option value="O-" <?php selected($blood_group, 'O-'); ?>><?php esc_html_e('O-', 'edu-results'); ?></option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td><label for="cbedu_result_std_guardian_phone"><?php esc_html_e('Guardian Phone Number:', 'edu-results'); ?></label></td>
-                <td><input class="regular-text" type="text" id="cbedu_result_std_guardian_phone" name="cbedu_result_std_guardian_phone" value="<?php echo esc_attr($guardian_phone); ?>" /></td>
-            </tr>
-            <tr>
-                <td><label for="cbedu_result_std_fathers_qualification"><?php esc_html_e('Father\'s Qualification:', 'edu-results'); ?></label></td>
-                <td><input class="regular-text" type="text" id="cbedu_result_std_fathers_qualification" name="cbedu_result_std_fathers_qualification" value="<?php echo esc_attr($fathers_qualification); ?>" /></td>
-            </tr>
-            <tr>
-                <td><label for="cbedu_result_std_fathers_occupation"><?php esc_html_e('Father\'s Occupation:', 'edu-results'); ?></label></td>
-                <td><input class="regular-text" type="text" id="cbedu_result_std_fathers_occupation" name="cbedu_result_std_fathers_occupation" value="<?php echo esc_attr($fathers_occupation); ?>" /></td>
-            </tr>
-            <tr>
-                <td><label for="cbedu_result_std_mothers_occupation"><?php esc_html_e('Mother\'s Occupation:', 'edu-results'); ?></label></td>
-                <td><input class="regular-text" type="text" id="cbedu_result_std_mothers_occupation" name="cbedu_result_std_mothers_occupation" value="<?php echo esc_attr($mothers_occupation); ?>" /></td>
-            </tr>
-            <tr>
-                <td><label for="cbedu_result_std_mothers_qualification"><?php esc_html_e('Mother\'s Qualification:', 'edu-results'); ?></label></td>
-                <td><input class="regular-text" type="text" id="cbedu_result_std_mothers_qualification" name="cbedu_result_std_mothers_qualification" value="<?php echo esc_attr($mothers_qualification); ?>" /></td>
-            </tr>
-            <tr>
-                <td><label for="cbedu_result_std_birth_registration_number"><?php esc_html_e('Birth Registration Number:', 'edu-results'); ?></label></td>
-                <td><input class="regular-text" type="text" id="cbedu_result_std_birth_registration_number" name="cbedu_result_std_birth_registration_number" value="<?php echo esc_attr($birth_registration_number); ?>" /></td>
-            </tr>
-            <tr>
-                <td><label for="cbedu_result_std_nid_number"><?php esc_html_e('NID Number:', 'edu-results'); ?></label></td>
-                <td><input class="regular-text" type="text" id="cbedu_result_std_nid_number" name="cbedu_result_std_nid_number" value="<?php echo esc_attr($nid_number); ?>" /></td>
-            </tr>
-            <tr>
-                <td><label for="cbedu_result_std_address"><?php esc_html_e('Address:', 'edu-results'); ?></label></td>
-                <td>
-                    <textarea id="cbedu_result_std_address" name="cbedu_result_std_address" rows="4" cols="50"><?php echo esc_textarea($address); ?></textarea>
-                </td>
-            </tr>
+                    <div class="cbedu-field-row">
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_dob">
+                                <?php esc_html_e('Date of Birth', 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="date" id="cbedu_result_std_dob" name="cbedu_result_std_dob" value="<?php echo esc_attr($dob); ?>" />
+                        </div>
 
-        </table>
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_gender">
+                                <?php esc_html_e('Gender', 'edu-results'); ?>
+                            </label>
+                            <select class="cbedu-field-select" id="cbedu_result_std_gender" name="cbedu_result_std_gender">
+                                <option value=""><?php esc_html_e('Select Gender', 'edu-results'); ?></option>
+                                <option value="Male" <?php selected($gender, 'Male'); ?>><?php esc_html_e('Male', 'edu-results'); ?></option>
+                                <option value="Female" <?php selected($gender, 'Female'); ?>><?php esc_html_e('Female', 'edu-results'); ?></option>
+                                <option value="Other" <?php selected($gender, 'Other'); ?>><?php esc_html_e('Other', 'edu-results'); ?></option>
+                            </select>
+                        </div>
+
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_blood_group">
+                                <?php esc_html_e('Blood Group', 'edu-results'); ?>
+                            </label>
+                            <select class="cbedu-field-select" id="cbedu_result_std_blood_group" name="cbedu_result_std_blood_group">
+                                <option value=""><?php esc_html_e('Select Blood Group', 'edu-results'); ?></option>
+                                <option value="A+" <?php selected($blood_group, 'A+'); ?>>A+</option>
+                                <option value="A-" <?php selected($blood_group, 'A-'); ?>>A-</option>
+                                <option value="B+" <?php selected($blood_group, 'B+'); ?>>B+</option>
+                                <option value="B-" <?php selected($blood_group, 'B-'); ?>>B-</option>
+                                <option value="AB+" <?php selected($blood_group, 'AB+'); ?>>AB+</option>
+                                <option value="AB-" <?php selected($blood_group, 'AB-'); ?>>AB-</option>
+                                <option value="O+" <?php selected($blood_group, 'O+'); ?>>O+</option>
+                                <option value="O-" <?php selected($blood_group, 'O-'); ?>>O-</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information Section -->
+            <div class="cbedu-field-section">
+                <h3 class="cbedu-section-header"><?php esc_html_e('Contact Information', 'edu-results'); ?></h3>
+                <div class="cbedu-section-content">
+                    <div class="cbedu-field-row">
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_phone">
+                                <?php esc_html_e('Phone Number', 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_phone" name="cbedu_result_std_phone" value="<?php echo esc_attr($phone); ?>" placeholder="<?php esc_attr_e('+880...', 'edu-results'); ?>" />
+                        </div>
+
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_email">
+                                <?php esc_html_e('Email Address', 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="email" id="cbedu_result_std_email" name="cbedu_result_std_email" value="<?php echo esc_attr($email); ?>" placeholder="<?php esc_attr_e('student@example.com', 'edu-results'); ?>" />
+                        </div>
+
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_guardian_phone">
+                                <?php esc_html_e('Guardian Phone', 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_guardian_phone" name="cbedu_result_std_guardian_phone" value="<?php echo esc_attr($guardian_phone); ?>" placeholder="<?php esc_attr_e('+880...', 'edu-results'); ?>" />
+                        </div>
+                    </div>
+
+                    <div class="cbedu-field-row">
+                        <div class="cbedu-field-group cbedu-field-full">
+                            <label class="cbedu-field-label" for="cbedu_result_std_address">
+                                <?php esc_html_e('Address', 'edu-results'); ?>
+                            </label>
+                            <textarea class="cbedu-field-textarea" id="cbedu_result_std_address" name="cbedu_result_std_address" rows="3" placeholder="<?php esc_attr_e('Enter full address...', 'edu-results'); ?>"><?php echo esc_textarea($address); ?></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Family Information Section -->
+            <div class="cbedu-field-section">
+                <h3 class="cbedu-section-header"><?php esc_html_e('Family Information', 'edu-results'); ?></h3>
+                <div class="cbedu-section-content">
+                    <div class="cbedu-field-row">
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_father_name">
+                                <?php esc_html_e("Father's Name", 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_father_name" name="cbedu_result_std_father_name" value="<?php echo esc_attr($father_name); ?>" placeholder="<?php esc_attr_e("Enter father's name", 'edu-results'); ?>" />
+                        </div>
+
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_fathers_occupation">
+                                <?php esc_html_e("Father's Occupation", 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_fathers_occupation" name="cbedu_result_std_fathers_occupation" value="<?php echo esc_attr($fathers_occupation); ?>" placeholder="<?php esc_attr_e('Enter occupation', 'edu-results'); ?>" />
+                        </div>
+
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_fathers_qualification">
+                                <?php esc_html_e("Father's Qualification", 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_fathers_qualification" name="cbedu_result_std_fathers_qualification" value="<?php echo esc_attr($fathers_qualification); ?>" placeholder="<?php esc_attr_e('Enter qualification', 'edu-results'); ?>" />
+                        </div>
+                    </div>
+
+                    <div class="cbedu-field-row">
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_mother_name">
+                                <?php esc_html_e("Mother's Name", 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_mother_name" name="cbedu_result_std_mother_name" value="<?php echo esc_attr($mother_name); ?>" placeholder="<?php esc_attr_e("Enter mother's name", 'edu-results'); ?>" />
+                        </div>
+
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_mothers_occupation">
+                                <?php esc_html_e("Mother's Occupation", 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_mothers_occupation" name="cbedu_result_std_mothers_occupation" value="<?php echo esc_attr($mothers_occupation); ?>" placeholder="<?php esc_attr_e('Enter occupation', 'edu-results'); ?>" />
+                        </div>
+
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_mothers_qualification">
+                                <?php esc_html_e("Mother's Qualification", 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_mothers_qualification" name="cbedu_result_std_mothers_qualification" value="<?php echo esc_attr($mothers_qualification); ?>" placeholder="<?php esc_attr_e('Enter qualification', 'edu-results'); ?>" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Government Documents Section -->
+            <div class="cbedu-field-section">
+                <h3 class="cbedu-section-header"><?php esc_html_e('Government Documents', 'edu-results'); ?></h3>
+                <div class="cbedu-section-content">
+                    <div class="cbedu-field-row">
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_birth_registration_number">
+                                <?php esc_html_e('Birth Registration Number', 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_birth_registration_number" name="cbedu_result_std_birth_registration_number" value="<?php echo esc_attr($birth_registration_number); ?>" placeholder="<?php esc_attr_e('Enter birth registration number', 'edu-results'); ?>" />
+                        </div>
+
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_nid_number">
+                                <?php esc_html_e('NID Number', 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_nid_number" name="cbedu_result_std_nid_number" value="<?php echo esc_attr($nid_number); ?>" placeholder="<?php esc_attr_e('Enter NID number', 'edu-results'); ?>" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     <?php
     }
 
@@ -345,16 +404,22 @@ class CBEDUCustomFields
 
         // Output HTML input for subject code
     ?>
-        <table>
-            <tr>
-                <td>
-                    <label for="cbedu_subject_code"><?php esc_html_e('Subject Code:', 'edu-results'); ?></label>
-                </td>
-                <td>
-                    <input class="regular-text" type="text" id="cbedu_subject_code" name="cbedu_subject_code" value="<?php echo esc_attr($subject_code); ?>" />
-                </td>
-            </tr>
-        </table>
+        <div class="cbedu-meta-box-wrap">
+            <div class="cbedu-field-section">
+                <h3 class="cbedu-section-header"><?php esc_html_e('Subject Information', 'edu-results'); ?></h3>
+                <div class="cbedu-section-content">
+                    <div class="cbedu-field-row">
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_subject_code">
+                                <?php esc_html_e('Subject Code', 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_subject_code" name="cbedu_subject_code" value="<?php echo esc_attr($subject_code); ?>" placeholder="<?php esc_attr_e('e.g., MATH101', 'edu-results'); ?>" />
+                            <p class="cbedu-field-description"><?php esc_html_e('Enter a unique code for this subject', 'edu-results'); ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     <?php
     }
 
@@ -439,67 +504,99 @@ class CBEDUCustomFields
         $was_gpa = get_post_meta($post->ID, 'cbedu_result_std_was_gpa', true);
 
     ?>
-        <table>
-            <?php
-            $this->render_registration_number_input($post);
-            ?>
-            <tr>
-                <td>
-                    <label for="cbedu_result_std_roll"><?php esc_html_e('Roll:', 'edu-results'); ?></label>
-                </td>
-                <td>
-                    <input class="regular-text" style="padding: 7px 10px;" type="text" id="cbedu_result_std_roll" name="cbedu_result_std_roll" value="<?php echo esc_attr($roll); ?>" />
-                </td>
-            </tr>
-            <tr>
-                <td><label for="cbedu_result_std_name"><?php esc_html_e('Student Name:', 'edu-results'); ?></label></td>
-                <td><input type="text" style="padding: 7px 10px;width: 100%;" id="cbedu_result_std_name" name="cbedu_result_std_name" value="<?php echo esc_attr($student_name) ?>" readonly /></td>
-            </tr>
-            <tr>
-                <td><label for="cbedu_result_std_fathers_name"><?php esc_html_e('Father\'s Name:', 'edu-results'); ?></label></td>
-                <td><input type="text" style="padding: 7px 10px;width: 100%;" id="cbedu_result_std_fathers_name" name="cbedu_result_std_fathers_name" value="<?php echo esc_attr($fathers_name); ?>" readonly /></td>
-            </tr>
-            <tr>
-                <td><label for="cbedu_result_std_mothers_name"><?php esc_html_e('Mother\'s Name:', 'edu-results'); ?></label></td>
-                <td><input type="text" style="padding: 7px 10px;width: 100%;" id="cbedu_result_std_mothers_name" name="cbedu_result_std_mothers_name" value="<?php echo esc_attr($mothers_name); ?>" readonly /></td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="cbedu_result_std_student_type"><?php esc_html_e('Student Type:', 'edu-results'); ?></label>
-                </td>
-                <td>
-                    <input class="regular-text" style="padding: 7px 10px;" type="text" id="cbedu_result_std_student_type" name="cbedu_result_std_student_type" value="<?php echo esc_attr($student_type); ?>" />
-                </td>
-            </tr>
-            <tr style="margin-top: 10px;margin-bottom:10px;">
-                <td>
-                    <label><?php esc_html_e('Result Status:', 'edu-results'); ?></label>
-                </td>
-                <td>
-                    <input type="radio" id="cbedu_result_std_result_status_passed" name="cbedu_result_std_result_status" value="Passed" <?php checked($result_status, 'Passed'); ?> />
-                    <label for="cbedu_result_std_result_status_passed" style="margin-right: 10px;"><?php esc_html_e('Passed', 'edu-results'); ?></label>
+        <div class="cbedu-meta-box-wrap">
+            <!-- Student Selection Section -->
+            <div class="cbedu-field-section">
+                <h3 class="cbedu-section-header"><?php esc_html_e('Student Selection', 'edu-results'); ?></h3>
+                <div class="cbedu-section-content">
+                    <div class="cbedu-field-row">
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_registration_number">
+                                <?php esc_html_e('Registration Number', 'edu-results'); ?>
+                                <span class="required">*</span>
+                            </label>
+                            <input class="cbedu-field-input cbedu-registration-number-autocomplete" type="text" id="cbedu_result_std_registration_number" name="cbedu_result_std_registration_number" value="<?php echo esc_attr($current_reg_number); ?>" placeholder="<?php esc_attr_e('Start typing...', 'edu-results'); ?>" />
+                            <p class="cbedu-field-description"><?php esc_html_e('Type to search and select student registration number', 'edu-results'); ?></p>
+                        </div>
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_roll">
+                                <?php esc_html_e('Roll Number', 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_roll" name="cbedu_result_std_roll" value="<?php echo esc_attr($roll); ?>" placeholder="<?php esc_attr_e('Enter roll number', 'edu-results'); ?>" />
+                        </div>
+                    </div>
+                    
+                    <div class="cbedu-field-row">
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_name">
+                                <?php esc_html_e('Student Name', 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_name" name="cbedu_result_std_name" value="<?php echo esc_attr($student_name); ?>" readonly style="background-color: #f0f0f1; cursor: not-allowed;" />
+                        </div>
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_fathers_name">
+                                <?php esc_html_e("Father's Name", 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_fathers_name" name="cbedu_result_std_fathers_name" value="<?php echo esc_attr($fathers_name); ?>" readonly style="background-color: #f0f0f1; cursor: not-allowed;" />
+                        </div>
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_mothers_name">
+                                <?php esc_html_e("Mother's Name", 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_mothers_name" name="cbedu_result_std_mothers_name" value="<?php echo esc_attr($mothers_name); ?>" readonly style="background-color: #f0f0f1; cursor: not-allowed;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                    <input type="radio" id="cbedu_result_std_result_status_failed" name="cbedu_result_std_result_status" value="Failed" <?php checked($result_status, 'Failed'); ?> />
-                    <label for="cbedu_result_std_result_status_failed"><?php esc_html_e('Failed', 'edu-results'); ?></label>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="cbedu_result_std_gpa"><?php esc_html_e('GPA:', 'edu-results'); ?></label>
-                </td>
-                <td>
-                    <input class="regular-text" style="padding: 7px 10px;" type="text" id="cbedu_result_std_gpa" name="cbedu_result_std_gpa" value="<?php echo esc_attr($gpa); ?>" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="cbedu_result_std_was_gpa"><?php _e('GPA <abbr title="Without additional subject">(WAS)</abbr>:', 'edu-results'); ?></label>
-                </td>
-                <td>
-                    <input class="regular-text" style="padding: 7px 10px;" type="text" id="cbedu_result_std_was_gpa" name="cbedu_result_std_was_gpa" value="<?php echo esc_attr($was_gpa); ?>" />
-                </td>
-            </tr>
-        </table>
+            <!-- Result Details Section -->
+            <div class="cbedu-field-section">
+                <h3 class="cbedu-section-header"><?php esc_html_e('Result Details', 'edu-results'); ?></h3>
+                <div class="cbedu-section-content">
+                    <div class="cbedu-field-row">
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_student_type">
+                                <?php esc_html_e('Student Type', 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_student_type" name="cbedu_result_std_student_type" value="<?php echo esc_attr($student_type); ?>" placeholder="<?php esc_attr_e('e.g., Regular, Private', 'edu-results'); ?>" />
+                        </div>
+                        
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label">
+                                <?php esc_html_e('Result Status', 'edu-results'); ?>
+                            </label>
+                            <div style="display: flex; gap: 20px; align-items: center; margin-top: 8px;">
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: normal;">
+                                    <input type="radio" id="cbedu_result_std_result_status_passed" name="cbedu_result_std_result_status" value="Passed" <?php checked($result_status, 'Passed'); ?> />
+                                    <?php esc_html_e('Passed', 'edu-results'); ?>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: normal;">
+                                    <input type="radio" id="cbedu_result_std_result_status_failed" name="cbedu_result_std_result_status" value="Failed" <?php checked($result_status, 'Failed'); ?> />
+                                    <?php esc_html_e('Failed', 'edu-results'); ?>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cbedu-field-row">
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_gpa">
+                                <?php esc_html_e('GPA', 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_gpa" name="cbedu_result_std_gpa" value="<?php echo esc_attr($gpa); ?>" placeholder="<?php esc_attr_e('e.g., 4.50', 'edu-results'); ?>" />
+                        </div>
+
+                        <div class="cbedu-field-group">
+                            <label class="cbedu-field-label" for="cbedu_result_std_was_gpa">
+                                <?php esc_html_e('GPA (WAS)', 'edu-results'); ?>
+                            </label>
+                            <input class="cbedu-field-input" type="text" id="cbedu_result_std_was_gpa" name="cbedu_result_std_was_gpa" value="<?php echo esc_attr($was_gpa); ?>" placeholder="<?php esc_attr_e('e.g., 4.50', 'edu-results'); ?>" />
+                            <p class="cbedu-field-description"><?php esc_html_e('GPA Without Additional Subject', 'edu-results'); ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     <?php
     }
 
@@ -508,23 +605,6 @@ class CBEDUCustomFields
      *
      * @param object $post The post object.
      * @throws Some_Exception_Class If there is an error retrieving the registration number or the students.
-     * @return void
-     */
-    private function render_registration_number_input($post)
-    {
-        // Get current value
-        $current_value = get_post_meta($post->ID, 'cbedu_result_std_registration_number', true);
-    
-        // Translatable string with text domain
-        $label = __('Registration Number:', 'edu-results');
-    
-        echo '<tr><td><label for="cbedu_result_std_registration_number">' . esc_html($label) . '</label></td>';
-        echo '<td><input style="padding: 7px 10px;width: 100%;" type="text" id="cbedu_result_std_registration_number" name="cbedu_result_std_registration_number" class="cbedu-registration-number-autocomplete" value="' . esc_attr($current_value) . '" placeholder="Start typing...">';
-        echo '</td></tr>';
-    }
-    
-
-
     /**
      * Saves the result fields for a given post ID.
      *
