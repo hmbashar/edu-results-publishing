@@ -76,21 +76,31 @@
 .cbedu-field-select,
 .cbedu-field-textarea {
     width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #8c8f94;
-    border-radius: 4px;
-    font-size: 14px;
-    line-height: 1.5;
+    padding: 8px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.4;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
     background-color: #fff;
+    font-weight: 500;
+    height: 38px;
 }
 
 .cbedu-field-input:focus,
 .cbedu-field-select:focus,
 .cbedu-field-textarea:focus {
-    border-color: #2271b1;
-    box-shadow: 0 0 0 1px #2271b1;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
     outline: none;
+    background-color: #fafbff;
+}
+
+.cbedu-field-input:hover,
+.cbedu-field-select:hover,
+.cbedu-field-textarea:hover {
+    border-color: #a0aec0;
+    background-color: #f9fafb;
 }
 
 .cbedu-field-input[type="date"] {
@@ -99,17 +109,22 @@
 
 .cbedu-field-select {
     cursor: pointer;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%23555' d='M5 6l5 5 5-5 2 1-7 7-7-7z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 20 20'%3E%3Cpath fill='%23667eea' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 8px center;
-    background-size: 16px;
-    padding-right: 32px;
+    background-position: right 10px center;
+    background-size: 14px;
+    padding-right: 36px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 .cbedu-field-textarea {
     min-height: 100px;
     resize: vertical;
     font-family: inherit;
+    height: auto;
+    line-height: 1.6;
 }
 
 /* Field Description */
