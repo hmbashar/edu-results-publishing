@@ -4,12 +4,12 @@
  *
  * Registers all custom post types for the plugin
  *
- * @package    EduResults
+ * @package    CBEDU
  * @subpackage Core/PostTypes
  * @since      1.3.0
  */
 
-namespace EduResults\Core\PostTypes;
+namespace CBEDU\Core\PostTypes;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly

@@ -4,13 +4,13 @@
  *
  * Core plugin functionality and initialization
  *
- * @package    EduResults
+ * @package    CBEDU
  * @since      1.3.0
  */
 
-namespace EduResults;
+namespace CBEDU;
 
-use EduResults\Core\Loader;
+use CBEDU\Core\Loader;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly

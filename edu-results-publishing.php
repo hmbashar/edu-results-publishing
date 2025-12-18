@@ -13,78 +13,120 @@
  * Requires at least: 5.0
  * Requires PHP: 7.2
  *
- * @package EduResults
+ * @package CBEDU
  */
 
+namespace CBEDU;
+
+// Exit if accessed directly.
 if (!defined('ABSPATH')) {
-    exit; // Exit if accessed directly
+    exit;
 }
 
-// Plugin constants
-define('EDU_RESULTS_VERSION', '1.3.0');
-define('EDU_RESULTS_PREFIX', 'cbedu_');
-define('EDU_RESULTS_URL', plugin_dir_url(__FILE__));
-define('EDU_RESULTS_DIR', plugin_dir_path(__FILE__));
-define('EDU_RESULTS_FILE', __FILE__);
-
-// For backward compatibility
-define('CBEDU_VERSION', EDU_RESULTS_VERSION);
-define('CBEDU_PREFIX', EDU_RESULTS_PREFIX);
-define('CBEDU_RESULT_URL', EDU_RESULTS_URL);
-define('CBEDU_RESULT_DIR', EDU_RESULTS_DIR);
-
-// Load composer autoloader
-if (file_exists(EDU_RESULTS_DIR . 'vendor/autoload.php')) {
-    require_once EDU_RESULTS_DIR . 'vendor/autoload.php';
-}
-
-// Load legacy files for backward compatibility
-require_once EDU_RESULTS_DIR . 'inc/custom-fields.php';
-require_once EDU_RESULTS_DIR . 'inc/admin/settings.php';
-require_once EDU_RESULTS_DIR . 'inc/RepeaterCF.php';
-require_once EDU_RESULTS_DIR . 'inc/lib/shortcode.php';
-require_once EDU_RESULTS_DIR . 'inc/lib/custom-functions.php';
-
-/**
- * Initialize the plugin
- *
- * @return void
- */
-function edu_results_init()
+final class CBEDUResultsPublishing
 {
-    // Initialize the main plugin class
-    \EduResults\Plugin::getInstance(
-        EDU_RESULTS_PREFIX,
-        EDU_RESULTS_VERSION,
-        EDU_RESULTS_URL,
-        EDU_RESULTS_DIR
-    );
+    /**
+     * Singleton instance.
+     *
+     * @var CBEDUResultsPublishing|null
+     */
+    private static $instance = null;
+
+    /**
+     * Get singleton instance.
+     *
+     * @return CBEDUResultsPublishing
+     */
+    public static function get_instance()
+    {
+        if (null === self::$instance) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * Constructor is private to enforce singleton.
+     */
+    private function __construct()
+    {
+        $this->define_constants();
+        $this->include_files();
+        $this->init_hooks();
+    }
+
+    /**
+     * Define plugin constants.
+     */
+    private function define_constants()
+    {
+        define('CBEDU_VERSION', '1.3.0');
+        define('CBEDU_PATH', plugin_dir_path(__FILE__));
+        define('CBEDU_URL', plugin_dir_url(__FILE__));
+        define('CBEDU_FILE', __FILE__);
+        define('CBEDU_BASENAME', plugin_basename(__FILE__));
+        define('CBEDU_NAME', 'EDU Results Publishing');
+        define('CBEDU_PREFIX', 'cbedu_');
+    }
+
+    /**
+     * Include necessary files.
+     */
+    private function include_files()
+    {
+        if (file_exists(CBEDU_PATH . 'vendor/autoload.php')) {
+            require_once CBEDU_PATH . 'vendor/autoload.php';
+        }
+    }
+
+    /**
+     * Register plugin hooks.
+     */
+    private function init_hooks()
+    {
+        add_action('plugins_loaded', array($this, 'plugin_loaded'));
+        register_activation_hook(CBEDU_FILE, array($this, 'activate'));
+        register_deactivation_hook(CBEDU_FILE, array($this, 'deactivate'));
+    }
+
+    /**
+     * Actions after plugins_loaded.
+     */
+    public function plugin_loaded()
+    {
+        if (class_exists('\CBEDU\Manager')) {
+            new \CBEDU\Manager();
+        }
+    }
+
+    /**
+     * Plugin activation logic.
+     */
+    public function activate()
+    {
+        if (class_exists('\CBEDU\Activate')) {
+            \CBEDU\Activate::activate();
+        }
+    }
+
+    /**
+     * Plugin deactivation logic.
+     */
+    public function deactivate()
+    {
+        if (class_exists('\CBEDU\Deactivate')) {
+            \CBEDU\Deactivate::deactivate();
+        }
+    }
 }
 
-add_action('plugins_loaded', 'edu_results_init', 5);
+// Initialize the plugin.
+if (!function_exists('cbedu_initialize')) {
+    function cbedu_initialize()
+    {
+        return \CBEDU\CBEDUResultsPublishing::get_instance();
+    }
 
-/**
- * Plugin activation hook
- *
- * @return void
- */
-function edu_results_activate()
-{
-    // Flush rewrite rules on activation
-    flush_rewrite_rules();
+    cbedu_initialize();
 }
-
-register_activation_hook(__FILE__, 'edu_results_activate');
-
-/**
- * Plugin deactivation hook
- *
- * @return void
- */
-function edu_results_deactivate()
-{
-    // Flush rewrite rules on deactivation
-    flush_rewrite_rules();
-}
-
-register_deactivation_hook(__FILE__, 'edu_results_deactivate');

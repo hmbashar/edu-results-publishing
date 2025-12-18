@@ -4,15 +4,15 @@
  *
  * Loads all core components of the plugin
  *
- * @package    EduResults
+ * @package    CBEDU
  * @subpackage Core
  * @since      1.3.0
  */
 
-namespace EduResults\Core;
+namespace CBEDU\Core;
 
-use EduResults\Core\PostTypes\PostTypesManager;
-use EduResults\Core\Taxonomies\TaxonomiesManager;
+use CBEDU\Core\PostTypes\PostTypesManager;
+use CBEDU\Core\Taxonomies\TaxonomiesManager;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
@@ -121,26 +121,12 @@ class Loader
      */
     private function loadAdminComponents()
     {
-        // Admin components will be loaded here
-        // This keeps the old functionality for now until we migrate everything
-        if (file_exists($this->pluginPath . 'inc/custom-fields.php')) {
-            require_once $this->pluginPath . 'inc/custom-fields.php';
-            if (class_exists('\cbedu\inc\custom_fields\CBEDUCustomFields')) {
-                new \cbedu\inc\custom_fields\CBEDUCustomFields();
-            }
-        }
-        
-        if (file_exists($this->pluginPath . 'inc/RepeaterCF.php')) {
-            require_once $this->pluginPath . 'inc/RepeaterCF.php';
-            if (class_exists('\cbedu\inc\RepeaterCF\CBEDURepeaterCustomFields')) {
-                new \cbedu\inc\RepeaterCF\CBEDURepeaterCustomFields();
-            }
-        }
-        
-        if (file_exists($this->pluginPath . 'inc/admin/settings.php')) {
-            require_once $this->pluginPath . 'inc/admin/settings.php';
-            if (class_exists('\cbedu\inc\admin\settings\CBEDUResultSettings')) {
-                new \cbedu\inc\admin\settings\CBEDUResultSettings((object)['prefix' => $this->prefix]);
+        // Legacy files are now loaded by AdminManager
+        // Keeping this for custom functions that are used in both admin and frontend
+        if (file_exists($this->pluginPath . 'inc/lib/custom-functions.php')) {
+            require_once $this->pluginPath . 'inc/lib/custom-functions.php';
+            if (class_exists('\cbedu\inc\lib\CBEDUCustomFunctions\CBEDUCustomFunctions')) {
+                new \cbedu\inc\lib\CBEDUCustomFunctions\CBEDUCustomFunctions($this->prefix);
             }
         }
     }
@@ -152,13 +138,7 @@ class Loader
      */
     private function loadFrontendComponents()
     {
-        // Frontend components will be loaded here
-        if (file_exists($this->pluginPath . 'inc/lib/shortcode.php')) {
-            require_once $this->pluginPath . 'inc/lib/shortcode.php';
-            if (class_exists('\cbedu\inc\lib\CBEDUResultsShortcode')) {
-                new \cbedu\inc\lib\CBEDUResultsShortcode();
-            }
-        }
+        // Frontend components are now loaded by PublicManager
     }
 
     /**

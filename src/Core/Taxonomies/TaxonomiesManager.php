@@ -4,12 +4,12 @@
  *
  * Registers all custom taxonomies for the plugin
  *
- * @package    EduResults
+ * @package    CBEDU
  * @subpackage Core/Taxonomies
  * @since      1.3.0
  */
 
-namespace EduResults\Core\Taxonomies;
+namespace CBEDU\Core\Taxonomies;
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
