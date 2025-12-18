@@ -297,7 +297,7 @@
 }
 
 /* Submit Button */
-.cbedu-submit-btn {
+.cbedu-submit-btn, button.cbedu-submit-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -319,6 +319,7 @@
   overflow: hidden;
   white-space: nowrap;
   line-height: 1;
+  border:none;
 }
 
 .cbedu-submit-btn::before {
@@ -510,21 +511,23 @@
   .cbedu-form-field select {
     padding: 12px 14px;
     font-size: 14px;
+  }
+
+  .cbedu-error-message {
+    padding-left: 0;
+  }
+
+  .cbedu-submit-btn {
+    width: 100%;
+    padding: 16px 32px;
+    font-size: 15px;
+  }
+}
 
 /*------------------------------
 * Result Display - Modern UI
 ------------------------------*/
 
-#cbedu-results-display {  .cbedu-error-message {
-    padding-left: 0;
-  }
-
-  .cbedu-results-search-form-submit input[type="submit"] {
-    width: 100%;
-    padding: 14px 30px;
-    font-size: 16px;
-  }
-}
 @keyframes cbedu-ellipsis1 {
   0% {
     transform: scale(0);
