@@ -303,6 +303,17 @@ class CBEDUCustomFields
             return;
         }
 
+        // Skip auto-draft, trash, and inherit posts
+        $post_status = get_post_status($post_id);
+        if (in_array($post_status, array('auto-draft', 'trash', 'inherit'))) {
+            return;
+        }
+
+        // Check post type
+        if (get_post_type($post_id) !== 'cbedu_students') {
+            return;
+        }
+
         // Update ID number
         if (isset($_POST['cbedu_result_std_id'])) {
             update_post_meta($post_id, 'cbedu_result_std_id', sanitize_text_field($_POST['cbedu_result_std_id']));
@@ -454,6 +465,17 @@ class CBEDUCustomFields
     {
         // Save the custom field value when the post is saved
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return;
+        }
+
+        // Skip auto-draft, trash, and inherit posts
+        $post_status = get_post_status($post_id);
+        if (in_array($post_status, array('auto-draft', 'trash', 'inherit'))) {
+            return;
+        }
+
+        // Check post type
+        if (get_post_type($post_id) !== 'cbedu_subjects') {
             return;
         }
 
@@ -638,6 +660,17 @@ class CBEDUCustomFields
             return;
         }
 
+        // Skip auto-draft, trash, and inherit posts
+        $post_status = get_post_status($post_id);
+        if (in_array($post_status, array('auto-draft', 'trash', 'inherit'))) {
+            return;
+        }
+
+        // Check post type
+        if (get_post_type($post_id) !== 'cbedu_results') {
+            return;
+        }
+
         // Update Roll
         if (isset($_POST['cbedu_result_std_roll'])) {
             update_post_meta($post_id, 'cbedu_result_std_roll', sanitize_text_field($_POST['cbedu_result_std_roll']));
@@ -776,6 +809,10 @@ class CBEDUCustomFields
     {
         // Check for autosave
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+
+        // Skip auto-draft, trash, and inherit posts
+        $post_status = get_post_status($post_id);
+        if (in_array($post_status, array('auto-draft', 'trash', 'inherit'))) return;
 
         // Check the post type
         if (get_post_type($post_id) !== 'cbedu_students') return;

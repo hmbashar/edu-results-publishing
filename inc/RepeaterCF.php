@@ -164,7 +164,16 @@ class CBEDURepeaterCustomFields
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
             return;
 
+        // Skip auto-draft, trash, and inherit posts
+        $post_status = get_post_status($postID);
+        if (in_array($post_status, array('auto-draft', 'trash', 'inherit')))
+            return;
+
         if (!current_user_can('edit_post', $postID))
+            return;
+
+        // Check post type
+        if (get_post_type($postID) !== 'cbedu_results')
             return;
 
         $old = get_post_meta($postID, 'cbedu_subjects_results', true);
