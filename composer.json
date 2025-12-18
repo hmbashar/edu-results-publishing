@@ -1,7 +1,7 @@
 {
     "name": "hmbashar/edu-results-publishing",
     "license": "GPL-2.0-or-later",
-    "version": "1.2.9",
+    "version": "1.2.0",
     "autoload": {
         "psr-4": {
             "CBEDU\\Inc": "inc/"
@@ -22,8 +22,5 @@
 		"lint:php": "@php ./vendor/bin/parallel-lint --exclude .git --exclude vendor .",
 		"make-pot": "wp i18n make-pot . languages/edu-results-publishing.pot",
 		"lint:autofix": "vendor/bin/phpcbf"
-	},
-    "require": {
-        "appsero/client": "^2.0"
-    }
+	}
 }

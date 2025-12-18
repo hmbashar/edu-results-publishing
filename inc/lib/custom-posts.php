@@ -126,7 +126,7 @@ class CBEDU_CUSTOM_POSTS{
         $args = array(
             'labels' => $labels,
             'public' => true,
-            'publicly_queryable' => true,
+            'publicly_queryable' => false,
             'show_ui' => true,
             'show_in_menu' => false,
             'query_var' => true,
