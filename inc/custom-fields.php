@@ -88,6 +88,21 @@ class CBEDUCustomFields
         
         // Allow deletion of auto-draft posts
         add_filter('user_has_cap', array($this, 'allow_auto_draft_deletion'), 10, 4);
+        
+        // Disable autosave for our custom post types
+        add_action('admin_print_scripts', array($this, 'disable_autosave'));
+    }
+    
+    /**
+     * Disable autosave for custom post types
+     */
+    public function disable_autosave()
+    {
+        global $post;
+        
+        if ($post && in_array($post->post_type, array('cbedu_students', 'cbedu_subjects', 'cbedu_results'))) {
+            wp_dequeue_script('autosave');
+        }
     }
     
     /**
