@@ -216,3 +216,309 @@
 #student_fields table {
     display: none;
 }
+/*============================================
+  Subjects Repeater Styles
+============================================*/
+
+.cbedu-subjects-repeater-wrapper {
+    background: #fff;
+    padding: 0;
+}
+
+.cbedu-repeater-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px 25px;
+    border-radius: 4px 4px 0 0;
+    margin: -8px -12px 0;
+}
+
+.cbedu-repeater-header h3 {
+    color: #fff;
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.cbedu-repeater-header .description {
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    font-size: 13px;
+}
+
+/* Repeater Table */
+.cbedu-repeater-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 20px 0 0 0;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.cbedu-repeater-table thead {
+    background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+}
+
+.cbedu-repeater-table thead tr th {
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    color: #2d3748;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.cbedu-repeater-th-subject {
+    width: 45%;
+}
+
+.cbedu-repeater-th-marks {
+    width: 35%;
+}
+
+.cbedu-repeater-th-action {
+    width: 20%;
+    text-align: center !important;
+}
+
+/* Repeater Rows */
+.cbedu-repeater-row {
+    transition: all 0.2s ease;
+}
+
+.cbedu-repeater-row:nth-child(even) {
+    background: #f8f9ff;
+}
+
+.cbedu-repeater-row:hover {
+    background: #f0f4ff;
+}
+
+.cbedu-repeater-table tbody tr td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+/* Subject Select Dropdown */
+.cbedu-repeater-select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #dfe3e8;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #2d3748;
+    background-color: #fff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.cbedu-repeater-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.cbedu-repeater-select:hover {
+    border-color: #cbd5e0;
+}
+
+/* Marks Input */
+.cbedu-repeater-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #dfe3e8;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #2d3748;
+    background-color: #fff;
+    transition: all 0.2s ease;
+}
+
+.cbedu-repeater-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.cbedu-repeater-input::placeholder {
+    color: #a0aec0;
+}
+
+/* Action Column */
+.cbedu-repeater-td-action {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.cbedu-remove-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: #fff;
+    border: 2px solid #e53e3e;
+    color: #e53e3e;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.cbedu-remove-btn:hover {
+    background: #e53e3e;
+    color: #fff;
+    border-color: #c53030;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(229, 62, 62, 0.2);
+}
+
+.cbedu-remove-btn:active {
+    transform: translateY(0);
+}
+
+.cbedu-remove-btn .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+/* Repeater Footer */
+.cbedu-repeater-footer {
+    padding: 20px 0;
+    text-align: center;
+}
+
+.cbedu-add-subject-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cbedu-add-subject-btn:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46a0 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    color: #fff;
+}
+
+.cbedu-add-subject-btn:active {
+    transform: translateY(0);
+}
+
+.cbedu-add-subject-btn .dashicons {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+/* Empty State Message */
+.cbedu-repeater-table tbody:empty::after {
+    content: "No subjects added yet. Click 'Add Another Subject' to begin.";
+    display: block;
+    padding: 40px 20px;
+    text-align: center;
+    color: #718096;
+    font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 782px) {
+    .cbedu-repeater-header {
+        padding: 15px 20px;
+        margin: -8px -12px 0;
+    }
+
+    .cbedu-repeater-table thead {
+        display: none;
+    }
+
+    .cbedu-repeater-row {
+        display: block;
+        margin-bottom: 20px;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #fff;
+    }
+
+    .cbedu-repeater-row:nth-child(even) {
+        background: #fff;
+    }
+
+    .cbedu-repeater-row:hover {
+        background: #f8f9ff;
+    }
+
+    .cbedu-repeater-table tbody tr td {
+        display: block;
+        width: 100%;
+        padding: 12px 16px;
+        border: none;
+        border-bottom: 1px solid #f0f0f1;
+    }
+
+    .cbedu-repeater-table tbody tr td:last-child {
+        border-bottom: none;
+    }
+
+    .cbedu-repeater-td-subject::before {
+        content: "Subject:";
+        display: block;
+        font-weight: 600;
+        color: #2d3748;
+        margin-bottom: 8px;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    .cbedu-repeater-td-input::before {
+        content: "Marks / Grade:";
+        display: block;
+        font-weight: 600;
+        color: #2d3748;
+        margin-bottom: 8px;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    .cbedu-repeater-td-action {
+        text-align: left;
+        padding-top: 16px !important;
+    }
+
+    .cbedu-remove-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .cbedu-add-subject-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
