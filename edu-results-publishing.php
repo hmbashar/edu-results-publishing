@@ -27,22 +27,52 @@ namespace CBEDU;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-
-
-//define URL
-define('CBEDU_RESULT_URL', plugin_dir_url(__FILE__));
-define('CBEDU_RESULT_DIR', plugin_dir_path(__FILE__));
-define('CBEDU_PREFIX', 'cbedu_');
-define('CBEDU_VERSION', '1.2.0');
+/**
+ * Main CBEDUResultPublishing Class
+ *
+ * This is the main class that initializes the EDU Results Publishing plugin.
+ * It sets up constants, loads text domains, enqueues scripts and styles,
+ * and initializes various components of the plugin such as custom post types,
+ * taxonomies, admin settings, and AJAX handlers.
+ *
+ * @package CBEDU
+ * @since 1.0.0
+ */
 
 final class CBEDUResultPublishing
 {
     // Plugin prefix
     private $prefix;
 
+    /**
+     * Instance of this class.
+     *
+     * @var CBEDUResultPublishing
+     */
+    private static $instance = null;
+
+    /**
+     * Get the singleton instance of the class.
+     *
+     * @return CBEDUResultPublishing
+     */
+    public static function get_instance()
+    {
+        if (null === self::$instance) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
     public function __construct()
     {
-        $this->prefix = CBEDU_PREFIX;
+        $this->define_constants();
+
+        $this->prefix = CBEDU_PREFIX;         
+
+          $this->include_files();
+
+          $this->init_hooks();
 
         // Register plugin action links
         add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($this, 'addPluginActionLinks'));
@@ -55,9 +85,6 @@ final class CBEDUResultPublishing
 
         add_filter('post_updated_messages', array($this, 'cbedu_custom_post_publish_message'));
 
-        // Register text domain for translation
-        add_action('plugins_loaded', array($this, 'loadTextDomain'));
-
         //add custom description afeter title for the result post type
         add_action('edit_form_after_title', array($this, 'add_custom_description_after_title'));
 
@@ -65,6 +92,72 @@ final class CBEDUResultPublishing
         $this->initialize();
 
         $this->register_ajax_handlers();
+    }
+
+    private function define_constants()
+    {
+        if (!defined('CBEDU_RESULT_URL')) {
+            define('CBEDU_RESULT_URL', plugin_dir_url(__FILE__));
+        }
+
+        if (!defined('CBEDU_RESULT_PATH')) {
+            define('CBEDU_RESULT_PATH', plugin_dir_path(__FILE__));
+        }
+
+        if (!defined('CBEDU_PREFIX')) {
+            define('CBEDU_PREFIX', 'cbedu_');
+        }
+
+        if (!defined('CBEDU_VERSION')) {
+            define('CBEDU_VERSION', '1.2.0');
+        }
+    }
+
+
+    /**
+     * Includes necessary files.
+     */
+    private function include_files()
+    {
+        if (file_exists(CBEDU_RESULT_PATH . 'vendor/autoload.php')) {
+            require_once CBEDU_RESULT_PATH . 'vendor/autoload.php';
+        }
+    }
+
+    /**
+     * Initializes hooks.
+     */
+    private function init_hooks()
+    {
+        add_action('plugins_loaded', array($this, 'plugin_loaded'));
+        register_activation_hook(__FILE__, array($this, 'activate'));
+        register_deactivation_hook(__FILE__, array($this, 'deactivate'));
+    }
+
+    /**
+     * Initialize plugin on WordPress loaded
+     */
+    public function plugin_loaded()
+    {
+        if (class_exists('CBEDU\Inc\Manager')) {
+            new \CBEDU\Inc\Manager();
+        }
+    }
+
+       /**
+     * Activates the plugin.
+     */
+    public function activate()
+    {
+        Inc\Activate::activate();
+    }
+
+    /**
+     * Deactivates the plugin.
+     */
+    public function deactivate()
+    {
+        Inc\Deactivate::deactivate();
     }
 
     public function getTextDomain()
@@ -118,12 +211,7 @@ final class CBEDUResultPublishing
          // Initialize CBEDUCustomFunctions
         if (class_exists('\cbedu\inc\lib\CBEDUCustomFunctions\CBEDUCustomFunctions')) {
             new \cbedu\inc\lib\CBEDUCustomFunctions\CBEDUCustomFunctions($this->prefix);
-        }
-        
-        // Initialize Student Import/Export
-        if (class_exists('\cbedu\inc\admin\CBEDU_Student_Import_Export')) {
-            new \cbedu\inc\admin\CBEDU_Student_Import_Export($this->prefix);
-        }
+        }    
         
     }
     
@@ -209,11 +297,6 @@ final class CBEDUResultPublishing
         }
     }
 
-
-    public function loadTextDomain()
-    {
-        load_plugin_textdomain($this->getTextDomain(), false, dirname(plugin_basename(__FILE__)) . '/languages/');
-    }
 
     public function cbedu_results_assets_enqueue()
     {
@@ -605,20 +688,14 @@ final class CBEDUResultPublishing
 }
 
 
-require_once CBEDU_RESULT_DIR . 'inc/custom-fields.php';
+/**
+ * Initializes the EDU Results Publishing plugin.
+ */
+if (!function_exists('cbedu_results_initialize')) {
+    function cbedu_results_initialize()
+    {
+        return CBEDUResultPublishing::get_instance();
+    }
 
-require_once CBEDU_RESULT_DIR . 'inc/admin/settings.php';
-
-require_once CBEDU_RESULT_DIR . 'inc/RepeaterCF.php';
-
-require_once CBEDU_RESULT_DIR . 'inc/lib/shortcode.php';
-
-require_once CBEDU_RESULT_DIR . 'inc/lib/custom-posts.php';
-
-require_once CBEDU_RESULT_DIR . 'inc/lib/custom-taxonomy.php';
-
-require_once CBEDU_RESULT_DIR . 'inc/lib/custom-functions.php';
-
-
-//init the main class
-$CBEDUResultPublishing = new CBEDUResultPublishing();
+    cbedu_results_initialize();
+}
