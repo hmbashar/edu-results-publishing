@@ -12,6 +12,15 @@ This plugin streamlines the entire process of publishing exam results, saving ti
 
 ## Features
 
+### Student Import/Export (NEW!)
+- **CSV Export**: Export all student records to CSV format with one click
+- **CSV Import**: Bulk import students from CSV files
+- **Update Existing**: Option to update existing students or create new ones
+- **Sample CSV**: Download a pre-formatted sample CSV file
+- **Data Validation**: Automatic validation of required fields
+- **UTF-8 Support**: Full support for international characters (Bengali, Arabic, etc.)
+- **Detailed Results**: View import summary with counts of imported, updated, and skipped records
+
 ### College Information Display
 - **College Name**: Displays the name of the college
 - **College Registration Number**: Showcases the college's official registration number
@@ -54,10 +63,38 @@ This plugin streamlines the entire process of publishing exam results, saving ti
 4. **Add Taxonomies**: Add Session, Examinations, Boards, Departments
    - Note: These are optional for students but required for results
 5. **Add Students**: Add student information
+   - **Bulk Import**: Use the "Import Students (CSV)" button for mass import
+   - **Export**: Use "Export Students (CSV)" to download all student records
+   - **Sample Template**: Click "Download Sample CSV" for the correct format
 6. **Add Results**: Publish student results
 7. **Display Search Form**: Use the shortcode `[cbedu_search_form]` to display the search form on any page
 
 **Note**: A full-width template isn't required but will provide a better view.
+
+### Importing Students
+
+To bulk import students:
+
+1. Navigate to **EDU Results → Students** in your WordPress admin
+2. Click **"Import Students (CSV)"** button at the top
+3. Download the sample CSV for reference (optional)
+4. Prepare your CSV file with the following columns:
+   - Student Name (required)
+   - ID Number
+   - Registration Number (required)
+   - Father Name, Mother Name
+   - Date of Birth (YYYY-MM-DD format)
+   - Gender, Phone, Email
+   - Blood Group, Address
+   - Guardian Phone
+   - Parent qualifications and occupations
+   - Birth Registration Number, NID Number
+5. Upload your CSV file
+6. Check "Update existing students" if you want to update records with matching registration numbers
+7. Click "Upload and Import"
+8. Review the import summary
+
+For detailed documentation, see [IMPORT-EXPORT-DOCS.md](IMPORT-EXPORT-DOCS.md)
 
 ## Shortcode
 
@@ -91,6 +128,11 @@ Use this shortcode to display the result search form on any page or post.
 ## Changelog
 
 ### 1.2.0
+* **NEW**: Student Import/Export functionality via CSV
+* **NEW**: Bulk student import with validation
+* **NEW**: Export all students to CSV
+* **NEW**: Sample CSV download for easy formatting
+* **NEW**: Update existing students option during import
 * Enhanced features and improvements
 * Bug fixes and performance optimization
 * Updated compatibility with WordPress 6.9

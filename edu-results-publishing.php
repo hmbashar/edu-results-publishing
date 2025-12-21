@@ -120,6 +120,11 @@ final class CBEDUResultPublishing
             new \cbedu\inc\lib\CBEDUCustomFunctions\CBEDUCustomFunctions($this->prefix);
         }
         
+        // Initialize Student Import/Export
+        if (class_exists('\cbedu\inc\admin\CBEDU_Student_Import_Export')) {
+            new \cbedu\inc\admin\CBEDU_Student_Import_Export($this->prefix);
+        }
+        
     }
     
     public function addPluginActionLinks($links)
