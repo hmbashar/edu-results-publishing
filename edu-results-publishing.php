@@ -88,9 +88,6 @@ final class CBEDUResultPublishing
         //add custom description afeter title for the result post type
         add_action('edit_form_after_title', array($this, 'add_custom_description_after_title'));
 
-        // Initialize the plugin
-        $this->initialize();
-
         $this->register_ajax_handlers();
     }
 
@@ -168,51 +165,6 @@ final class CBEDUResultPublishing
     public function getPrefix()
     {
         return $this->prefix;
-    }
-
-    private function initialize()
-    {
-        // Register custom post types and taxonomies
-        $this->initializePostTypesAndTaxonomies();
-    
-        // Initialize other components
-        $this->initializeComponents();
-    }
-    
-    private function initializePostTypesAndTaxonomies()
-    {
-        if (class_exists('\cbedu\inc\lib\CBEDU_CUSTOM_POSTS')) {
-            new \cbedu\inc\lib\CBEDU_CUSTOM_POSTS($this->prefix);
-        }
-    
-        if (class_exists('\cbedu\inc\lib\CBEDU_CUSTOM_TAXONOMY')) {
-            new \cbedu\inc\lib\CBEDU_CUSTOM_TAXONOMY($this->prefix);
-        }
-    }
-    
-    private function initializeComponents()
-    {
-        if (class_exists('\cbedu\inc\RepeaterCF\CBEDURepeaterCustomFields')) {
-            new \cbedu\inc\RepeaterCF\CBEDURepeaterCustomFields($this);
-        }
-    
-        if (class_exists('\cbedu\inc\admin\settings\CBEDUResultSettings')) {
-            new \cbedu\inc\admin\settings\CBEDUResultSettings($this);
-        }
-    
-        if (class_exists('\cbedu\inc\custom_fields\CBEDUCustomFields')) {
-            new \cbedu\inc\custom_fields\CBEDUCustomFields();
-        }
-    
-        if (class_exists('\cbedu\inc\lib\CBEDUResultsShortcode')) {
-            new \cbedu\inc\lib\CBEDUResultsShortcode();
-        }
-
-         // Initialize CBEDUCustomFunctions
-        if (class_exists('\cbedu\inc\lib\CBEDUCustomFunctions\CBEDUCustomFunctions')) {
-            new \cbedu\inc\lib\CBEDUCustomFunctions\CBEDUCustomFunctions($this->prefix);
-        }    
-        
     }
     
     public function addPluginActionLinks($links)

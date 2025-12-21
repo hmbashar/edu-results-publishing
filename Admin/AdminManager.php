@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AdminManager.php
  *
@@ -10,10 +11,15 @@
  * @package CBEDU\Admin
  * @since 1.2.0
  */
+
 namespace CBEDU\Admin;
 
 if (!defined('ABSPATH'))
     exit; // Exit if accessed directly
+
+use CBEDU\Admin\PostTypes\CustomPosts;
+use CBEDU\Admin\Dashboard\Dashboard;
+
 
 /**
  * Class AdminManager
@@ -26,8 +32,13 @@ if (!defined('ABSPATH'))
  */
 class AdminManager
 {
+    protected $customPosts;
+    protected $dashboard;
+    protected $customTaxonomy;
+    protected $customFields;
+    protected $repeaterCF;
     protected $settings;
-    protected $studentImportExport;
+    protected $pluginInstance;
 
     /**
      * AdminManager constructor.
@@ -35,13 +46,15 @@ class AdminManager
      * Initializes the AdminManager by setting constants and initiating configurations
      * necessary for the EDU Results Publishing Admin setup.
      *
+     * @param object $plugin_instance Main plugin instance
      * @since 1.2.0
      */
-    public function __construct()
+    public function __construct($plugin_instance = null)
     {
+        $this->pluginInstance = $plugin_instance;
         $this->setConstants();
         $this->init();
-        
+
         // Add plugin action links
         add_filter('plugin_action_links_' . plugin_basename(CBEDU_RESULT_PATH . 'edu-results-publishing.php'), [$this, 'add_plugin_settings_link']);
         add_filter('plugin_row_meta', [$this, 'plugin_row_meta'], 10, 2);
@@ -64,20 +77,47 @@ class AdminManager
     /**
      * Initializes the classes used by the EDU Results Publishing Admin.
      *
-     * This function instantiates the settings and other admin classes.
+     * This function instantiates all admin-related classes including custom post types,
+     * taxonomies, custom fields, settings, and import/export functionality.
      *
      * @since 1.2.0
      */
     public function init()
     {
-        // Initialize Settings
-        if (class_exists('\cbedu\inc\admin\settings\CBEDUResultSettings')) {
-            $this->settings = new \cbedu\inc\admin\settings\CBEDUResultSettings();
+
+
+        // Initialize Custom Post Types
+        if (class_exists('\CBEDU\Admin\PostTypes\CustomPosts')) {
+            $this->customPosts = new CustomPosts();
+        }
+        // Initialize Dashboard
+        if (class_exists('\CBEDU\Admin\Dashboard\Dashboard')) {
+            $this->dashboard = new Dashboard();
         }
 
-        // Initialize Student Import/Export
-        if (class_exists('\cbedu\inc\admin\CBEDU_Student_Import_Export')) {
-            $this->studentImportExport = new \cbedu\inc\admin\CBEDU_Student_Import_Export(CBEDU_PREFIX);
+        // Initialize Settings
+        if (class_exists('\CBEDU\Admin\Dashboard\Settings\Settings') && $this->pluginInstance) {
+            $this->settings = new \CBEDU\Admin\Dashboard\Settings\Settings($this->pluginInstance);
+        }
+       
+        // Initialize Custom Taxonomies
+        if (class_exists('\cbedu\inc\lib\CBEDU_CUSTOM_TAXONOMY')) {
+            $this->customTaxonomy = new \cbedu\inc\lib\CBEDU_CUSTOM_TAXONOMY(CBEDU_PREFIX);
+        }
+
+        // Initialize Custom Fields
+        if (class_exists('\cbedu\inc\custom_fields\CBEDUCustomFields')) {
+            $this->customFields = new \cbedu\inc\custom_fields\CBEDUCustomFields();
+        }
+
+        // Initialize Repeater Custom Fields
+        if (class_exists('\cbedu\inc\RepeaterCF\CBEDURepeaterCustomFields') && $this->pluginInstance) {
+            $this->repeaterCF = new \cbedu\inc\RepeaterCF\CBEDURepeaterCustomFields($this->pluginInstance);
+        }
+
+        // Initialize Settings
+        if (class_exists('\\CBEDU\\Admin\\Dashboard\\Settings\\Settings') && $this->pluginInstance) {
+            $this->settings = new \CBEDU\Admin\Dashboard\Settings\Settings($this->pluginInstance);
         }
     }
 

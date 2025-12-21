@@ -65,7 +65,10 @@ class Manager
      */
     public function init()
     {
-        $this->Admin_Manager = new AdminManager();
+        // Get the main plugin instance
+        $plugin_instance = \CBEDU\CBEDUResultPublishing::get_instance();
+        
+        $this->Admin_Manager = new AdminManager($plugin_instance);
         $this->Frontend = new Frontend();
     }
 }

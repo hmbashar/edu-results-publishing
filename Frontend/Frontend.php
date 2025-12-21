@@ -26,6 +26,9 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
  */
 class Frontend {
 
+    protected $shortcode;
+    protected $customFunctions;
+
     /**
      * Frontend constructor
      *
@@ -41,7 +44,14 @@ class Frontend {
      * @since 1.2.0
      */
     public function initialize() {
-        // Initialize frontend components here
-        // Add hooks, filters, and other frontend-related functionality
+        // Initialize Shortcode
+        if (class_exists('\\cbedu\\inc\\lib\\CBEDUResultsShortcode')) {
+            $this->shortcode = new \cbedu\inc\lib\CBEDUResultsShortcode();
+        }
+
+        // Initialize Custom Functions
+        if (class_exists('\cbedu\inc\lib\CBEDUCustomFunctions\CBEDUCustomFunctions')) {
+            $this->customFunctions = new \cbedu\inc\lib\CBEDUCustomFunctions\CBEDUCustomFunctions(CBEDU_PREFIX);
+        }
     }
 }
