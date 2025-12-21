@@ -75,8 +75,7 @@ final class CBEDUResultPublishing
           $this->init_hooks();
 
        
-        // Add plugin assets
-        add_action('wp_enqueue_scripts', array($this, 'cbedu_results_assets_enqueue'));
+        
 
         add_filter('post_updated_messages', array($this, 'cbedu_custom_post_publish_message'));
        
@@ -187,20 +186,7 @@ final class CBEDUResultPublishing
 
 
 
-    public function cbedu_results_assets_enqueue()
-    {
-        wp_enqueue_style('cbedu-results-style', plugins_url('/assets/css/style.css', __FILE__));
 
-        //for ajax search
-        wp_enqueue_script('cbedu-ajax-search-result', plugins_url('/assets/js/ajax-search-result.js', __FILE__), array('jquery'), '1.0.0', true);
-        wp_localize_script('cbedu-ajax-search-result', 'cbedu_ajax_results_object', array(
-            'ajaxurl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('cbedu_ajax_search_result_nonce') // Create a nonce for security
-        ));
-
-        //script for print
-        wp_enqueue_script('cbedu-print-js', plugins_url('/assets/js/print.js', __FILE__), array('jquery'), '1.0.0', true);
-    }
 
     public function cbedu_custom_post_publish_message($messages)
     {

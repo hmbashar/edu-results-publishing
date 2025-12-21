@@ -17,6 +17,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 use CBEDU\Frontend\Shortcodes\SearchForm;
 use CBEDU\Frontend\Shortcodes\ResultDetails;
+use CBEDU\Frontend\Assets\Assets;
 
 /**
  * Class Frontend
@@ -32,6 +33,7 @@ class Frontend {
 
     protected $SearchForm;
     protected $ResultDetails;
+    protected $assets;
 
     /**
      * Frontend constructor
@@ -72,5 +74,6 @@ class Frontend {
     public function initialize() {
         $this->SearchForm = new SearchForm();
         $this->ResultDetails = new ResultDetails();
+        $this->assets = new Assets();
     }
 }
