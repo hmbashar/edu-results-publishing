@@ -8,30 +8,16 @@ class Settings
 
     private $prefix;
 
-    public function __construct($eduResultPublishing)
+    public function __construct()
     {
 
-        $this->prefix = $eduResultPublishing->getPrefix();
+        $this->prefix = CBEDU_PREFIX;
 
         add_action('admin_menu', array($this, 'addSubmenuPage'));
-        add_action('admin_init', array($this, 'registerSettings'));
-        add_action('admin_enqueue_scripts', array($this, 'enqueueSettingsStyles'));
+        add_action('admin_init', array($this, 'registerSettings'));       
     }
 
-    public function enqueueSettingsStyles($hook)
-    {
-        // Only load on our settings page
-        if ($hook !== 'cbedu_results_page_cbedu_results_settings') {
-            return;
-        }
-        
-        wp_enqueue_style(
-            'cbedu-admin-settings',
-            CBEDU_RESULT_URL . 'assets/css/admin-settings.css',
-            array(),
-            CBEDU_VERSION
-        );
-    }
+
 
     public function addSubmenuPage()
     {

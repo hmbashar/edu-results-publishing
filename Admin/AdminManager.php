@@ -17,8 +17,14 @@ namespace CBEDU\Admin;
 if (!defined('ABSPATH'))
     exit; // Exit if accessed directly
 
+use CBEDU\Admin\Assets\Assets;
 use CBEDU\Admin\PostTypes\CustomPosts;
+use CBEDU\Admin\Taxonomy\Taxonomy;
+use CBEDU\Admin\Helpers\Helpers;
 use CBEDU\Admin\Dashboard\Dashboard;
+use CBEDU\Admin\CustomFields\CustomFields;
+use CBEDU\Admin\CustomFields\ResultSubjectRF;
+use CBEDU\Admin\Dashboard\Settings\Settings;
 
 
 /**
@@ -33,12 +39,14 @@ use CBEDU\Admin\Dashboard\Dashboard;
 class AdminManager
 {
     protected $customPosts;
+    protected $taxonomy;
     protected $dashboard;
-    protected $customTaxonomy;
+    protected $helpers;
     protected $customFields;
-    protected $repeaterCF;
+    protected $resultSubjectRF;
     protected $settings;
-    protected $pluginInstance;
+    protected $assets;
+
 
     /**
      * AdminManager constructor.
@@ -51,7 +59,6 @@ class AdminManager
      */
     public function __construct($plugin_instance = null)
     {
-        $this->pluginInstance = $plugin_instance;
         $this->setConstants();
         $this->init();
 
@@ -69,8 +76,8 @@ class AdminManager
      */
     public function setConstants()
     {
-        if (!defined('CBEDU_ADMIN_ASSETS')) {
-            define('CBEDU_ADMIN_ASSETS', CBEDU_RESULT_URL . 'Admin/Assets');
+        if (!defined('CBEDU_ADMIN_ASSETS_URL')) {
+            define('CBEDU_ADMIN_ASSETS_URL', CBEDU_RESULT_URL . 'Admin/Assets');
         }
     }
 
@@ -86,6 +93,10 @@ class AdminManager
     {
 
 
+        // Initialize Assets
+        if (class_exists('\CBEDU\Admin\Assets\Assets')) {
+            $this->assets = new Assets();
+        }
         // Initialize Custom Post Types
         if (class_exists('\CBEDU\Admin\PostTypes\CustomPosts')) {
             $this->customPosts = new CustomPosts();
@@ -94,31 +105,28 @@ class AdminManager
         if (class_exists('\CBEDU\Admin\Dashboard\Dashboard')) {
             $this->dashboard = new Dashboard();
         }
-
-        // Initialize Settings
-        if (class_exists('\CBEDU\Admin\Dashboard\Settings\Settings') && $this->pluginInstance) {
-            $this->settings = new \CBEDU\Admin\Dashboard\Settings\Settings($this->pluginInstance);
+        // Initialize Taxonomies
+        if (class_exists('\CBEDU\Admin\Taxonomy\Taxonomy')) {
+            $this->taxonomy = new Taxonomy();
         }
-       
-        // Initialize Custom Taxonomies
-        if (class_exists('\cbedu\inc\lib\CBEDU_CUSTOM_TAXONOMY')) {
-            $this->customTaxonomy = new \cbedu\inc\lib\CBEDU_CUSTOM_TAXONOMY(CBEDU_PREFIX);
+        // Initialize Helpers
+        if (class_exists('\CBEDU\Admin\Helpers\Helpers')) {
+            $this->helpers = new Helpers();
         }
-
         // Initialize Custom Fields
-        if (class_exists('\cbedu\inc\custom_fields\CBEDUCustomFields')) {
-            $this->customFields = new \cbedu\inc\custom_fields\CBEDUCustomFields();
+        if (class_exists('\CBEDU\Admin\CustomFields\CustomFields')) {
+            $this->customFields = new CustomFields();
         }
-
-        // Initialize Repeater Custom Fields
-        if (class_exists('\cbedu\inc\RepeaterCF\CBEDURepeaterCustomFields') && $this->pluginInstance) {
-            $this->repeaterCF = new \cbedu\inc\RepeaterCF\CBEDURepeaterCustomFields($this->pluginInstance);
+        // Initialize Result-Subject Repeater Field
+        if (class_exists('\CBEDU\Admin\CustomFields\ResultSubjectRF')) {
+            $this->resultSubjectRF = new ResultSubjectRF();
         }
 
         // Initialize Settings
-        if (class_exists('\\CBEDU\\Admin\\Dashboard\\Settings\\Settings') && $this->pluginInstance) {
-            $this->settings = new \CBEDU\Admin\Dashboard\Settings\Settings($this->pluginInstance);
+        if (class_exists('\CBEDU\Admin\Dashboard\Settings\Settings')) {
+            $this->settings = new Settings();
         }
+
     }
 
     /**

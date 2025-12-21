@@ -1,0 +1,577 @@
+/**
+ * Admin Meta Fields Styling
+ * Modern UI for EDU Results Publishing Plugin
+ */
+
+/* Meta Box Wrapper */
+.cbedu-meta-box-wrap {
+    padding: 15px;
+    background: #fff;
+}
+
+/* Section Headers */
+.cbedu-field-section {
+    margin-bottom: 30px;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.cbedu-section-header {
+    background: linear-gradient(to right, #2271b1, #135e96);
+    color: #fff;
+    padding: 12px 20px;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.cbedu-section-content {
+    padding: 20px;
+    background: #fafafa;
+}
+
+/* Field Row */
+.cbedu-field-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.cbedu-field-row:last-child {
+    margin-bottom: 0;
+}
+
+/* Single Field */
+.cbedu-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cbedu-field-label {
+    font-weight: 600;
+    font-size: 13px;
+    color: #1d2327;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.cbedu-field-label .required {
+    color: #d63638;
+}
+
+.cbedu-field-label .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+/* Input Fields */
+.cbedu-field-input,
+.cbedu-field-select,
+.cbedu-field-textarea {
+    width: 100%;
+    padding: 8px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.4;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background-color: #fff;
+    font-weight: 500;
+    height: 38px;
+}
+
+.cbedu-field-input:focus,
+.cbedu-field-select:focus,
+.cbedu-field-textarea:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    outline: none;
+    background-color: #fafbff;
+}
+
+.cbedu-field-input:hover,
+.cbedu-field-select:hover,
+.cbedu-field-textarea:hover {
+    border-color: #a0aec0;
+    background-color: #f9fafb;
+}
+
+.cbedu-field-input[type="date"] {
+    font-family: inherit;
+}
+
+.cbedu-field-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 20 20'%3E%3Cpath fill='%23667eea' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 14px;
+    padding-right: 36px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.cbedu-field-textarea {
+    min-height: 100px;
+    resize: vertical;
+    font-family: inherit;
+    height: auto;
+    line-height: 1.6;
+}
+
+/* Field Description */
+.cbedu-field-description {
+    font-size: 12px;
+    color: #646970;
+    font-style: italic;
+    margin: 0;
+}
+
+/* Full Width Field */
+.cbedu-field-full {
+    grid-column: 1 / -1;
+}
+
+/* Empty State */
+.cbedu-empty-notice {
+    padding: 15px;
+    background: #f0f6fc;
+    border-left: 4px solid #2271b1;
+    color: #1d2327;
+    font-size: 13px;
+}
+
+/* Required Field Indicator */
+.cbedu-required-indicator {
+    display: inline-block;
+    margin-left: 4px;
+    color: #d63638;
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 782px) {
+    .cbedu-field-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .cbedu-section-content {
+        padding: 15px;
+    }
+    
+    .cbedu-field-input,
+    .cbedu-field-select,
+    .cbedu-field-textarea {
+        padding: 10px;
+        font-size: 16px;
+    }
+}
+
+/* Field Icons */
+.cbedu-field-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #f0f0f1;
+    color: #50575e;
+    font-size: 12px;
+    margin-right: 8px;
+}
+
+/* Validation States */
+.cbedu-field-group.has-error .cbedu-field-input,
+.cbedu-field-group.has-error .cbedu-field-select,
+.cbedu-field-group.has-error .cbedu-field-textarea {
+    border-color: #d63638;
+}
+
+.cbedu-field-group.has-error .cbedu-field-label {
+    color: #d63638;
+}
+
+.cbedu-field-error {
+    color: #d63638;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* Success State */
+.cbedu-field-group.has-success .cbedu-field-input,
+.cbedu-field-group.has-success .cbedu-field-select {
+    border-color: #00a32a;
+}
+
+/* Info Box */
+.cbedu-info-box {
+    background: #f0f6fc;
+    border-left: 4px solid #72aee6;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    border-radius: 0 4px 4px 0;
+}
+
+.cbedu-info-box p {
+    margin: 0;
+    font-size: 13px;
+    color: #1d2327;
+}
+
+/* Old table compatibility - hide if exists */
+#student_fields table {
+    display: none;
+}
+/*============================================
+  Subjects Repeater Styles
+============================================*/
+
+.cbedu-subjects-repeater-wrapper {
+    background: #fff;
+    padding: 0;
+}
+
+.cbedu-repeater-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px 25px;
+    border-radius: 4px 4px 0 0;
+    margin: -8px -12px 0;
+}
+
+.cbedu-repeater-header h3 {
+    color: #fff;
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.cbedu-repeater-header .description {
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    font-size: 13px;
+}
+
+/* Repeater Table */
+.cbedu-repeater-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 20px 0 0 0;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.cbedu-repeater-table thead {
+    background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+}
+
+.cbedu-repeater-table thead tr th {
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    color: #2d3748;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.cbedu-repeater-th-subject {
+    width: 45%;
+}
+
+.cbedu-repeater-th-marks {
+    width: 35%;
+}
+
+.cbedu-repeater-th-action {
+    width: 20%;
+    text-align: center !important;
+}
+
+/* Repeater Rows */
+.cbedu-repeater-row {
+    transition: all 0.2s ease;
+}
+
+.cbedu-repeater-row:nth-child(even) {
+    background: #f8f9ff;
+}
+
+.cbedu-repeater-row:hover {
+    background: #f0f4ff;
+}
+
+.cbedu-repeater-table tbody tr td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+/* Subject Select Dropdown */
+.cbedu-repeater-select {
+    width: 100%;
+    padding: 8px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #2d3748;
+    background-color: #fff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 20 20'%3E%3Cpath fill='%23667eea' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 36px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-weight: 500;
+    line-height: 1.4;
+    height: 38px;
+}
+
+.cbedu-repeater-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    background-color: #fafbff;
+}
+
+.cbedu-repeater-select:hover {
+    border-color: #a0aec0;
+    background-color: #f9fafb;
+}
+
+/* Marks Input */
+.cbedu-repeater-input {
+    width: 100%;
+    padding: 8px 14px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #2d3748;
+    background-color: #fff;
+    transition: all 0.2s ease-in-out;
+    font-weight: 500;
+    line-height: 1.4;
+    height: 38px;
+}
+
+.cbedu-repeater-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    background-color: #fafbff;
+}
+
+.cbedu-repeater-input:hover {
+    border-color: #a0aec0;
+    background-color: #f9fafb;
+}
+
+.cbedu-repeater-input::placeholder {
+    color: #9ca3af;
+    font-weight: 400;
+}
+
+/* Action Column */
+.cbedu-repeater-td-action {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.cbedu-remove-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 6px 14px !important;
+    background: #fff !important;
+    border: 1.5px solid #dc3545 !important;
+    color: #dc3545 !important;
+    border-radius: 6px;
+    font-size: 12px !important;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none !important;
+    line-height: 1.2;
+    height: 30px !important;
+    min-height: auto !important;
+    box-shadow: none;
+}
+
+.cbedu-remove-btn:hover {
+    background: #dc3545 !important;
+    color: #fff !important;
+    border-color: #c82333 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(220, 53, 69, 0.2) !important;
+}
+
+.cbedu-remove-btn:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.12) !important;
+}
+
+.cbedu-remove-btn:active {
+    transform: translateY(0);
+}
+
+.cbedu-remove-btn .dashicons {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    line-height: 1;
+    margin: 0;
+}
+
+/* Repeater Footer */
+.cbedu-repeater-footer {
+    padding: 20px 0;
+    text-align: center;
+}
+
+.cbedu-add-subject-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 32px !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border: none !important;
+    color: #fff !important;
+    border-radius: 8px;
+    font-size: 14px !important;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 14px rgba(102, 126, 234, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    line-height: 1;
+    height: auto !important;
+    text-decoration: none !important;
+}
+
+.cbedu-add-subject-btn:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46a0 100%) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.45) !important;
+    color: #fff !important;
+}
+
+.cbedu-add-subject-btn:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2), 0 4px 14px rgba(102, 126, 234, 0.35) !important;
+}
+
+.cbedu-add-subject-btn:active {
+    transform: translateY(-1px);
+}
+
+.cbedu-add-subject-btn .dashicons {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    line-height: 1;
+    margin: 0;
+}
+
+/* Empty State Message */
+.cbedu-repeater-table tbody:empty::after {
+    content: "No subjects added yet. Click 'Add Another Subject' to begin.";
+    display: block;
+    padding: 40px 20px;
+    text-align: center;
+    color: #718096;
+    font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 782px) {
+    .cbedu-repeater-header {
+        padding: 15px 20px;
+        margin: -8px -12px 0;
+    }
+
+    .cbedu-repeater-table thead {
+        display: none;
+    }
+
+    .cbedu-repeater-row {
+        display: block;
+        margin-bottom: 20px;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #fff;
+    }
+
+    .cbedu-repeater-row:nth-child(even) {
+        background: #fff;
+    }
+
+    .cbedu-repeater-row:hover {
+        background: #f8f9ff;
+    }
+
+    .cbedu-repeater-table tbody tr td {
+        display: block;
+        width: 100%;
+        padding: 12px 16px;
+        border: none;
+        border-bottom: 1px solid #f0f0f1;
+    }
+
+    .cbedu-repeater-table tbody tr td:last-child {
+        border-bottom: none;
+    }
+
+    .cbedu-repeater-td-subject::before {
+        content: "Subject:";
+        display: block;
+        font-weight: 600;
+        color: #2d3748;
+        margin-bottom: 8px;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    .cbedu-repeater-td-input::before {
+        content: "Marks / Grade:";
+        display: block;
+        font-weight: 600;
+        color: #2d3748;
+        margin-bottom: 8px;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    .cbedu-repeater-td-action {
+        text-align: left;
+        padding-top: 16px !important;
+    }
+
+    .cbedu-remove-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .cbedu-add-subject-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

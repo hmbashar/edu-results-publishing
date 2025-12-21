@@ -74,19 +74,12 @@ final class CBEDUResultPublishing
 
           $this->init_hooks();
 
-        // Register plugin action links
-        add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($this, 'addPluginActionLinks'));
-        // Change placeholder
-        add_filter('enter_title_here', array($this, 'changeTitlePlaceholder'));
-        // Add admin assets
-        add_action('admin_enqueue_scripts', array($this, 'cbedu_result_assets_enque_admin'));
+       
         // Add plugin assets
         add_action('wp_enqueue_scripts', array($this, 'cbedu_results_assets_enqueue'));
 
         add_filter('post_updated_messages', array($this, 'cbedu_custom_post_publish_message'));
-
-        //add custom description afeter title for the result post type
-        add_action('edit_form_after_title', array($this, 'add_custom_description_after_title'));
+       
 
         $this->register_ajax_handlers();
     }
@@ -167,12 +160,8 @@ final class CBEDUResultPublishing
         return $this->prefix;
     }
     
-    public function addPluginActionLinks($links)
-    {
-        $donateLink = '<a href="https://www.buymeacoffee.com/hmbashar" target="_blank">' . __('Donate', 'edu-results') . '</a>';
-        array_unshift($links, $donateLink);
-        return $links;
-    }
+ 
+    
 
     public static function convert_marks_to_grade($marks)
     {
@@ -193,61 +182,9 @@ final class CBEDUResultPublishing
         }
     }
 
-    public function changeTitlePlaceholder($title)
-    {
-        $screen = get_current_screen();
-        if ($screen->post_type == $this->prefix . 'results') {
-            $title = __('Student Name', 'edu-results'); 
-        }elseif ($screen->post_type == $this->prefix . 'students') {
-            $title = __('Enter Student Name', 'edu-results');
-        } 
-        elseif ($screen->post_type == $this->prefix . 'subjects') {
-            $title = __('Enter Subject Name', 'edu-results'); // Placeholder for Subjects post type
-        }
-        return $title;
-    }
-   public function add_custom_description_after_title() {        
-        $screen = get_current_screen();    
-        if ($screen->post_type == $this->prefix . 'results') {
-            echo '<div style="margin-top: 10px; font-style: italic;font-weight:bold">';
-            echo '<p>' . __('The name will be automatically shown based on the student\'s registration number after publish the post.', 'edu-results') . '</p>';
-            echo '</div>';
-        }
-    }    
 
-    public function cbedu_result_assets_enque_admin($hook_suffix)
-    {
-        global $post;
-        wp_enqueue_media();
+ 
 
-        wp_enqueue_script('cbedu-custom-fields', CBEDU_RESULT_URL . 'assets/js/admin.js', array('jquery'), '1.0.0', true);
-
-        wp_localize_script('cbedu-custom-fields', 'cbedu_ajax_object', array(
-            'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('cbedu_register_number_nonce')
-        ));
-
-        // Enqueue admin meta fields CSS for custom post types
-        if ($hook_suffix === 'post-new.php' || $hook_suffix === 'post.php') {
-            $post_type = get_post_type($post);
-            
-            // Load admin CSS for students, subjects, and results post types
-            if (in_array($post_type, array('cbedu_students', 'cbedu_subjects', 'cbedu_results'))) {
-                wp_enqueue_style('cbedu-admin-meta-fields', CBEDU_RESULT_URL . 'assets/css/admin-meta-fields.css', array(), CBEDU_VERSION);
-            }
-
-            // For autocomplete jquery in results post type with registration number
-            if ($post_type === 'cbedu_results') {
-                wp_enqueue_style('cbedu-autocomplete-ui-css', plugin_dir_url(__FILE__) . 'assets/css/autocomplete.css');
-                wp_enqueue_script('cbedu-autocomplete-js', plugin_dir_url(__FILE__) . 'assets/js/autocomplete.js', array('jquery', 'jquery-ui-autocomplete'), '1.0.0', true);
-                wp_localize_script('cbedu-autocomplete-js', 'cbedu_ajax_autocomplete_object', array(
-                    'ajax_url' => admin_url('admin-ajax.php'),
-                    // Pass the nonce here
-                    'auto_complete_nonce' => wp_create_nonce('cbedu_auto_complete_nonce')
-                ));
-            }
-        }
-    }
 
 
     public function cbedu_results_assets_enqueue()
