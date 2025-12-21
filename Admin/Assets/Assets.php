@@ -13,6 +13,7 @@ class Assets
 
         // Add admin assets
         add_action('admin_enqueue_scripts', array($this, 'cbedu_result_assets_enque_admin'));
+         add_action('admin_enqueue_scripts', array($this, 'enqueueSettingsStyles'));
     }
 
 
@@ -59,7 +60,7 @@ class Assets
 
         wp_enqueue_style(
             'cbedu-admin-settings',
-            CBEDU_RESULT_URL . 'assets/css/admin-settings.css',
+            CBEDU_ADMIN_ASSETS_URL . '/css/admin-settings.css',
             array(),
             CBEDU_VERSION
         );
