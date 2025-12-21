@@ -91,7 +91,7 @@ if ($cbedu_result->have_posts()) :
                             if (has_post_thumbnail()) {
                                 the_post_thumbnail('thumbnail');
                             } else {
-                                echo '<img src="' . CBEDU_RESULT_URL . '/assets/img/student.webp" alt="Student Image">';
+                                echo '<img src="' . CBEDU_FRONTEND_ASSETS_URL . '/img/student.webp" alt="Student Image">';
                             }
                             ?>
                         </div>
