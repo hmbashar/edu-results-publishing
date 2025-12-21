@@ -1,7 +1,10 @@
 <?php
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
-$post_id = 157;
-$cbedu_result = new WP_Query(
+
+use CBEDU\Frontend\Helpers\Helpers;
+
+$post_id = 1062;
+$cbedu_result = new \WP_Query(
     array(
         'post_type' => 'cbedu_results',
         'p'         => $post_id,
@@ -207,7 +210,7 @@ if ($cbedu_result->have_posts()) :
                                     if (isset($subject_result['subject_name']) && isset($subject_result['subject_value'])) {
                                         $subject_name = esc_html($subject_result['subject_name']);
                                         $marks = intval(esc_html($subject_result['subject_value'])); // Assuming the marks are stored in 'subject_value'
-                                        list($letter_grade, $grade_point) = CBEDUResultPublishing::convert_marks_to_grade($marks);
+                                        list($letter_grade, $grade_point) = Helpers::convert_marks_to_grade($marks);
 
                                         // Fetch subject code based on subject name
                                         $subject_posts = get_posts(array(
@@ -254,4 +257,3 @@ if ($cbedu_result->have_posts()) :
     endwhile;
 endif;
 wp_reset_query();
-?>

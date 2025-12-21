@@ -14,6 +14,10 @@ namespace CBEDU\Frontend;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
+
+use CBEDU\Frontend\Shortcodes\SearchForm;
+use CBEDU\Frontend\Shortcodes\ResultDetails;
+
 /**
  * Class Frontend
  *
@@ -26,8 +30,8 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
  */
 class Frontend {
 
-    protected $shortcode;
-    protected $customFunctions;
+    protected $SearchForm;
+    protected $ResultDetails;
 
     /**
      * Frontend constructor
@@ -35,8 +39,30 @@ class Frontend {
      * @since 1.2.0
      */
     public function __construct() {
+
+        $this->setConstants();
+
         $this->initialize();
     }
+
+    /**
+     * Set Frontend constants
+     *
+     * @since 1.2.0
+     */
+    public function setConstants() {
+        if (!defined('CBEDU_FRONTEND_ASSETS_URL')) {
+            define('CBEDU_FRONTEND_ASSETS_URL', CBEDU_RESULT_URL . 'Frontend/Assets');
+        }
+
+        if (!defined('CBEDU_FRONTEND_PATH')) {
+            define('CBEDU_FRONTEND_PATH', CBEDU_RESULT_PATH . 'Frontend/');
+        }
+
+    }
+
+
+
 
     /**
      * Initialize the EDU Results Publishing Frontend
@@ -44,14 +70,7 @@ class Frontend {
      * @since 1.2.0
      */
     public function initialize() {
-        // Initialize Shortcode
-        if (class_exists('\\cbedu\\inc\\lib\\CBEDUResultsShortcode')) {
-            $this->shortcode = new \cbedu\inc\lib\CBEDUResultsShortcode();
-        }
-
-        // Initialize Custom Functions
-        if (class_exists('\cbedu\inc\lib\CBEDUCustomFunctions\CBEDUCustomFunctions')) {
-            $this->customFunctions = new \cbedu\inc\lib\CBEDUCustomFunctions\CBEDUCustomFunctions(CBEDU_PREFIX);
-        }
+        $this->SearchForm = new SearchForm();
+        $this->ResultDetails = new ResultDetails();
     }
 }
