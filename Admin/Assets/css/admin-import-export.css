@@ -3,6 +3,9 @@
    =================================== */
 
 /* Wrapper */
+.cbedu-settings-header .notice.notice-success.is-dismissible {
+    color:#1f2937;
+}
 .cbedu-import-export-wrapper {
     max-width: 1400px;
     margin: 20px auto 0;
@@ -208,6 +211,22 @@
 .cbedu-ie-upload-label:hover {
     border-color: #f5576c;
     background: #fef2f2;
+}
+
+.cbedu-ie-upload-label.cbedu-ie-drag-active {
+    border-color: #f5576c;
+    background: #fef2f2;
+    border-style: solid;
+    transform: scale(1.02);
+}
+
+.cbedu-ie-upload-label.cbedu-ie-file-selected {
+    border-color: #10b981;
+    background: #ecfdf5;
+}
+
+.cbedu-ie-upload-label.cbedu-ie-file-selected .cbedu-ie-upload-text {
+    color: #059669;
 }
 
 .cbedu-ie-upload-label svg {
