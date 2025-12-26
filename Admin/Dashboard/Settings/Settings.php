@@ -8,13 +8,19 @@ class Settings
 
     private $prefix;
 
+    private $import_export;
+
     public function __construct()
     {
 
         $this->prefix = CBEDU_PREFIX;
 
         add_action('admin_menu', array($this, 'addSubmenuPage'));
-        add_action('admin_init', array($this, 'registerSettings'));       
+        add_action('admin_init', array($this, 'registerSettings'));
+        
+        // Initialize ImportExport
+        $this->import_export = new ImportExport();
+        add_action('admin_notices', array($this->import_export, 'display_notices'));
     }
 
 
@@ -32,7 +38,9 @@ class Settings
     }
     public function renderSettingsPage()
     {
-?>
+        // Get current tab
+        $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'general';
+    ?>
         <div class="wrap cbedu-settings-wrap">
             <div class="cbedu-settings-header">
                 <h1><?php echo esc_html__('🎓 Edu Results Settings', 'edu-results'); ?></h1>
@@ -41,25 +49,45 @@ class Settings
             
             <?php settings_errors(); ?>
             
+            <!-- Tab Navigation -->
+            <h2 class="nav-tab-wrapper">
+                <a href="?post_type=<?php echo esc_attr($this->prefix . 'results'); ?>&page=cbedu_results_settings&tab=general" 
+                   class="nav-tab <?php echo $active_tab === 'general' ? 'nav-tab-active' : ''; ?>">
+                    <?php esc_html_e('General', 'edu-results'); ?>
+                </a>
+                <a href="?post_type=<?php echo esc_attr($this->prefix . 'results'); ?>&page=cbedu_results_settings&tab=import-export" 
+                   class="nav-tab <?php echo $active_tab === 'import-export' ? 'nav-tab-active' : ''; ?>">
+                    <?php esc_html_e('Import / Export', 'edu-results'); ?>
+                </a>
+            </h2>
+            
             <div class="cbedu-settings-container">
-                <form method="post" action="options.php" enctype="multipart/form-data" class="cbedu-settings-form">
-                    <?php settings_fields('cbedu_results_settings_group'); ?>
-                    <?php wp_nonce_field('cbedu_results_settings_nonce', 'cbedu_results_settings_nonce_field'); ?>
-                    
-                    <div class="cbedu-settings-card">
-                        <div class="cbedu-card-header">
-                            <h2>🏛️ Institution Information</h2>
-                            <p class="description">Basic information about your educational institution</p>
+                <?php if ($active_tab === 'general') : ?>
+                    <!-- General Settings Tab -->
+                    <form method="post" action="options.php" enctype="multipart/form-data" class="cbedu-settings-form">
+                        <?php settings_fields('cbedu_results_settings_group'); ?>
+                        <?php wp_nonce_field('cbedu_results_settings_nonce', 'cbedu_results_settings_nonce_field'); ?>
+                        
+                        <div class="cbedu-settings-card">
+                            <div class="cbedu-card-header">
+                                <h2>🏛️ Institution Information</h2>
+                                <p class="description">Basic information about your educational institution</p>
+                            </div>
+                            <div class="cbedu-card-body">
+                                <?php do_settings_sections('cbedu_results_settings'); ?>
+                            </div>
                         </div>
-                        <div class="cbedu-card-body">
-                            <?php do_settings_sections('cbedu_results_settings'); ?>
+                        
+                        <div class="cbedu-settings-footer">
+                            <?php submit_button(__('Save Settings', 'edu-results'), 'primary cbedu-save-btn', 'submit', false); ?>
                         </div>
-                    </div>
+                    </form>
                     
-                    <div class="cbedu-settings-footer">
-                        <?php submit_button(__('Save Settings', 'edu-results'), 'primary cbedu-save-btn', 'submit', false); ?>
-                    </div>
-                </form>
+                <?php elseif ($active_tab === 'import-export') : ?>
+                    <!-- Import/Export Tab -->
+                    <?php $this->import_export->render_import_export_tab(); ?>
+                    
+                <?php endif; ?>
             </div>
         </div>
     <?php

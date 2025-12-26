@@ -64,5 +64,12 @@ class Assets
             array(),
             CBEDU_VERSION
         );
+        
+        wp_enqueue_style(
+            'cbedu-admin-import-export',
+            CBEDU_ADMIN_ASSETS_URL . '/css/admin-import-export.css',
+            array(),
+            CBEDU_VERSION
+        );
     }
 }

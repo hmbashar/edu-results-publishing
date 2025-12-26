@@ -1,0 +1,477 @@
+/* ===================================
+   Import/Export Tab - Premium UI
+   =================================== */
+
+/* Wrapper */
+.cbedu-import-export-wrapper {
+    max-width: 1400px;
+    margin: 20px auto 0;
+    padding: 0;
+}
+
+/* Hero Section */
+.cbedu-ie-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    padding: 40px 50px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.cbedu-ie-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.cbedu-ie-hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.cbedu-ie-hero-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 12px 0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cbedu-ie-hero-subtitle {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.95);
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Grid Layout */
+.cbedu-ie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+/* Cards */
+.cbedu-ie-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid #e5e7eb;
+    position: relative;
+    overflow: hidden;
+}
+
+.cbedu-ie-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cbedu-ie-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.cbedu-ie-card:hover::before {
+    opacity: 1;
+}
+
+/* Card Icons */
+.cbedu-ie-card-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    transition: all 0.3s ease;
+}
+
+.cbedu-ie-card-export .cbedu-ie-card-icon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+}
+
+.cbedu-ie-card-import .cbedu-ie-card-icon {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: #ffffff;
+}
+
+.cbedu-ie-card:hover .cbedu-ie-card-icon {
+    transform: scale(1.05) rotate(5deg);
+}
+
+/* Card Header */
+.cbedu-ie-card-header {
+    margin-bottom: 24px;
+}
+
+.cbedu-ie-card-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 8px 0;
+}
+
+.cbedu-ie-card-description {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Card Body */
+.cbedu-ie-card-body {
+    margin-top: 24px;
+}
+
+/* Features List */
+.cbedu-ie-features {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.cbedu-ie-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #f9fafb;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.cbedu-ie-feature-item:hover {
+    background: #f3f4f6;
+    transform: translateX(4px);
+}
+
+.cbedu-ie-feature-icon {
+    flex-shrink: 0;
+    color: #667eea;
+}
+
+.cbedu-ie-feature-item span {
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+}
+
+/* Upload Area */
+.cbedu-ie-upload-area {
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.cbedu-ie-file-input {
+    position: absolute;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.cbedu-ie-upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    border: 2px dashed #d1d5db;
+    border-radius: 12px;
+    background: #f9fafb;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.cbedu-ie-upload-label:hover {
+    border-color: #f5576c;
+    background: #fef2f2;
+}
+
+.cbedu-ie-upload-label svg {
+    color: #9ca3af;
+    margin-bottom: 16px;
+    transition: all 0.3s ease;
+}
+
+.cbedu-ie-upload-label:hover svg {
+    color: #f5576c;
+    transform: translateY(-4px);
+}
+
+.cbedu-ie-upload-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: #374151;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.cbedu-ie-upload-hint {
+    font-size: 13px;
+    color: #6b7280;
+    display: block;
+}
+
+.cbedu-ie-file-input:focus + .cbedu-ie-upload-label {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* Info Box */
+.cbedu-ie-info-box {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    border: 1px solid #fbbf24;
+}
+
+.cbedu-ie-info-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    color: #92400e;
+}
+
+.cbedu-ie-info-header svg {
+    flex-shrink: 0;
+}
+
+.cbedu-ie-info-header strong {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.cbedu-ie-info-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cbedu-ie-info-list li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #78350f;
+    line-height: 1.6;
+}
+
+.cbedu-ie-info-list li:last-child {
+    margin-bottom: 0;
+}
+
+.cbedu-ie-info-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #f59e0b;
+    font-weight: bold;
+}
+
+.cbedu-ie-info-list code {
+    background: rgba(255, 255, 255, 0.6);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: 'Courier New', monospace;
+    color: #92400e;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+/* Buttons */
+.cbedu-ie-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.cbedu-ie-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.cbedu-ie-btn:active {
+    transform: translateY(0);
+}
+
+.cbedu-ie-btn svg {
+    flex-shrink: 0;
+}
+
+.cbedu-ie-btn-export {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+}
+
+.cbedu-ie-btn-export:hover {
+    background: linear-gradient(135deg, #5568d3 0%, #63408a 100%);
+    color: #ffffff;
+}
+
+.cbedu-ie-btn-import {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: #ffffff;
+}
+
+.cbedu-ie-btn-import:hover {
+    background: linear-gradient(135deg, #e082ea 0%, #e0465a 100%);
+    color: #ffffff;
+}
+
+/* Help Section */
+.cbedu-ie-help {
+    background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+    border-radius: 12px;
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid #7dd3fc;
+}
+
+.cbedu-ie-help-icon {
+    width: 48px;
+    height: 48px;
+    background: #0ea5e9;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #ffffff;
+}
+
+.cbedu-ie-help-content h4 {
+    margin: 0 0 6px 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #0c4a6e;
+}
+
+.cbedu-ie-help-content p {
+    margin: 0;
+    font-size: 14px;
+    color: #075985;
+    line-height: 1.6;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1200px) {
+    .cbedu-ie-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 782px) {
+    .cbedu-ie-hero {
+        padding: 30px 24px;
+    }
+    
+    .cbedu-ie-hero-title {
+        font-size: 24px;
+    }
+    
+    .cbedu-ie-hero-subtitle {
+        font-size: 14px;
+    }
+    
+    .cbedu-ie-card {
+        padding: 24px;
+    }
+    
+    .cbedu-ie-card-title {
+        font-size: 20px;
+    }
+    
+    .cbedu-ie-help {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .cbedu-import-export-wrapper {
+        margin: 10px 0 0;
+    }
+    
+    .cbedu-ie-hero {
+        border-radius: 12px;
+        padding: 24px 20px;
+    }
+    
+    .cbedu-ie-card {
+        border-radius: 12px;
+        padding: 20px;
+    }
+    
+    .cbedu-ie-card-icon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .cbedu-ie-btn {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cbedu-ie-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.cbedu-ie-card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+/* Remove old styles */
+.cbedu-import-export-container {
+    display: none;
+}
