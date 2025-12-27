@@ -29,8 +29,8 @@ class ImportExport
             <!-- Students Section -->
             <div class="cbedu-ie-hero">
                 <div class="cbedu-ie-hero-content">
-                    <h2 class="cbedu-ie-hero-title">📊 Student Data Management</h2>
-                    <p class="cbedu-ie-hero-subtitle">Seamlessly import and export student records with all custom fields and taxonomies</p>
+                    <h2 class="cbedu-ie-hero-title"><?php esc_html_e('📊 Student Data Management', 'edu-results'); ?></h2>
+                    <p class="cbedu-ie-hero-subtitle"><?php esc_html_e('Seamlessly import and export student records with all custom fields and taxonomies', 'edu-results'); ?></p>
                 </div>
             </div>
 
@@ -46,8 +46,8 @@ class ImportExport
             <!-- Results Section -->
             <div class="cbedu-ie-hero">
                 <div class="cbedu-ie-hero-content">
-                    <h2 class="cbedu-ie-hero-title">📋 Results Data Management</h2>
-                    <p class="cbedu-ie-hero-subtitle">Seamlessly import and export result records with all custom fields and taxonomies</p>
+                    <h2 class="cbedu-ie-hero-title"><?php esc_html_e('📋 Results Data Management', 'edu-results'); ?></h2>
+                    <p class="cbedu-ie-hero-subtitle"><?php esc_html_e('Seamlessly import and export result records with all custom fields and taxonomies', 'edu-results'); ?></p>
                 </div>
             </div>
 
@@ -63,8 +63,8 @@ class ImportExport
                     </svg>
                 </div>
                 <div class="cbedu-ie-help-content">
-                    <h4>Need Help?</h4>
-                    <p>Export a sample CSV first to see the correct format, then modify it with your data and import it back.</p>
+                    <h4><?php esc_html_e('Need Help?', 'edu-results'); ?></h4>
+                    <p><?php esc_html_e('Export a sample CSV first to see the correct format, then modify it with your data and import it back.', 'edu-results'); ?></p>
                 </div>
             </div>
             
