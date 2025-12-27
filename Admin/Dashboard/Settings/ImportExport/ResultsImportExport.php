@@ -315,9 +315,15 @@ class ResultsImportExport
                     // Split by colon
                     $parts = explode(':', $pair, 2);
                     if (count($parts) === 2) {
+                        $subject_name = sanitize_text_field(trim($parts[0]));
+                        $subject_value = sanitize_text_field(trim($parts[1]));
+                        
+                        // Ensure subject exists (create if it doesn't)
+                        $this->ensure_subject_exists($subject_name);
+                        
                         $subjects_array[] = array(
-                            'subject_name' => sanitize_text_field(trim($parts[0])),
-                            'subject_value' => sanitize_text_field(trim($parts[1]))
+                            'subject_name' => $subject_name,
+                            'subject_value' => $subject_value
                         );
                     }
                 }
@@ -340,6 +346,35 @@ class ResultsImportExport
             'error_messages' => $error_messages,
             'total' => $imported + $updated
         ));
+    }
+
+    /**
+     * Ensure a subject exists, create it if it doesn't
+     * 
+     * @param string $subject_name The subject name to check/create
+     * @return int|null The subject post ID, or null if creation failed
+     */
+    private function ensure_subject_exists($subject_name)
+    {
+        // Check if subject already exists by title
+        $existing_subject = get_page_by_title($subject_name, OBJECT, 'cbedu_subjects');
+        
+        if ($existing_subject) {
+            return $existing_subject->ID;
+        }
+        
+        // Subject doesn't exist, create it
+        $subject_id = wp_insert_post(array(
+            'post_title' => $subject_name,
+            'post_type' => 'cbedu_subjects',
+            'post_status' => 'publish',
+        ));
+        
+        if (is_wp_error($subject_id)) {
+            return null;
+        }
+        
+        return $subject_id;
     }
 
     /**
