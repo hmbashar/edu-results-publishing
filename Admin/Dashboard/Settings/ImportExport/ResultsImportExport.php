@@ -70,7 +70,8 @@ class ResultsImportExport
         $headers = array_merge(
             ['result_title'],
             $this->meta_fields,
-            $this->taxonomies
+            $this->taxonomies,
+            ['subjects'] // Add subjects column
         );
 
         // Create CSV content
@@ -94,6 +95,20 @@ class ResultsImportExport
                 $terms = wp_get_post_terms($result->ID, $taxonomy, array('fields' => 'names'));
                 $row[] = is_array($terms) ? implode('|', $terms) : '';
             }
+            
+            // Add subjects (format: SubjectName:Mark|SubjectName:Mark)
+            $subjects_data = get_post_meta($result->ID, 'cbedu_subjects_results', true);
+            $subjects_string = '';
+            if (is_array($subjects_data) && !empty($subjects_data)) {
+                $subject_pairs = array();
+                foreach ($subjects_data as $subject) {
+                    if (isset($subject['subject_name']) && isset($subject['subject_value'])) {
+                        $subject_pairs[] = $subject['subject_name'] . ':' . $subject['subject_value'];
+                    }
+                }
+                $subjects_string = implode('|', $subject_pairs);
+            }
+            $row[] = $subjects_string;
             
             $csv_data[] = $row;
         }
@@ -186,15 +201,20 @@ class ResultsImportExport
             return trim($header);
         }, $headers);
 
-        // Validate required headers
-        $expected_headers = array_merge(
+        // Validate required headers (subjects is optional for backward compatibility)
+        $required_headers = array_merge(
             ['result_title'],
             $this->meta_fields,
             $this->taxonomies
         );
+        
+        $expected_headers = array_merge(
+            $required_headers,
+            ['subjects'] // Optional
+        );
 
         // Check if all required headers are present (order doesn't matter)
-        $missing_headers = array_diff($expected_headers, $headers);
+        $missing_headers = array_diff($required_headers, $headers);
         if (!empty($missing_headers)) {
             fclose($handle);
             $error_msg = sprintf(
@@ -282,6 +302,32 @@ class ResultsImportExport
                     }
                 }
             }
+            
+            // Update subjects (format: SubjectName:Mark|SubjectName:Mark)
+            if (isset($row_data['subjects']) && !empty($row_data['subjects'])) {
+                $subjects_array = array();
+                $subject_pairs = explode('|', $row_data['subjects']);
+                
+                foreach ($subject_pairs as $pair) {
+                    $pair = trim($pair);
+                    if (empty($pair)) continue;
+                    
+                    // Split by colon
+                    $parts = explode(':', $pair, 2);
+                    if (count($parts) === 2) {
+                        $subjects_array[] = array(
+                            'subject_name' => sanitize_text_field(trim($parts[0])),
+                            'subject_value' => sanitize_text_field(trim($parts[1]))
+                        );
+                    }
+                }
+                
+                if (!empty($subjects_array)) {
+                    update_post_meta($post_id, 'cbedu_subjects_results', $subjects_array);
+                } else {
+                    delete_post_meta($post_id, 'cbedu_subjects_results');
+                }
+            }
         }
 
         fclose($handle);
@@ -356,7 +402,7 @@ class ResultsImportExport
                         <svg class="cbedu-ie-feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
                             <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        <span>6 custom meta fields</span>
+                        <span>6 custom meta fields + subjects</span>
                     </div>
                     <div class="cbedu-ie-feature-item">
                         <svg class="cbedu-ie-feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -425,6 +471,7 @@ class ResultsImportExport
                             <li>Results with matching registration number + roll will be <strong>updated</strong></li>
                             <li>New results will be <strong>created</strong> automatically</li>
                             <li>Use pipe (<code>|</code>) to separate multiple taxonomy terms</li>
+                            <li>Subjects format: <code>Math:80|English:89|Bangla:98</code></li>
                             <li>Required fields: <code>result_title</code>, <code>cbedu_result_std_registration_number</code>, <code>cbedu_result_std_roll</code></li>
                         </ul>
                     </div>
