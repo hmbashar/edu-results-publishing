@@ -352,8 +352,8 @@ class StudentsImportExport
             </div>
             
             <div class="cbedu-ie-card-header">
-                <h3 class="cbedu-ie-card-title">Export Students</h3>
-                <p class="cbedu-ie-card-description">Download all student data as a CSV file</p>
+                <h3 class="cbedu-ie-card-title"><?php esc_html_e('Export Students', 'edu-results'); ?></h3>
+                <p class="cbedu-ie-card-description"><?php esc_html_e('Download all student data as a CSV file', 'edu-results'); ?></p>
             </div>
             
             <div class="cbedu-ie-card-body">
@@ -362,25 +362,25 @@ class StudentsImportExport
                         <svg class="cbedu-ie-feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
                             <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        <span>All published students</span>
+                        <span><?php esc_html_e('All published students', 'edu-results'); ?></span>
                     </div>
                     <div class="cbedu-ie-feature-item">
                         <svg class="cbedu-ie-feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
                             <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        <span>17 custom meta fields</span>
+                        <span><?php esc_html_e('17 custom meta fields', 'edu-results'); ?></span>
                     </div>
                     <div class="cbedu-ie-feature-item">
                         <svg class="cbedu-ie-feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
                             <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        <span>All taxonomy terms</span>
+                        <span><?php esc_html_e('All taxonomy terms', 'edu-results'); ?></span>
                     </div>
                     <div class="cbedu-ie-feature-item">
                         <svg class="cbedu-ie-feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
                             <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        <span>UTF-8 encoded CSV</span>
+                        <span><?php esc_html_e('UTF-8 encoded CSV', 'edu-results'); ?></span>
                     </div>
                 </div>
                 
@@ -391,7 +391,7 @@ class StudentsImportExport
                             <path d="M12 15L12 3M12 15L8 11M12 15L16 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M2 17L2 19C2 20.1046 2.89543 21 4 21L20 21C21.1046 21 22 20.1046 22 19L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
-                        <span>Export to CSV</span>
+                        <span><?php esc_html_e('Export to CSV', 'edu-results'); ?></span>
                     </button>
                 </form>
             </div>
@@ -407,8 +407,8 @@ class StudentsImportExport
             </div>
             
             <div class="cbedu-ie-card-header">
-                <h3 class="cbedu-ie-card-title">Import Students</h3>
-                <p class="cbedu-ie-card-description">Upload CSV file to create or update students</p>
+                <h3 class="cbedu-ie-card-title"><?php esc_html_e('Import Students', 'edu-results'); ?></h3>
+                <p class="cbedu-ie-card-description"><?php esc_html_e('Upload CSV file to create or update students', 'edu-results'); ?></p>
             </div>
             
             <div class="cbedu-ie-card-body">
@@ -421,8 +421,8 @@ class StudentsImportExport
                             <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
                                 <path d="M7 18C4.23858 18 2 15.7614 2 13C2 10.2386 4.23858 8 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C19.7614 8 22 10.2386 22 13C22 15.7614 19.7614 18 17 18M12 15V21M12 15L9 18M12 15L15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            <span class="cbedu-ie-upload-text">Click to browse or drag CSV file here</span>
-                            <span class="cbedu-ie-upload-hint">Maximum file size: 10MB</span>
+                            <span class="cbedu-ie-upload-text"><?php esc_html_e('Click to browse or drag CSV file here', 'edu-results'); ?></span>
+                            <span class="cbedu-ie-upload-hint"><?php esc_html_e('Maximum file size: 10MB', 'edu-results'); ?></span>
                         </label>
                     </div>
                     
@@ -431,13 +431,13 @@ class StudentsImportExport
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                                 <path d="M12 16V12M12 8H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            <strong>Important Notes</strong>
+                            <strong><?php esc_html_e('Important Notes', 'edu-results'); ?></strong>
                         </div>
                         <ul class="cbedu-ie-info-list">
-                            <li>Students with matching registration numbers will be <strong>updated</strong></li>
-                            <li>New students will be <strong>created</strong> automatically</li>
-                            <li>Use pipe (<code>|</code>) to separate multiple taxonomy terms</li>
-                            <li>Required fields: <code>student_title</code>, <code>cbedu_result_std_registration_number</code></li>
+                            <li><?php esc_html_e('Students with matching registration numbers will be', 'edu-results'); ?> <strong><?php esc_html_e('updated', 'edu-results'); ?></strong></li>
+                            <li><?php esc_html_e('New students will be', 'edu-results'); ?> <strong><?php esc_html_e('created', 'edu-results'); ?></strong> <?php esc_html_e('automatically', 'edu-results'); ?></li>
+                            <li><?php esc_html_e('Use pipe', 'edu-results'); ?> (<code>|</code>) <?php esc_html_e('to separate multiple taxonomy terms', 'edu-results'); ?></li>
+                            <li><?php esc_html_e('Required fields:', 'edu-results'); ?> <code>student_title</code>, <code>cbedu_result_std_registration_number</code></li>
                         </ul>
                     </div>
                     
@@ -446,7 +446,7 @@ class StudentsImportExport
                             <path d="M12 3L12 15M12 3L16 7M12 3L8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M2 17L2 19C2 20.1046 2.89543 21 4 21L20 21C21.1046 21 22 20.1046 22 19L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
-                        <span>Import from CSV</span>
+                        <span><?php esc_html_e('Import from CSV', 'edu-results'); ?></span>
                     </button>
                 </form>
             </div>
