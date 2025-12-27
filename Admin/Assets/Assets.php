@@ -72,13 +72,33 @@ class Assets
             CBEDU_VERSION
         );
         
+        // Enqueue SweetAlert2
+        wp_enqueue_script(
+            'sweetalert2',
+            'https://cdn.jsdelivr.net/npm/sweetalert2@11',
+            array(),
+            '11.0.0',
+            true
+        );
+        
         // Enqueue import-export JavaScript
         wp_enqueue_script(
             'cbedu-import-export',
             CBEDU_ADMIN_ASSETS_URL . '/js/import-export.js',
-            array('jquery'),
+            array('jquery', 'sweetalert2'),
             CBEDU_VERSION,
             true
+        );
+        
+        // Localize script with AJAX URL and nonces
+        wp_localize_script(
+            'cbedu-import-export',
+            'cbeduImportExport',
+            array(
+                'ajaxurl' => admin_url('admin-ajax.php'),
+                'exportNonce' => wp_create_nonce('cbedu_export_nonce'),
+                'importNonce' => wp_create_nonce('cbedu_import_nonce')
+            )
         );
     }
 }

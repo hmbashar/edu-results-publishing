@@ -41,29 +41,23 @@ class ImportExport
     {
         $this->prefix = CBEDU_PREFIX;
         
-        // Handle export
-        add_action('admin_init', array($this, 'handle_export'));
+        // Handle AJAX export
+        add_action('wp_ajax_cbedu_export_students', array($this, 'ajax_export_students'));
         
-        // Handle import
-        add_action('admin_init', array($this, 'handle_import'));
+        // Handle AJAX import
+        add_action('wp_ajax_cbedu_import_students', array($this, 'ajax_import_students'));
     }
 
     /**
-     * Handle CSV export
+     * Handle AJAX CSV export
      */
-    public function handle_export()
+    public function ajax_export_students()
     {
-        if (!isset($_POST['cbedu_export_students'])) {
-            return;
-        }
-
         // Security checks
+        check_ajax_referer('cbedu_export_nonce', 'nonce');
+        
         if (!current_user_can('manage_options')) {
-            wp_die(__('You do not have permission to export students.', 'edu-results'));
-        }
-
-        if (!isset($_POST['cbedu_export_nonce']) || !wp_verify_nonce($_POST['cbedu_export_nonce'], 'cbedu_export_students_action')) {
-            wp_die(__('Security check failed.', 'edu-results'));
+            wp_send_json_error(array('message' => __('You do not have permission to export students.', 'edu-results')));
         }
 
         // Get all students
@@ -78,8 +72,7 @@ class ImportExport
         $students = get_posts($args);
 
         if (empty($students)) {
-            wp_redirect(add_query_arg('export_error', 'no_students', wp_get_referer()));
-            exit;
+            wp_send_json_error(array('message' => __('No students found to export.', 'edu-results')));
         }
 
         // Prepare CSV headers
@@ -89,22 +82,11 @@ class ImportExport
             $this->taxonomies
         );
 
-        // Set headers for download
-        header('Content-Type: text/csv; charset=utf-8');
-        header('Content-Disposition: attachment; filename=students-export-' . date('Y-m-d-His') . '.csv');
-        header('Pragma: no-cache');
-        header('Expires: 0');
+        // Create CSV content
+        $csv_data = array();
+        $csv_data[] = $headers;
 
-        // Open output stream
-        $output = fopen('php://output', 'w');
-
-        // Write BOM for UTF-8
-        fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
-
-        // Write headers
-        fputcsv($output, $headers);
-
-        // Write data
+        // Add data rows
         foreach ($students as $student) {
             $row = array();
             
@@ -122,51 +104,80 @@ class ImportExport
                 $row[] = is_array($terms) ? implode('|', $terms) : '';
             }
             
-            fputcsv($output, $row);
+            $csv_data[] = $row;
         }
 
+        // Convert to CSV string
+        $output = fopen('php://temp', 'r+');
+        foreach ($csv_data as $row) {
+            fputcsv($output, $row);
+        }
+        rewind($output);
+        $csv_string = stream_get_contents($output);
         fclose($output);
-        exit;
+
+        // Send success response with CSV data
+        wp_send_json_success(array(
+            'csv' => $csv_string,
+            'filename' => 'students-export-' . date('Y-m-d-His') . '.csv',
+            'count' => count($students)
+        ));
     }
 
     /**
-     * Handle CSV import
+     * Handle AJAX CSV import
      */
-    public function handle_import()
+    public function ajax_import_students()
     {
-        if (!isset($_POST['cbedu_import_students'])) {
-            return;
-        }
-
         // Security checks
+        check_ajax_referer('cbedu_import_nonce', 'nonce');
+        
         if (!current_user_can('manage_options')) {
-            wp_die(__('You do not have permission to import students.', 'edu-results'));
-        }
-
-        if (!isset($_POST['cbedu_import_nonce']) || !wp_verify_nonce($_POST['cbedu_import_nonce'], 'cbedu_import_students_action')) {
-            wp_die(__('Security check failed.', 'edu-results'));
+            wp_send_json_error(array('message' => __('You do not have permission to import students.', 'edu-results')));
         }
 
         // Check if file was uploaded
         if (!isset($_FILES['cbedu_import_file']) || $_FILES['cbedu_import_file']['error'] !== UPLOAD_ERR_OK) {
-            wp_redirect(add_query_arg('import_error', 'no_file', wp_get_referer()));
-            exit;
+            wp_send_json_error(array('message' => __('Please select a CSV file to import.', 'edu-results')));
         }
 
         $file = $_FILES['cbedu_import_file'];
 
-        // Validate file type
+        // Validate file extension
         $file_ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         if ($file_ext !== 'csv') {
-            wp_redirect(add_query_arg('import_error', 'invalid_file', wp_get_referer()));
-            exit;
+            wp_send_json_error(array('message' => __('Invalid file type. Please upload a CSV file.', 'edu-results')));
+        }
+
+        // Validate MIME type for additional security
+        $allowed_mime_types = array(
+            'text/csv',
+            'text/plain',
+            'application/csv',
+            'text/comma-separated-values',
+            'application/excel',
+            'application/vnd.ms-excel',
+            'application/vnd.msexcel'
+        );
+        
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime_type = finfo_file($finfo, $file['tmp_name']);
+        finfo_close($finfo);
+        
+        if (!in_array($mime_type, $allowed_mime_types)) {
+            wp_send_json_error(array('message' => __('Invalid file format. Please upload a valid CSV file.', 'edu-results')));
+        }
+
+        // Check file size (max 10MB)
+        $max_file_size = 10 * 1024 * 1024; // 10MB in bytes
+        if ($file['size'] > $max_file_size) {
+            wp_send_json_error(array('message' => __('File size exceeds 10MB limit.', 'edu-results')));
         }
 
         // Read CSV file
         $handle = fopen($file['tmp_name'], 'r');
         if ($handle === false) {
-            wp_redirect(add_query_arg('import_error', 'read_error', wp_get_referer()));
-            exit;
+            wp_send_json_error(array('message' => __('Unable to read the CSV file.', 'edu-results')));
         }
 
         // Get headers
@@ -174,9 +185,15 @@ class ImportExport
         
         if (empty($headers)) {
             fclose($handle);
-            wp_redirect(add_query_arg('import_error', 'no_headers', wp_get_referer()));
-            exit;
+            wp_send_json_error(array('message' => __('CSV file is empty or has no headers.', 'edu-results')));
         }
+
+        // Clean headers (remove BOM, trim whitespace)
+        $headers = array_map(function($header) {
+            // Remove BOM if present
+            $header = str_replace("\xEF\xBB\xBF", '', $header);
+            return trim($header);
+        }, $headers);
 
         // Validate required headers
         $expected_headers = array_merge(
@@ -185,18 +202,22 @@ class ImportExport
             $this->taxonomies
         );
 
-        // Check if all required headers are present
+        // Check if all required headers are present (order doesn't matter)
         $missing_headers = array_diff($expected_headers, $headers);
         if (!empty($missing_headers)) {
             fclose($handle);
-            wp_redirect(add_query_arg('import_error', 'invalid_headers', wp_get_referer()));
-            exit;
+            $error_msg = sprintf(
+                __('CSV file has invalid or missing headers. Missing: %s', 'edu-results'),
+                implode(', ', $missing_headers)
+            );
+            wp_send_json_error(array('message' => $error_msg));
         }
 
         // Process rows
         $imported = 0;
         $updated = 0;
         $errors = 0;
+        $error_messages = array();
         $row_number = 1;
 
         while (($data = fgetcsv($handle)) !== false) {
@@ -213,6 +234,7 @@ class ImportExport
             // Validate required fields
             if (empty($row_data['student_title']) || empty($row_data['cbedu_result_std_registration_number'])) {
                 $errors++;
+                $error_messages[] = sprintf(__('Row %d: Missing required fields (title or registration number)', 'edu-results'), $row_number);
                 continue;
             }
 
@@ -239,6 +261,7 @@ class ImportExport
 
                 if (is_wp_error($post_id)) {
                     $errors++;
+                    $error_messages[] = sprintf(__('Row %d: Failed to create student', 'edu-results'), $row_number);
                     continue;
                 }
                 
@@ -279,16 +302,14 @@ class ImportExport
 
         fclose($handle);
 
-        // Redirect with success message
-        $redirect_args = array(
-            'import_success' => 1,
+        // Send success response
+        wp_send_json_success(array(
             'imported' => $imported,
             'updated' => $updated,
             'errors' => $errors,
-        );
-
-        wp_redirect(add_query_arg($redirect_args, wp_get_referer()));
-        exit;
+            'error_messages' => $error_messages,
+            'total' => $imported + $updated
+        ));
     }
 
     /**
