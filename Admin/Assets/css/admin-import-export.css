@@ -63,6 +63,31 @@
     margin-bottom: 30px;
 }
 
+/* Separator */
+.cbedu-ie-separator {
+    margin: 50px 0;
+    position: relative;
+}
+
+.cbedu-ie-separator-line {
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #e5e7eb 20%, #e5e7eb 80%, transparent 100%);
+    position: relative;
+}
+
+.cbedu-ie-separator-line::before {
+    content: '⬥';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    padding: 0 20px;
+    color: #667eea;
+    font-size: 20px;
+}
+
+
 /* Cards */
 .cbedu-ie-card {
     background: #ffffff;

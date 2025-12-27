@@ -81,11 +81,29 @@ class Assets
             true
         );
         
-        // Enqueue import-export JavaScript
+        // Enqueue Students import/export module
+        wp_enqueue_script(
+            'cbedu-students-import-export',
+            CBEDU_ADMIN_ASSETS_URL . '/js/import-export/students-import-export.js',
+            array('jquery', 'sweetalert2'),
+            CBEDU_VERSION,
+            true
+        );
+        
+        // Enqueue Results import/export module
+        wp_enqueue_script(
+            'cbedu-results-import-export',
+            CBEDU_ADMIN_ASSETS_URL . '/js/import-export/results-import-export.js',
+            array('jquery', 'sweetalert2'),
+            CBEDU_VERSION,
+            true
+        );
+        
+        // Enqueue main coordinator
         wp_enqueue_script(
             'cbedu-import-export',
             CBEDU_ADMIN_ASSETS_URL . '/js/import-export.js',
-            array('jquery', 'sweetalert2'),
+            array('jquery', 'cbedu-students-import-export', 'cbedu-results-import-export'),
             CBEDU_VERSION,
             true
         );
@@ -96,8 +114,12 @@ class Assets
             'cbeduImportExport',
             array(
                 'ajaxurl' => admin_url('admin-ajax.php'),
-                'exportNonce' => wp_create_nonce('cbedu_export_nonce'),
-                'importNonce' => wp_create_nonce('cbedu_import_nonce')
+                // Students nonces
+                'exportStudentsNonce' => wp_create_nonce('cbedu_export_students_nonce'),
+                'importStudentsNonce' => wp_create_nonce('cbedu_import_students_nonce'),
+                // Results nonces
+                'exportResultsNonce' => wp_create_nonce('cbedu_export_results_nonce'),
+                'importResultsNonce' => wp_create_nonce('cbedu_import_results_nonce')
             )
         );
     }
