@@ -32,6 +32,75 @@
     max-width: 100%;
 }
 
+/* ========================================
+   Modern Tab Navigation
+   ======================================== */
+
+.cbedu-modern-tabs {
+    display: flex;
+    gap: 12px;
+    margin: 0 0 30px 0;
+    padding: 0;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.cbedu-modern-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    background: #fff;
+    border: 2px solid #e5e7eb;
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    margin-bottom: -2px;
+}
+
+.cbedu-modern-tab svg {
+    transition: all 0.3s ease;
+}
+
+.cbedu-modern-tab:hover {
+    color: #667eea;
+    background: #f9fafb;
+    border-color: #d1d5db;
+}
+
+.cbedu-modern-tab:hover svg {
+    transform: translateY(-2px);
+}
+
+.cbedu-modern-tab.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
+}
+
+.cbedu-modern-tab.active svg {
+    color: #fff;
+}
+
+.cbedu-modern-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.cbedu-settings-container {
+    max-width: 100%;
+}
+
 .cbedu-settings-card {
     background: #fff;
     border-radius: 12px;
@@ -424,6 +493,24 @@
     
     .cbedu-settings-header h1 {
         font-size: 24px;
+    }
+    
+    /* Modern Tabs Responsive */
+    .cbedu-modern-tabs {
+        flex-direction: column;
+        gap: 8px;
+        border-bottom: none;
+    }
+    
+    .cbedu-modern-tab {
+        border-radius: 8px;
+        border: 2px solid #e5e7eb;
+        margin-bottom: 0;
+        justify-content: center;
+    }
+    
+    .cbedu-modern-tab.active::after {
+        display: none;
     }
     
     .cbedu-card-header {
