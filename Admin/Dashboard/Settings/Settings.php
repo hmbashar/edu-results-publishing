@@ -70,8 +70,8 @@ class Settings
                         
                         <div class="cbedu-settings-card">
                             <div class="cbedu-card-header">
-                                <h2>🏛️ Institution Information</h2>
-                                <p class="description">Basic information about your educational institution</p>
+                                <h2>🏛️ <?php esc_html_e('Institution Information', 'edu-results'); ?></h2>
+                                <p class="description"><?php esc_html_e('Basic information about your educational institution', 'edu-results'); ?></p>
                             </div>
                             <div class="cbedu-card-body">
                                 <?php do_settings_sections('cbedu_results_settings'); ?>
@@ -79,7 +79,7 @@ class Settings
                         </div>
                         
                         <div class="cbedu-settings-footer">
-                            <?php submit_button(__('Save Settings', 'edu-results'), 'primary cbedu-save-btn', 'submit', false); ?>
+                            <?php submit_button(esc_html__('Save Settings', 'edu-results'), 'primary cbedu-save-btn', 'submit', false); ?>
                         </div>
                     </form>
                     

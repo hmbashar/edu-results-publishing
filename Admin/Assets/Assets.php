@@ -75,7 +75,7 @@ class Assets
         // Enqueue SweetAlert2
         wp_enqueue_script(
             'sweetalert2',
-            'https://cdn.jsdelivr.net/npm/sweetalert2@11',
+            CBEDU_ADMIN_ASSETS_URL . '/js/sweetalert2.js',
             array(),
             '11.0.0',
             true
