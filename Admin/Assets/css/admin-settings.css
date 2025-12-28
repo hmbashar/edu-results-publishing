@@ -216,6 +216,257 @@
     transform: translateY(0) !important;
 }
 
+/* ========================================
+   Modern General Tab Styles
+   ======================================== */
+
+/* Hero Section */
+.cbedu-general-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    padding: 50px 40px;
+    border-radius: 16px;
+    margin-bottom: 40px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.cbedu-general-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.cbedu-general-hero-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.cbedu-general-hero-icon svg {
+    color: #fff;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+}
+
+.cbedu-general-hero-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    color: #fff;
+    letter-spacing: -0.5px;
+    position: relative;
+    z-index: 1;
+}
+
+.cbedu-general-hero-subtitle {
+    font-size: 16px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 400;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* General Form */
+.cbedu-general-form {
+    background: transparent;
+}
+
+/* Field Grid */
+.cbedu-general-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+/* Field Group */
+.cbedu-field-group {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+    display: flex;
+    gap: 20px;
+}
+
+.cbedu-field-group:hover {
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.12);
+    border-color: #667eea;
+    transform: translateY(-2px);
+}
+
+.cbedu-field-group.cbedu-field-full {
+    grid-column: 1 / -1;
+}
+
+/* Field Icon */
+.cbedu-field-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
+}
+
+.cbedu-field-icon svg {
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+/* Field Content */
+.cbedu-field-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.cbedu-field-label {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 8px;
+}
+
+.cbedu-field-description {
+    font-size: 13px;
+    color: #718096;
+    margin: 0 0 12px 0;
+    line-height: 1.5;
+}
+
+/* Input Fields */
+.cbedu-field-content input[type="text"],
+.cbedu-field-content input[type="email"],
+.cbedu-field-content input[type="url"],
+.cbedu-field-content input[type="number"],
+.cbedu-field-content textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+    transition: all 0.2s ease;
+    background: #fff;
+    font-family: inherit;
+}
+
+.cbedu-field-content input[type="text"]:focus,
+.cbedu-field-content input[type="email"]:focus,
+.cbedu-field-content input[type="url"]:focus,
+.cbedu-field-content input[type="number"]:focus,
+.cbedu-field-content textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    background: #fafbff;
+}
+
+.cbedu-field-content textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Logo Field Special Styling */
+.cbedu-field-logo .cbedu-field-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.cbedu-field-logo #logo_preview {
+    margin-top: 15px;
+    border-radius: 12px;
+    border: 2px solid #e5e7eb;
+    padding: 12px;
+    background: #f9fafb;
+    max-width: 200px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.cbedu-field-logo .button {
+    align-self: flex-start;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1.5px solid #667eea;
+    background: #fff;
+    color: #667eea;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    margin-top: 12px;
+}
+
+.cbedu-field-logo .button:hover {
+    background: #667eea;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
+}
+
+/* Footer / Save Button */
+.cbedu-general-footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.cbedu-general-save-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border: none !important;
+    color: #fff !important;
+    padding: 16px 48px !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    border-radius: 10px !important;
+    cursor: pointer;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    height: auto !important;
+    line-height: 1 !important;
+}
+
+.cbedu-general-save-btn:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46a0 100%) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 28px rgba(102, 126, 234, 0.5) !important;
+}
+
+.cbedu-general-save-btn:active {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4) !important;
+}
+
 /* Responsive */
 @media (max-width: 782px) {
     .cbedu-settings-header {
@@ -246,5 +497,38 @@
     .cbedu-card-body input[type="url"],
     .cbedu-card-body textarea {
         max-width: 100%;
+    }
+    
+    /* General Tab Responsive */
+    .cbedu-general-hero {
+        padding: 40px 24px;
+    }
+    
+    .cbedu-general-hero-title {
+        font-size: 24px;
+    }
+    
+    .cbedu-general-hero-subtitle {
+        font-size: 14px;
+    }
+    
+    .cbedu-general-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .cbedu-field-group {
+        flex-direction: column;
+        padding: 20px;
+    }
+    
+    .cbedu-field-icon {
+        width: 44px;
+        height: 44px;
+    }
+    
+    .cbedu-general-save-btn {
+        width: 100%;
+        padding: 14px 32px !important;
     }
 }
