@@ -1,4 +1,4 @@
-=== EDU Results Publishing ===
+=== EDU Results Publishing – Student Result Management ===
 Contributors: hmbashar
 Donate link: https://www.buymeacoffee.com/hmbashar
 Tags: Result, WP Result Plugin, EDU Results, academic
@@ -9,7 +9,7 @@ Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Simplify exam results publishing for schools, colleges, and universities with an easy-to-use interface for managing academic achievements.
+Publish and manage student exam results for schools, colleges, and universities with an easy-to-use WordPress result management system.
 
 
 == Description ==

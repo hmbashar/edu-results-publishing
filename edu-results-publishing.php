@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: EDU Results Publishing
+ * Plugin Name: EDU Results Publishing – Student Result Management
  * Author: MD Abul Bashar
  * Author URI: https://facebook.com/hmbashar
  * Description: A powerful tool designed to simplify the process of publishing exam results for educational institutions such as schools, colleges, and universities. With an easy-to-use interface, it empowers administrators and educators to effortlessly manage and showcase academic achievements.
