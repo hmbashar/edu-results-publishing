@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDU Results Publishing — WordPress Plugin</title>
+  <meta name="description" content="EDU Results Publishing is a WordPress plugin for managing students, subjects, examinations, boards, departments, session years, and searchable academic results." />
+  <meta name="theme-color" content="#6674ec" />
+  <meta property="og:title" content="EDU Results Publishing — WordPress Plugin" />
+  <meta property="og:description" content="Manage, publish, and search academic results online with a polished WordPress plugin built for educational institutions." />
+  <meta property="og:image" content="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/icon-256x256.png" />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://raw.githubusercontent.com" />
+  <link rel="preconnect" href="https://wordpress.org" />
+  <link rel="icon" href="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/icon-128x128.png" />
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/icon-128x128.png" />
+
+  <style>
+    :root {
+      --bg: #f7f9ff;
+      --surface: #ffffff;
+      --surface-2: #f1f5ff;
+      --ink: #182235;
+      --muted: #64748b;
+      --line: rgba(96, 116, 170, 0.18);
+      --primary: #6674ec;
+      --primary-2: #7649ae;
+      --cyan: #13b8a6;
+      --gold: #ffc43b;
+      --shadow: 0 24px 70px rgba(31, 50, 105, 0.14);
+      --shadow-soft: 0 14px 40px rgba(31, 50, 105, 0.10);
+      --radius: 28px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(102, 116, 236, 0.20), transparent 32rem),
+        radial-gradient(circle at 85% 10%, rgba(19, 184, 166, 0.18), transparent 26rem),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 48%, #ffffff 100%);
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    h1, h2, h3, p { margin-top: 0; }
+
+    .skip-link {
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      z-index: 999;
+      transform: translateY(-160%);
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: #fff;
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(18px);
+      background: rgba(255, 255, 255, 0.78);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      width: min(var(--max), calc(100% - 36px));
+      margin: 0 auto;
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+    .brand img { width: 42px; height: 42px; border-radius: 12px; box-shadow: var(--shadow-soft); }
+    .brand span { font-size: 1.02rem; line-height: 1.05; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #475569;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+    .nav-links a { padding: 10px 12px; border-radius: 999px; transition: 180ms ease; }
+    .nav-links a:hover { background: rgba(102, 116, 236, 0.10); color: var(--primary-2); }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 44px;
+      padding: 12px 18px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-weight: 850;
+      line-height: 1;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border 180ms ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { color: #fff; background: linear-gradient(135deg, var(--primary), var(--primary-2)); box-shadow: 0 18px 42px rgba(118, 73, 174, 0.28); }
+    .btn-secondary { color: var(--primary-2); background: rgba(255,255,255,0.9); border-color: rgba(102, 116, 236, 0.22); box-shadow: 0 10px 24px rgba(31, 50, 105, 0.08); }
+    .btn-dark { color: #fff; background: #111827; box-shadow: 0 18px 42px rgba(17, 24, 39, 0.20); }
+
+    main { overflow: hidden; }
+    .section { width: min(var(--max), calc(100% - 36px)); margin: 0 auto; padding: 92px 0; }
+
+    .hero {
+      position: relative;
+      width: min(1260px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 72px 0 70px;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.02fr 0.98fr; gap: 42px; align-items: center; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      width: fit-content;
+      padding: 9px 12px;
+      border: 1px solid rgba(102, 116, 236, 0.20);
+      border-radius: 999px;
+      color: var(--primary-2);
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 8px 24px rgba(31, 50, 105, 0.08);
+      font-size: 0.9rem;
+      font-weight: 850;
+    }
+    .eyebrow .dot { width: 9px; height: 9px; border-radius: 999px; background: var(--cyan); box-shadow: 0 0 0 6px rgba(19, 184, 166, 0.15); }
+
+    .hero h1 {
+      margin: 22px 0 18px;
+      max-width: 760px;
+      font-size: clamp(3rem, 7vw, 6.9rem);
+      line-height: 0.92;
+      letter-spacing: -0.075em;
+    }
+    .gradient-text { background: linear-gradient(135deg, #25315e 10%, var(--primary) 48%, var(--primary-2) 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero-lead { max-width: 680px; color: #475569; font-size: clamp(1.08rem, 2vw, 1.32rem); line-height: 1.72; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .hero-proof { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; max-width: 680px; margin-top: 34px; }
+    .proof-card { padding: 16px 16px 15px; border: 1px solid rgba(102, 116, 236, 0.16); border-radius: 20px; background: rgba(255,255,255,0.70); box-shadow: 0 12px 32px rgba(31, 50, 105, 0.07); }
+    .proof-card strong { display: block; margin-bottom: 5px; font-size: 1.28rem; letter-spacing: -0.04em; }
+    .proof-card span { color: var(--muted); font-size: 0.9rem; font-weight: 650; }
+
+    .hero-visual { position: relative; min-height: 560px; isolation: isolate; }
+    .orb {
+      position: absolute;
+      inset: 12% -8% auto auto;
+      width: 430px;
+      height: 430px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 25%, rgba(19,184,166,0.34), rgba(102,116,236,0.20) 42%, transparent 70%);
+      filter: blur(2px);
+      z-index: -2;
+      animation: pulseOrb 7s ease-in-out infinite;
+    }
+    .visual-card { position: absolute; overflow: hidden; border: 1px solid rgba(102, 116, 236, 0.18); border-radius: 30px; background: rgba(255,255,255,0.82); box-shadow: var(--shadow); backdrop-filter: blur(14px); }
+
+    .result-preview {
+      top: 18px;
+      right: 0;
+      width: min(100%, 560px);
+      min-height: 428px;
+      padding: 26px;
+      animation: floatLarge 6s ease-in-out infinite;
+    }
+    .mock-search { position: relative; padding: 24px; border-radius: 24px; background: linear-gradient(180deg, #ffffff, #f8fbff); border: 1px solid rgba(102, 116, 236, 0.14); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.75); }
+    .mock-search-head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; font-weight: 950; color: var(--primary-2); letter-spacing: -0.04em; font-size: 1.32rem; }
+    .mock-search-head img { width: 48px; height: 48px; border-radius: 14px; box-shadow: var(--shadow-soft); }
+    .mock-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .mock-field { min-height: 58px; padding: 12px 14px; border-radius: 16px; background: #fff; border: 1px solid #dbe5f4; color: #273347; box-shadow: 0 10px 22px rgba(31, 50, 105, 0.06); }
+    .mock-field small { display: block; margin-bottom: 6px; color: #64748b; font-weight: 850; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .mock-submit { width: fit-content; margin: 20px auto 0; padding: 14px 24px; border-radius: 14px; color: #fff; background: linear-gradient(135deg, var(--primary), var(--primary-2)); font-weight: 950; letter-spacing: 0.08em; font-size: 0.78rem; box-shadow: 0 16px 32px rgba(102, 116, 236, 0.26); }
+    .result-strip { position: absolute; left: -34px; right: 32px; bottom: -58px; overflow: hidden; border-radius: 22px; border: 1px solid rgba(102, 116, 236, 0.18); background: #fff; box-shadow: var(--shadow); }
+    .result-strip-head { padding: 14px 18px; color: #fff; background: linear-gradient(135deg, var(--primary), var(--primary-2)); font-weight: 950; letter-spacing: 0.03em; }
+    .result-rows { display: grid; grid-template-columns: 1.1fr 0.8fr 0.8fr; font-size: 0.86rem; }
+    .result-rows span { padding: 13px 14px; border-right: 1px solid #e2e8f0; border-top: 1px solid #e2e8f0; color: #334155; font-weight: 750; }
+
+    .shot-frame { left: 0; bottom: 8px; width: min(72%, 430px); aspect-ratio: 16 / 10; transform: rotate(-2.5deg); animation: floatSmall 6.5s ease-in-out infinite; }
+    .shot-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+    .mini-card { position: absolute; right: 26px; bottom: 48px; display: grid; gap: 6px; width: 216px; padding: 18px; border: 1px solid rgba(255, 255, 255, 0.50); border-radius: 24px; color: #fff; background: linear-gradient(135deg, rgba(102,116,236,0.96), rgba(118,73,174,0.96)); box-shadow: 0 22px 48px rgba(118, 73, 174, 0.24); animation: floatTiny 5.8s ease-in-out infinite; }
+    .mini-card strong { font-size: 1.8rem; letter-spacing: -0.04em; }
+    .mini-card span { font-size: 0.92rem; opacity: 0.88; font-weight: 700; }
+
+    .section-head { max-width: 760px; margin: 0 auto 42px; text-align: center; }
+    .section-kicker { margin-bottom: 12px; color: var(--primary-2); font-size: 0.86rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.16em; }
+    .section-title { margin-bottom: 16px; font-size: clamp(2.1rem, 4vw, 4rem); line-height: 1.02; letter-spacing: -0.06em; }
+    .section-copy { color: var(--muted); font-size: 1.06rem; line-height: 1.75; }
+
+    .features-grid, .screens-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .feature-card, .workflow-card, .install-card, .screenshot-card, .doc-menu, .doc-panel { border: 1px solid rgba(102, 116, 236, 0.16); border-radius: var(--radius); background: rgba(255,255,255,0.82); box-shadow: var(--shadow-soft); }
+    .feature-card { position: relative; overflow: hidden; padding: 28px; transition: transform 220ms ease, box-shadow 220ms ease; }
+    .feature-card::before { content: ""; position: absolute; inset: auto 20px 0; height: 4px; border-radius: 999px 999px 0 0; background: linear-gradient(90deg, var(--primary), var(--cyan), var(--primary-2)); opacity: 0; transform: translateY(8px); transition: 220ms ease; }
+    .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+    .feature-card:hover::before { opacity: 1; transform: translateY(0); }
+    .feature-icon { display: grid; place-items: center; width: 54px; height: 54px; margin-bottom: 20px; border-radius: 18px; color: #fff; background: linear-gradient(135deg, var(--primary), var(--primary-2)); box-shadow: 0 16px 32px rgba(102, 116, 236, 0.22); font-size: 1.55rem; }
+    .feature-card h3 { margin-bottom: 10px; font-size: 1.24rem; letter-spacing: -0.03em; }
+    .feature-card p { margin-bottom: 0; color: var(--muted); line-height: 1.7; }
+
+    .workflow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: step; }
+    .workflow-card { position: relative; padding: 26px; overflow: hidden; counter-increment: step; }
+    .workflow-card::after { content: counter(step, decimal-leading-zero); position: absolute; right: 18px; top: 12px; color: rgba(102, 116, 236, 0.12); font-size: 4.4rem; font-weight: 950; letter-spacing: -0.08em; }
+    .workflow-card h3, .workflow-card p { position: relative; z-index: 1; }
+    .workflow-card h3 { margin-bottom: 10px; font-size: 1.12rem; }
+    .workflow-card p { margin-bottom: 0; color: var(--muted); line-height: 1.65; }
+
+    .showcase { border-radius: 36px; padding: 28px; background: linear-gradient(135deg, rgba(102, 116, 236, 0.10), rgba(19, 184, 166, 0.10)); border: 1px solid rgba(102, 116, 236, 0.14); box-shadow: var(--shadow-soft); }
+    .showcase-main { overflow: hidden; border-radius: 28px; background: #fff; box-shadow: var(--shadow); }
+    .showcase-main img { width: 100%; height: auto; }
+
+    .docs-layout { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 22px; align-items: start; }
+    .doc-menu { position: sticky; top: 96px; padding: 18px; }
+    .doc-menu a { display: block; padding: 13px 14px; border-radius: 16px; color: #475569; font-weight: 850; transition: 180ms ease; }
+    .doc-menu a:hover { color: var(--primary-2); background: rgba(102, 116, 236, 0.10); }
+    .doc-panel { overflow: hidden; }
+    .doc-block { padding: 30px; border-bottom: 1px solid var(--line); }
+    .doc-block:last-child { border-bottom: 0; }
+    .doc-block h3 { margin-bottom: 12px; font-size: 1.45rem; letter-spacing: -0.04em; }
+    .doc-block p, .doc-block li { color: var(--muted); line-height: 1.76; }
+    .doc-block ul, .doc-block ol { margin: 0; padding-left: 1.25rem; }
+    .inline-code { display: inline-block; padding: 3px 8px; border-radius: 8px; color: #273347; background: #eef3ff; border: 1px solid #dbe5f4; font: 800 0.9em/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+
+    .tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 0 0 24px; }
+    .tab-btn { padding: 10px 14px; border: 1px solid rgba(102, 116, 236, 0.18); border-radius: 999px; color: #475569; background: #fff; font-weight: 850; cursor: pointer; transition: 180ms ease; }
+    .tab-btn:hover, .tab-btn.active { color: #fff; border-color: transparent; background: linear-gradient(135deg, var(--primary), var(--primary-2)); box-shadow: 0 12px 26px rgba(102, 116, 236, 0.22); }
+    .screenshot-card { overflow: hidden; cursor: pointer; transition: transform 220ms ease, box-shadow 220ms ease, opacity 220ms ease; }
+    .screenshot-card.hide { display: none; }
+    .screenshot-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+    .screen-media { height: 230px; overflow: hidden; background: var(--surface-2); }
+    .screen-media img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 700ms ease; }
+    .screenshot-card:hover .screen-media img { transform: scale(1.04); }
+    .screen-body { padding: 18px 18px 20px; }
+    .screen-body h3 { margin-bottom: 8px; font-size: 1.05rem; }
+    .screen-body p { margin-bottom: 0; color: var(--muted); line-height: 1.55; font-size: 0.95rem; }
+
+    .install-layout { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 22px; align-items: stretch; }
+    .install-card { padding: 30px; }
+    .install-card h3 { font-size: 1.44rem; letter-spacing: -0.04em; }
+    .install-card p, .install-card li { color: var(--muted); line-height: 1.75; }
+    .install-card ol { padding-left: 1.25rem; margin: 0; }
+    .code-box { display: block; overflow-x: auto; margin: 18px 0 0; padding: 18px; border-radius: 18px; color: #e5edff; background: #111827; font: 800 0.92rem/1.6 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+
+    .cta { position: relative; overflow: hidden; border-radius: 38px; padding: 58px; color: #fff; background: radial-gradient(circle at top right, rgba(19, 184, 166, 0.36), transparent 28rem), linear-gradient(135deg, #0b3f84, #6674ec 52%, #7649ae); box-shadow: var(--shadow); }
+    .cta::before { content: ""; position: absolute; inset: -110px auto auto -90px; width: 260px; height: 260px; border-radius: 50%; background: rgba(255, 255, 255, 0.12); }
+    .cta-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 28px; }
+    .cta h2 { margin-bottom: 12px; max-width: 700px; font-size: clamp(2rem, 4vw, 4rem); line-height: 1; letter-spacing: -0.06em; }
+    .cta p { max-width: 700px; margin-bottom: 0; color: rgba(255,255,255,0.82); font-size: 1.08rem; line-height: 1.7; }
+    .cta-actions { display: flex; flex-direction: column; gap: 12px; }
+
+    .site-footer { padding: 34px 0 50px; color: var(--muted); text-align: center; }
+    .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 20px; margin-bottom: 16px; font-weight: 800; color: #475569; }
+
+    .lightbox { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; padding: 24px; background: rgba(15, 23, 42, 0.82); backdrop-filter: blur(10px); }
+    .lightbox.active { display: flex; }
+    .lightbox-panel { width: min(1120px, 100%); max-height: 88vh; overflow: hidden; border-radius: 28px; background: #fff; box-shadow: 0 32px 100px rgba(0,0,0,0.30); }
+    .lightbox-head { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+    .lightbox-head strong { font-size: 1.05rem; }
+    .lightbox-close { width: 40px; height: 40px; border: 0; border-radius: 999px; color: #fff; background: #111827; cursor: pointer; font-size: 1.3rem; }
+    .lightbox-img-wrap { max-height: calc(88vh - 74px); overflow: auto; background: #f8fafc; }
+    .lightbox img { width: 100%; height: auto; }
+
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity 700ms ease, transform 700ms ease; }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+    @keyframes floatLarge { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-14px) rotate(0.4deg); } }
+    @keyframes floatSmall { 0%, 100% { transform: translateY(0) rotate(-2.5deg); } 50% { transform: translateY(12px) rotate(-1.5deg); } }
+    @keyframes floatTiny { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    @keyframes pulseOrb { 0%, 100% { transform: scale(1); opacity: 0.82; } 50% { transform: scale(1.08); opacity: 1; } }
+
+    @media (max-width: 1024px) {
+      .nav-links { display: none; }
+      .hero-grid, .docs-layout, .install-layout, .cta-grid { grid-template-columns: 1fr; }
+      .hero-visual { min-height: 540px; }
+      .doc-menu { position: static; }
+      .features-grid, .workflow, .screens-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .cta-actions { flex-direction: row; flex-wrap: wrap; }
+    }
+
+    @media (max-width: 720px) {
+      .nav { min-height: 68px; }
+      .brand span { display: none; }
+      .nav-actions .btn-secondary { display: none; }
+      .section { padding: 68px 0; }
+      .hero { padding-top: 48px; }
+      .hero h1 { font-size: clamp(2.7rem, 16vw, 4.8rem); }
+      .hero-proof, .features-grid, .workflow, .screens-grid { grid-template-columns: 1fr; }
+      .hero-visual { min-height: 600px; }
+      .mock-fields { grid-template-columns: 1fr; }
+      .result-preview { min-height: 500px; padding: 18px; }
+      .result-strip { left: 12px; right: 12px; bottom: -88px; }
+      .shot-frame { width: 76%; }
+      .mini-card { right: 6px; bottom: 22px; width: 180px; }
+      .screen-media { height: 210px; }
+      .cta { padding: 36px 24px; border-radius: 30px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.001ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="EDU Results Publishing home">
+        <img src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/icon-128x128.png" alt="EDU Results Publishing icon" />
+        <span>EDU Results<br />Publishing</span>
+      </a>
+
+      <div class="nav-links" aria-label="Page sections">
+        <a href="#features">Features</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#screenshots">Screenshots</a>
+        <a href="#documentation">Documentation</a>
+        <a href="#install">Install</a>
+      </div>
+
+      <div class="nav-actions">
+        <a class="btn btn-secondary" href="https://github.com/hmbashar/edu-results-publishing" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-primary" href="https://wordpress.org/plugins/edu-results-publishing/" target="_blank" rel="noopener">Download</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-grid">
+        <div class="hero-copy reveal">
+          <span class="eyebrow"><span class="dot"></span> WordPress results publishing plugin</span>
+          <h1><span class="gradient-text">Academic results, published beautifully.</span></h1>
+          <p class="hero-lead">EDU Results Publishing helps schools, colleges, coaching centers, and education websites manage student records, organize examinations, publish marksheets, and let students search results from the frontend.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://wordpress.org/plugins/edu-results-publishing/" target="_blank" rel="noopener">Download Plugin →</a>
+            <a class="btn btn-secondary" href="#documentation">Read Docs</a>
+            <a class="btn btn-dark" href="https://github.com/hmbashar/edu-results-publishing/issues" target="_blank" rel="noopener">Support / Issues</a>
+          </div>
+          <div class="hero-proof" aria-label="Plugin highlights">
+            <div class="proof-card"><strong>Frontend</strong><span>Student result search</span></div>
+            <div class="proof-card"><strong>Admin</strong><span>Students, subjects, results</span></div>
+            <div class="proof-card"><strong>Print</strong><span>Clean result sheet output</span></div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal" aria-label="Plugin visual preview">
+          <div class="orb" aria-hidden="true"></div>
+          <div class="visual-card result-preview">
+            <div class="mock-search">
+              <div class="mock-search-head">
+                <img src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/icon-128x128.png" alt="" aria-hidden="true" />
+                <span>Student Result Search</span>
+              </div>
+              <div class="mock-fields" aria-hidden="true">
+                <div class="mock-field"><small>Examination</small>HSC</div>
+                <div class="mock-field"><small>Year</small>2020</div>
+                <div class="mock-field"><small>Board</small>Barishal</div>
+                <div class="mock-field"><small>Group</small>Arts</div>
+                <div class="mock-field"><small>Registration</small>1000</div>
+                <div class="mock-field"><small>Roll</small>1000</div>
+              </div>
+              <div class="mock-submit">SEARCH RESULTS →</div>
+            </div>
+            <div class="result-strip" aria-hidden="true">
+              <div class="result-strip-head">📊 Result Sheet</div>
+              <div class="result-rows">
+                <span>Subject</span><span>Grade</span><span>GPA</span>
+                <span>Math</span><span>A+</span><span>5.5</span>
+                <span>English</span><span>A+</span><span>5.5</span>
+              </div>
+            </div>
+          </div>
+          <div class="visual-card shot-frame">
+            <img src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-12.png" alt="Detailed result sheet screenshot" />
+          </div>
+          <div class="mini-card" aria-hidden="true">
+            <strong>Docs</strong>
+            <span>Setup guide, shortcode usage, admin workflow, and developer links included</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="section-head reveal">
+        <div class="section-kicker">Features</div>
+        <h2 class="section-title">Everything needed to publish academic results online</h2>
+        <p class="section-copy">The plugin combines structured admin management with a polished student-facing search and printable result output.</p>
+      </div>
+
+      <div class="features-grid">
+        <article class="feature-card reveal"><div class="feature-icon">🎓</div><h3>Student Management</h3><p>Create student profiles with ID, registration number, date of birth, contact details, guardian information, and government document fields.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon">🧾</div><h3>Result Publishing</h3><p>Add roll, registration, status, GPA, GPA without additional subject, student type, and subject-wise marks or grades.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon">🔎</div><h3>Frontend Search</h3><p>Students can search results using examination, year, board, department/group, registration number, and roll number.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon">📚</div><h3>Subjects & Codes</h3><p>Maintain subjects with codes so results can show organized subject names, subject codes, marks, grades, and GPA columns.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon">🏛️</div><h3>Taxonomy Structure</h3><p>Organize data by session years, examinations, boards, and departments/groups directly from the WordPress admin interface.</p></article>
+        <article class="feature-card reveal"><div class="feature-icon">🖨️</div><h3>Printable Result Sheet</h3><p>Display a clean result sheet with student information, institution details, subject rows, GPA values, and a print button.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="workflow">
+      <div class="section-head reveal">
+        <div class="section-kicker">Workflow</div>
+        <h2 class="section-title">Simple setup for institutions</h2>
+        <p class="section-copy">Set up your institution identity, organize academic terms, add student records, publish results, and place the search form on any WordPress page.</p>
+      </div>
+      <div class="workflow">
+        <article class="workflow-card reveal"><h3>Configure Branding</h3><p>Add institution logo, name, registration number, established year, heading, contact information, and identity settings.</p></article>
+        <article class="workflow-card reveal"><h3>Create Academic Data</h3><p>Add examinations, boards, session years, departments or groups, and subjects with subject codes.</p></article>
+        <article class="workflow-card reveal"><h3>Add Students & Results</h3><p>Create student records, then publish results with subject-wise marks and GPA details.</p></article>
+        <article class="workflow-card reveal"><h3>Publish Search Page</h3><p>Insert the shortcode on a page so students can search and print their results from the frontend.</p></article>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Featured interface preview">
+      <div class="showcase reveal">
+        <div class="section-head">
+          <div class="section-kicker">Preview</div>
+          <h2 class="section-title">Clean student-facing result experience</h2>
+          <p class="section-copy">A modern form guides students through the exact fields required to find their result, then displays a structured marksheet.</p>
+        </div>
+        <div class="showcase-main"><img src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-7.png" alt="Frontend result search and result sheet preview" /></div>
+      </div>
+    </section>
+
+    <section class="section" id="screenshots">
+      <div class="section-head reveal">
+        <div class="section-kicker">Screenshots</div>
+        <h2 class="section-title">Explore the plugin interface</h2>
+        <p class="section-copy">Browse key frontend and WordPress admin screens. Click any screenshot to open a larger preview.</p>
+      </div>
+      <div class="tabs reveal" role="tablist" aria-label="Screenshot filters">
+        <button class="tab-btn active" type="button" data-filter="all">All</button>
+        <button class="tab-btn" type="button" data-filter="frontend">Frontend</button>
+        <button class="tab-btn" type="button" data-filter="admin">Admin</button>
+        <button class="tab-btn" type="button" data-filter="settings">Settings</button>
+      </div>
+      <div class="screens-grid" id="screensGrid">
+        <article class="screenshot-card reveal" data-category="frontend" data-title="Student Result Search" data-src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-1.png"><div class="screen-media"><img src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-1.png" alt="Student result search form" loading="lazy" /></div><div class="screen-body"><h3>Student Result Search</h3><p>Frontend form for selecting examination, year, board, group, registration, and roll.</p></div></article>
+        <article class="screenshot-card reveal" data-category="admin" data-title="Add New Student" data-src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-2.png"><div class="screen-media"><img src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-2.png" alt="Add new student admin screen" loading="lazy" /></div><div class="screen-body"><h3>Add New Student</h3><p>Structured student fields with basic, contact, family, and document information.</p></div></article>
+        <article class="screenshot-card reveal" data-category="admin" data-title="Add New Subject" data-src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-3.png"><div class="screen-media"><img src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-3.png" alt="Add new subject admin screen" loading="lazy" /></div><div class="screen-body"><h3>Add New Subject</h3><p>Create subjects with a unique subject code for organized result sheets.</p></div></article>
+        <article class="screenshot-card reveal" data-category="admin" data-title="Session Years" data-src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-4.png"><div class="screen-media"><img src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-4.png" alt="Session years taxonomy screen" loading="lazy" /></div><div class="screen-body"><h3>Session Years</h3><p>Manage academic years and assign them to student and result records.</p></div></article>
+        <article class="screenshot-card reveal" data-category="admin" data-title="Result Entry" data-src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-5.png"><div class="screen-media"><img src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-5.png" alt="Result entry admin screen" loading="lazy" /></div><div class="screen-body"><h3>Result Entry</h3><p>Add subject marks, select student registration, and define result status and GPA.</p></div></article>
+        <article class="screenshot-card reveal" data-category="settings" data-title="Plugin Settings" data-src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-6.png"><div class="screen-media"><img src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-6.png" alt="EDU Results settings page" loading="lazy" /></div><div class="screen-body"><h3>Plugin Settings</h3><p>Configure institution branding and identity from a dedicated settings screen.</p></div></article>
+        <article class="screenshot-card reveal" data-category="frontend" data-title="Result Sheet" data-src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-8.png"><div class="screen-media"><img src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-8.png" alt="Result sheet output" loading="lazy" /></div><div class="screen-body"><h3>Result Sheet</h3><p>Student information and subject results displayed in a clean printable layout.</p></div></article>
+        <article class="screenshot-card reveal" data-category="frontend" data-title="Search with Result Output" data-src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-9.png"><div class="screen-media"><img src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-9.png" alt="Search form with result output" loading="lazy" /></div><div class="screen-body"><h3>Search with Result Output</h3><p>Complete frontend flow from search input to visible result sheet.</p></div></article>
+        <article class="screenshot-card reveal" data-category="frontend" data-title="Institution Header Result" data-src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-10.png"><div class="screen-media"><img src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-10.png" alt="Institution header on result sheet" loading="lazy" /></div><div class="screen-body"><h3>Institution Header Result</h3><p>Result sheet with institution logo, photo area, heading, and contact details.</p></div></article>
+        <article class="screenshot-card reveal" data-category="frontend" data-title="Filled Search Form" data-src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-11.png"><div class="screen-media"><img src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-11.png" alt="Filled student search form" loading="lazy" /></div><div class="screen-body"><h3>Filled Search Form</h3><p>Example search fields filled with academic data before searching.</p></div></article>
+        <article class="screenshot-card reveal" data-category="frontend" data-title="Detailed Result Sheet" data-src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-12.png"><div class="screen-media"><img src="https://raw.githubusercontent.com/hmbashar/edu-results-publishing/main/.wordpress-org/screenshot-12.png" alt="Detailed result sheet" loading="lazy" /></div><div class="screen-body"><h3>Detailed Result Sheet</h3><p>Final result view with student details, marks, grades, GPA, and print action.</p></div></article>
+      </div>
+    </section>
+
+    <section class="section" id="documentation">
+      <div class="section-head reveal">
+        <div class="section-kicker">Documentation</div>
+        <h2 class="section-title">User and developer guide</h2>
+        <p class="section-copy">This documentation section explains what the plugin does, how to set it up, how to publish results, and where developers can find the source code or report issues.</p>
+      </div>
+      <div class="docs-layout">
+        <aside class="doc-menu reveal" aria-label="Documentation menu">
+          <a href="#doc-overview">Overview</a>
+          <a href="#doc-setup">Setup Checklist</a>
+          <a href="#doc-shortcode">Frontend Shortcode</a>
+          <a href="#doc-admin">Admin Workflow</a>
+          <a href="#doc-data">Data Structure</a>
+          <a href="#doc-dev">Developer Notes</a>
+        </aside>
+        <div class="doc-panel reveal">
+          <article class="doc-block" id="doc-overview"><h3>Overview</h3><p>EDU Results Publishing is built for education websites that need a WordPress-native way to manage students, subjects, exams, boards, session years, departments/groups, and searchable result sheets.</p><ul><li>Admins enter student and result data from the WordPress dashboard.</li><li>Students search from the frontend using academic identifiers.</li><li>Result sheets display institution branding, student details, subject marks, grades, GPA, and print controls.</li></ul></article>
+          <article class="doc-block" id="doc-setup"><h3>Setup Checklist</h3><ol><li>Install and activate the plugin from WordPress.org or from the GitHub release/source package.</li><li>Open plugin settings and add institution logo, institution name, registration number, contact details, website, and result page heading.</li><li>Create session years, examinations, boards, and departments/groups.</li><li>Add subjects and assign subject codes.</li><li>Add student records with ID number, registration number, personal details, and taxonomy assignments.</li><li>Create result records, select the student registration, add subject marks/grades, GPA, and result status.</li><li>Publish a frontend search page using the result search shortcode.</li></ol></article>
+          <article class="doc-block" id="doc-shortcode"><h3>Frontend Shortcode</h3><p>Add the result search interface to any WordPress page or post using the plugin shortcode. Confirm the exact shortcode from the plugin readme/source before publishing final public documentation.</p><code class="code-box">[edu_result_search]</code><p>The frontend form supports examination, year/session, board, department/group, registration number, and roll number fields.</p></article>
+          <article class="doc-block" id="doc-admin"><h3>Admin Workflow</h3><ul><li><strong>Students:</strong> Store ID, registration number, DOB, gender, blood group, contact details, guardian/family fields, and document numbers.</li><li><strong>Subjects:</strong> Create a subject title and subject code for result sheet rows.</li><li><strong>Results:</strong> Select student registration, add roll number, result status, GPA, GPA without additional subject, student type, and subject marks/grades.</li><li><strong>Settings:</strong> Configure institution identity and result sheet branding.</li></ul></article>
+          <article class="doc-block" id="doc-data"><h3>Data Structure</h3><p>The plugin is organized around WordPress admin content and taxonomies so data can be managed with familiar dashboard screens.</p><ul><li><span class="inline-code">Students</span> hold student profile and identification fields.</li><li><span class="inline-code">Subjects</span> hold subject names and subject codes.</li><li><span class="inline-code">Results</span> connect students to marks, grades, GPA, and status.</li><li><span class="inline-code">Session Years</span>, <span class="inline-code">Examinations</span>, <span class="inline-code">Boards</span>, and <span class="inline-code">Departments/Groups</span> organize result filtering.</li></ul></article>
+          <article class="doc-block" id="doc-dev"><h3>Developer Notes</h3><p>Use the GitHub repository for source code, issue tracking, and contribution work. Use WordPress.org for the public plugin download page.</p><p><a class="btn btn-secondary" href="https://github.com/hmbashar/edu-results-publishing" target="_blank" rel="noopener">Source Code</a> <a class="btn btn-secondary" href="https://github.com/hmbashar/edu-results-publishing/issues" target="_blank" rel="noopener">Report Issue</a></p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="install">
+      <div class="section-head reveal">
+        <div class="section-kicker">Install</div>
+        <h2 class="section-title">Install the WordPress plugin</h2>
+        <p class="section-copy">Download the plugin from WordPress.org, review the source on GitHub, or open an issue when you need support.</p>
+      </div>
+      <div class="install-layout">
+        <article class="install-card reveal">
+          <h3>Plugin links</h3>
+          <p>Official places for users and developers:</p>
+          <p><a class="btn btn-primary" href="https://wordpress.org/plugins/edu-results-publishing/" target="_blank" rel="noopener">WordPress.org Download</a></p>
+          <p><a class="btn btn-secondary" href="https://github.com/hmbashar/edu-results-publishing" target="_blank" rel="noopener">GitHub Repository</a></p>
+          <p><a class="btn btn-secondary" href="https://github.com/hmbashar/edu-results-publishing/issues" target="_blank" rel="noopener">Support / Issue Tracker</a></p>
+        </article>
+        <article class="install-card reveal">
+          <h3>WordPress setup</h3>
+          <ol><li>Download or install the plugin from WordPress.org.</li><li>Activate it from <strong>Plugins → Installed Plugins</strong>.</li><li>Configure institution settings and academic taxonomies.</li><li>Add students, subjects, and result records.</li><li>Create a public page and add the result search shortcode.</li></ol>
+          <code class="code-box">WordPress Admin → Plugins → Add New → EDU Results Publishing</code>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="cta reveal">
+        <div class="cta-grid">
+          <div><h2>Publish results with a modern student experience.</h2><p>Install EDU Results Publishing, configure your institution, add student records and results, then publish a searchable result page in WordPress.</p></div>
+          <div class="cta-actions"><a class="btn btn-secondary" href="https://wordpress.org/plugins/edu-results-publishing/" target="_blank" rel="noopener">Download Plugin</a><a class="btn btn-dark" href="https://github.com/hmbashar/edu-results-publishing" target="_blank" rel="noopener">View Source</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-links"><a href="https://wordpress.org/plugins/edu-results-publishing/" target="_blank" rel="noopener">WordPress.org</a><a href="https://github.com/hmbashar/edu-results-publishing" target="_blank" rel="noopener">GitHub</a><a href="https://github.com/hmbashar/edu-results-publishing/issues" target="_blank" rel="noopener">Support / Issues</a></div>
+    <div>© <span id="year"></span> EDU Results Publishing. Built for education websites using WordPress.</div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" aria-modal="true" role="dialog" aria-label="Screenshot preview">
+    <div class="lightbox-panel"><div class="lightbox-head"><strong id="lightboxTitle">Screenshot preview</strong><button class="lightbox-close" type="button" aria-label="Close screenshot preview">×</button></div><div class="lightbox-img-wrap"><img id="lightboxImage" src="" alt="" /></div></div>
+  </div>
+
+  <script>
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
+
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const screenshotCards = document.querySelectorAll('.screenshot-card');
+    tabButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+        tabButtons.forEach((btn) => btn.classList.remove('active'));
+        button.classList.add('active');
+        screenshotCards.forEach((card) => card.classList.toggle('hide', !(filter === 'all' || card.dataset.category === filter)));
+      });
+    });
+
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const closeLightbox = document.querySelector('.lightbox-close');
+
+    screenshotCards.forEach((card) => {
+      card.addEventListener('click', () => {
+        const title = card.dataset.title;
+        const src = card.dataset.src;
+        lightboxTitle.textContent = title;
+        lightboxImage.src = src;
+        lightboxImage.alt = title;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function hideLightbox() {
+      lightbox.classList.remove('active');
+      lightboxImage.src = '';
+      document.body.style.overflow = '';
+    }
+    closeLightbox.addEventListener('click', hideLightbox);
+    lightbox.addEventListener('click', (event) => { if (event.target === lightbox) hideLightbox(); });
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && lightbox.classList.contains('active')) hideLightbox(); });
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
