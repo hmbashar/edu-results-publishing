@@ -5,6 +5,17 @@ A powerful WordPress plugin designed to simplify the process of publishing exam 
 [![WordPress Plugin Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](https://github.com/hmbashar/edu-results-publishing)
 [![WordPress Compatibility](https://img.shields.io/badge/wordpress-6.9%20tested-brightgreen.svg)](https://wordpress.org/)
 [![License](https://img.shields.io/badge/license-GPLv2-orange.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
+[![Plugin Download](https://img.shields.io/badge/Download-WordPress.org-21759b.svg)](https://wordpress.org/plugins/edu-results-publishing/)
+[![Live Template](https://img.shields.io/badge/Live%20Template-GitHub%20Pages-6674ec.svg)](https://hmbashar.github.io/edu-results-publishing/)
+[![Documentation](https://img.shields.io/badge/Documentation-Docs-7649ae.svg)](https://github.com/hmbashar/edu-results-publishing/tree/main/docs)
+
+## Quick Links
+
+- **Plugin Download**: [https://wordpress.org/plugins/edu-results-publishing/](https://wordpress.org/plugins/edu-results-publishing/)
+- **Live Template / Demo**: [https://hmbashar.github.io/edu-results-publishing/](https://hmbashar.github.io/edu-results-publishing/)
+- **Documentation**: [https://github.com/hmbashar/edu-results-publishing/tree/main/docs](https://github.com/hmbashar/edu-results-publishing/tree/main/docs)
+- **GitHub Repository**: [https://github.com/hmbashar/edu-results-publishing](https://github.com/hmbashar/edu-results-publishing)
+- **Support / Issues**: [https://github.com/hmbashar/edu-results-publishing/issues](https://github.com/hmbashar/edu-results-publishing/issues)
 
 ## Description
 
@@ -50,7 +61,7 @@ This plugin streamlines the entire process of publishing exam results, saving ti
 
 ## Installation
 
-1. Download the plugin from [GitHub](https://github.com/hmbashar/edu-results-publishing)
+1. Download the plugin from [WordPress.org](https://wordpress.org/plugins/edu-results-publishing/) or [GitHub](https://github.com/hmbashar/edu-results-publishing)
 2. Upload the plugin files to the `/wp-content/plugins/edu-results-publishing` directory, or install the plugin through the WordPress plugins screen directly
 3. Activate the plugin through the 'Plugins' screen in WordPress
 4. Start configuring your results publishing system
@@ -94,7 +105,9 @@ To bulk import students:
 7. Click "Upload and Import"
 8. Review the import summary
 
-For detailed documentation, see [IMPORT-EXPORT-DOCS.md](IMPORT-EXPORT-DOCS.md)
+For detailed import/export documentation, see [IMPORT-EXPORT-DOCS.md](IMPORT-EXPORT-DOCS.md)
+
+For full plugin documentation, see [Docs](https://github.com/hmbashar/edu-results-publishing/tree/main/docs).
 
 ## Shortcode
 
@@ -165,6 +178,8 @@ Yes, the plugin provides customizable fields for college information, student de
 ## Support
 
 If you encounter any issues or have questions:
+- [Live Template / Demo](https://hmbashar.github.io/edu-results-publishing/)
+- [Documentation](https://github.com/hmbashar/edu-results-publishing/tree/main/docs)
 - [GitHub Issues](https://github.com/hmbashar/edu-results-publishing/issues)
 - [Support Forum](https://wordpress.org/support/plugin/edu-results-publishing/)
 

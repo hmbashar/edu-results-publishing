@@ -19,8 +19,12 @@ Publish and manage student exam results for schools, colleges, and universities 
 Gone are the days of manual result publication; our plugin streamlines the entire process, saving time and effort for educational institutions of all sizes. Whether you're a small school or a large university, this plugin is tailored to meet your needs.
 
 <a href="https://github.com/hmbashar/edu-results-publishing" target="_blank">Github</a>
+<a href="https://wordpress.org/plugins/edu-results-publishing/" target="_blank">Download Plugin</a> | <a href="https://hmbashar.github.io/edu-results-publishing/" target="_blank">Live Template / Demo</a> | <a href="https://github.com/hmbashar/edu-results-publishing/tree/main/docs" target="_blank">Documentation</a> | <a href="https://github.com/hmbashar/edu-results-publishing/issues" target="_blank">Support / Issues</a>
 
-Use the shortcode `[cbedu_search_form]` for displaying the search form. Note: A template isn't required but it will be a better view with the full-width. More features are coming. Just wait.... and stay with us. Also, the Elementor version is coming soon.
+Use the shortcode `[cbedu_search_form]` for displaying the search form.
+
+Full documentation is available here: https://github.com/hmbashar/edu-results-publishing/tree/main/docs
+Live template / demo: https://hmbashar.github.io/edu-results-publishing/ Note: A template isn't required but it will be a better view with the full-width. More features are coming. Just wait.... and stay with us. Also, the Elementor version is coming soon.
 
 = **Features List** =
 
@@ -68,6 +72,17 @@ Thank You.
 
 https://www.youtube.com/watch?v=GS50XOJcpvA
 
+
+== Installation ==
+
+1. Download the plugin from WordPress.org: https://wordpress.org/plugins/edu-results-publishing/
+2. Or review/download the source from GitHub: https://github.com/hmbashar/edu-results-publishing
+3. Upload the plugin to `/wp-content/plugins/edu-results-publishing` or install it through the WordPress plugin installer.
+4. Activate the plugin from the WordPress Plugins screen.
+5. Configure institution settings and publish the result search page using `[cbedu_search_form]`.
+
+Documentation: https://github.com/hmbashar/edu-results-publishing/tree/main/docs
+Live template / demo: https://hmbashar.github.io/edu-results-publishing/
 
 == Frequently Asked Questions ==
 
