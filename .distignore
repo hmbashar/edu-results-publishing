@@ -45,3 +45,4 @@ build
 postcss.config.js
 .wordpress-org
 DEVELOPER_GUIDE.md
+docs
