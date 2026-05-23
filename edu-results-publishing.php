@@ -6,7 +6,7 @@
  * Description: A powerful tool designed to simplify the process of publishing exam results for educational institutions such as schools, colleges, and universities. With an easy-to-use interface, it empowers administrators and educators to effortlessly manage and showcase academic achievements.
  * Tags: Result, WP Result Plugin, EDU Results
  * Text Domain: edu-results
- * Version: 1.2.1
+ * Version: 1.2.2
  * License: GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Domain Path: /languages
@@ -98,7 +98,7 @@ final class CBEDUResultPublishing
         }
 
         if (!defined('CBEDU_VERSION')) {
-            define('CBEDU_VERSION', '1.2.0');
+            define('CBEDU_VERSION', '1.2.2');
         }
     }
 
