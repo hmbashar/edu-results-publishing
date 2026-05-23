@@ -3,8 +3,8 @@ Contributors: hmbashar
 Donate link: https://www.buymeacoffee.com/hmbashar
 Tags: Result, WP Result Plugin, EDU Results, academic
 Requires at least: 4.7
-Tested up to: 6.9
-Stable tag: 1.2.0
+Tested up to: 7
+Stable tag: 1.2.1
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
