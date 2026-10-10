@@ -43,7 +43,7 @@ class Settings
     ?>
         <div class="wrap cbedu-settings-wrap">
             <div class="cbedu-settings-header">
-                <h1><?php echo esc_html__('🎓 Edu Results Settings', 'edu-results'); ?></h1>
+                <h1><?php echo esc_html__('Edu Results Settings', 'edu-results'); ?></h1>
                 <p class="cbedu-settings-subtitle"><?php echo esc_html__('Configure your educational institution settings', 'edu-results'); ?></p>
             </div>
             
@@ -255,7 +255,7 @@ class Settings
         // Add new settings fields for the new options
         add_settings_field(
             'cbedu_results_collage_name',
-            'Collage Name',
+            'College Name',
             array($this, 'collageNameFieldCallback'),
             'cbedu_results_settings',
             'cbedu_results_settings_section'
@@ -263,7 +263,7 @@ class Settings
 
         add_settings_field(
             'cbedu_results_collage_registration_number',
-            'Collage Registration Number',
+            'College Registration Number',
             array($this, 'collageRegistrationNumberFieldCallback'),
             'cbedu_results_settings',
             'cbedu_results_settings_section'
@@ -271,7 +271,7 @@ class Settings
 
         add_settings_field(
             'cbedu_results_collage_since_year',
-            'Collage Since Year',
+            'College Since Year',
             array($this, 'collageSinceYearFieldCallback'),
             'cbedu_results_settings',
             'cbedu_results_settings_section'
@@ -279,7 +279,7 @@ class Settings
 
         add_settings_field(
             'cbedu_results_collage_phone_number',
-            'Collage Phone Number',
+            'College Phone Number',
             array($this, 'collagePhoneNumberFieldCallback'),
             'cbedu_results_settings',
             'cbedu_results_settings_section'
@@ -287,7 +287,7 @@ class Settings
 
         add_settings_field(
             'cbedu_results_collage_email_address',
-            'Collage Email Address',
+            'College Email Address',
             array($this, 'collageEmailAddressFieldCallback'),
             'cbedu_results_settings',
             'cbedu_results_settings_section'
@@ -312,7 +312,7 @@ class Settings
 
         add_settings_field(
             'cbedu_results_collage_address',
-            'Collage Address',
+            'College Address',
             array($this, 'collageAddressFieldCallback'),
             'cbedu_results_settings',
             'cbedu_results_settings_section'

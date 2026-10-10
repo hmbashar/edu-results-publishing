@@ -2,6 +2,7 @@
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 use CBEDU\Frontend\Helpers\Helpers;
+use CBEDU\Frontend\Helpers\Icons;
 
 $post_id = 1062;
 $cbedu_result = new \WP_Query(
@@ -56,13 +57,13 @@ if ($cbedu_result->have_posts()) :
                     <div class="cbedu-result-sheet-header-info">
                         <?php if(!empty($collageLogo)) : ?>
                             <div class="cbedu-result-sheet-collage-logo">
-                                <img src="<?php echo esc_url($collageLogo); ?>" alt="Collage Logo">
+                                <img src="<?php echo esc_url($collageLogo); ?>" alt="<?php esc_attr_e('College Logo', 'edu-results'); ?>">
                             </div>
                         <?php endif; ?>
                         <div class="cbedu-result-collage-information">
                             <?php if(!empty($collageRegistrationNumber)) : ?>
                                 <div class="cbedu-result-collage-sub-heading">
-                                    <h4><?php _e('Collage Registration: ', 'edu-results'); echo esc_html($collageRegistrationNumber); ?></h4>
+                                    <h4><?php _e('College Registration: ', 'edu-results'); echo esc_html($collageRegistrationNumber); ?></h4>
                                 </div>
                             <?php endif; ?>
                             <?php if(!empty($collagePhone) && !empty($collageEmail)) : ?>
@@ -103,7 +104,10 @@ if ($cbedu_result->have_posts()) :
                 <!--Student Information-->
                 <div class="cbedu-result-student-information-area">
                     <div class="cbedu-result-student-information-heading">
-                        <h4><?php _e('Student Information', 'edu-results'); ?></h4>
+                        <h4>
+                            <?php echo Icons::get('user', array('class' => 'cbedu-icon cbedu-icon--heading', 'size' => 22)); ?>
+                            <span><?php _e('Student Information', 'edu-results'); ?></span>
+                        </h4>
                     </div>
                     <table>
                         <tr>
@@ -152,7 +156,7 @@ if ($cbedu_result->have_posts()) :
                         </tr>
                         <tr>
                             <th>
-                                <?php _e('Monther Name:', 'edu-results'); ?>
+                                <?php _e('Mother Name:', 'edu-results'); ?>
                             </th>
                             <td>
                                 <?php echo esc_html($cbedu_std_m_name); ?>
@@ -185,7 +189,10 @@ if ($cbedu_result->have_posts()) :
                 <div class="cbedu-result-student-subject-area">
                     <div class="cbedu-result-student-subject">
                         <div class="cbedu-result-student-subject-heading">
-                            <h4><?php _e('Result Sheet', 'edu-results'); ?></h4>
+                            <h4>
+                                <?php echo Icons::get('chart', array('class' => 'cbedu-icon cbedu-icon--heading', 'size' => 22)); ?>
+                                <span><?php _e('Result Sheet', 'edu-results'); ?></span>
+                            </h4>
                         </div>
                         <table>
                             <tr>

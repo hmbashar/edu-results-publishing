@@ -127,14 +127,35 @@
 }
 
 .cbedu-search-form-header h2 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
   font-size: 36px;
   font-weight: 800;
   margin: 0 0 12px 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #3d4a9e;
   letter-spacing: -0.5px;
+}
+
+.cbedu-search-form-header h2 .cbedu-icon {
+  flex-shrink: 0;
+  color: #667eea;
+}
+
+.cbedu-icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.cbedu-icon--heading {
+  color: #fff;
+}
+
+.cbedu-icon--empty {
+  color: #667eea;
+  margin-bottom: 8px;
 }
 
 .cbedu-search-form-header p {
@@ -199,8 +220,24 @@
 }
 
 .cbedu-form-field .label-icon {
-  font-size: 18px;
-  filter: grayscale(0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+}
+
+.cbedu-form-field .label-icon .cbedu-icon {
+  color: inherit;
+}
+
+.cbedu-form-field.has-error input,
+.cbedu-form-field.has-error select {
+  border-color: #f56565;
+  background: #fff5f5;
 }
 
 .cbedu-form-field .required {
@@ -215,19 +252,22 @@
 }
 
 .cbedu-select-wrapper::after {
-  content: '▼';
+  content: '';
   position: absolute;
   right: 18px;
   top: 50%;
+  width: 12px;
+  height: 12px;
   transform: translateY(-50%);
   pointer-events: none;
-  color: #667eea;
-  font-size: 12px;
-  transition: all 0.3s ease;
+  background-color: #667eea;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9l6 6 6-6' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9l6 6 6-6' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: background-color 0.3s ease;
 }
 
 .cbedu-select-wrapper:hover::after {
-  color: #764ba2;
+  background-color: #764ba2;
 }
 
 /* Input & Select Styles */
@@ -274,12 +314,17 @@
 
 /* Error Messages */
 .cbedu-error-message {
-  color: #f56565;
+  color: #c53030;
   font-size: 13px;
   font-weight: 500;
   margin-top: 6px;
   display: none;
   padding-left: 4px;
+}
+
+.cbedu-error-message.is-visible,
+.cbedu-error-message:not(:empty) {
+  display: block;
   animation: shake 0.3s ease;
 }
 
@@ -348,15 +393,18 @@
   box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
 }
 
-.cbedu-submit-btn .btn-icon {
-  font-size: 18px;
+.cbedu-submit-btn .btn-icon,
+.cbedu-submit-btn .btn-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-  animation: pulse 2s infinite;
+  color: #ffffff;
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+.cbedu-submit-btn .btn-icon .cbedu-icon,
+.cbedu-submit-btn .btn-arrow .cbedu-icon {
+  color: currentColor;
 }
 
 .cbedu-submit-btn .btn-text {
@@ -366,15 +414,18 @@
 }
 
 .cbedu-submit-btn .btn-arrow {
-  font-size: 18px;
-  flex-shrink: 0;
   transition: transform 0.3s ease;
-  font-weight: 700;
-  color: #ffffff;
 }
 
 .cbedu-submit-btn:hover .btn-arrow {
   transform: translateX(5px);
+}
+
+.cbedu-submit-btn:disabled,
+.cbedu-submit-btn.is-loading {
+  opacity: 0.75;
+  cursor: wait;
+  transform: none;
 }
 
 /* Preloader */
@@ -485,7 +536,13 @@
   }
 
   .cbedu-form-field .label-icon {
-    font-size: 16px;
+    width: 26px;
+    height: 26px;
+  }
+
+  .cbedu-search-form-header h2 {
+    font-size: 24px;
+    flex-wrap: wrap;
   }
 }
 
@@ -599,16 +656,6 @@
   gap: 10px;
 }
 
-.cbedu-result-student-information-heading h4:before {
-  content: "👤";
-  font-size: 24px;
-}
-
-.cbedu-result-student-subject-heading h4:before {
-  content: "📊";
-  font-size: 24px;
-}
-
 /* Student Information Area */
 .cbedu-result-student-information-area {
   margin-bottom: 30px;
@@ -698,8 +745,6 @@
 
 .cbedu-result-student-subject table tbody tr:hover {
   background: #e6f2ff;
-  transform: scale(1.01);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
 }
 
 .cbedu-result-student-subject table tbody td {
@@ -745,7 +790,12 @@
   border-radius: 0 0 12px 12px;
 }
 
-.cbedu-print-button-container button {
+.cbedu-print-button-container button,
+.cbedu-print-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #fff;
   padding: 14px 40px;
@@ -760,19 +810,54 @@
   letter-spacing: 1px;
 }
 
-.cbedu-print-button-container button:hover {
+.cbedu-print-button-container button .cbedu-icon,
+.cbedu-print-btn .cbedu-icon {
+  color: #fff;
+}
+
+.cbedu-print-button-container button:hover,
+.cbedu-print-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
 }
 
-.cbedu-print-button-container button:active {
+.cbedu-print-button-container button:active,
+.cbedu-print-btn:active {
   transform: translateY(0);
 }
 
-/* Status Badge Styling */
-.cbedu-result-student-information-area td:contains("Passed"),
-.cbedu-result-student-information-area td:contains("Failed") {
+/* Empty / error states */
+.cbedu-empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  margin: 28px 0;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 24px rgba(31, 50, 105, 0.06);
+}
+
+.cbedu-empty-state__title {
+  margin: 12px 0 8px;
+  font-size: 20px;
   font-weight: 700;
+  color: #2d3748;
+}
+
+.cbedu-empty-state__text {
+  margin: 0;
+  color: #718096;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.cbedu-empty-state--error {
+  border-color: #fed7d7;
+  background: #fffafa;
+}
+
+.cbedu-empty-state--error .cbedu-empty-state__title {
+  color: #c53030;
 }
 
 /* Responsive Design */
@@ -850,6 +935,40 @@
     text-align: left;
     font-weight: 600;
     color: #2d3748;
+  }
+
+  .cbedu-result-student-subject {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .cbedu-result-student-subject table {
+    min-width: 640px;
+  }
+
+  .cbedu-result-student-subject table tbody td.highlight {
+    font-size: 15px;
+  }
+
+  .cbedu-submit-btn,
+  button.cbedu-submit-btn {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .cbedu-ajax-result-area {
+    margin: 16px 0;
+  }
+
+  .cbedu-result-student-information-heading h4,
+  .cbedu-result-student-subject-heading h4 {
+    font-size: 14px;
+  }
+
+  .cbedu-empty-state {
+    padding: 36px 18px;
   }
 }
 

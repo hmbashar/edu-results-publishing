@@ -280,7 +280,14 @@ final class CBEDUResultPublishing
         $required_fields = array('registration_number', 'roll', 'examination', 'year', 'board', 'department_group');
         foreach ($required_fields as $field) {
             if (empty($_POST[$field])) {
-                echo '<p>Error: Field "' . esc_html($field) . '" is required.</p>';
+                echo '<div class="cbedu-empty-state cbedu-empty-state--error">';
+                echo '<p class="cbedu-empty-state__title">' . esc_html__('Missing required field', 'edu-results') . '</p>';
+                echo '<p class="cbedu-empty-state__text">' . sprintf(
+                    /* translators: %s: field name */
+                    esc_html__('Please complete the "%s" field and try again.', 'edu-results'),
+                    esc_html($field)
+                ) . '</p>';
+                echo '</div>';
                 wp_die();
             }
         }
@@ -414,7 +421,10 @@ final class CBEDUResultPublishing
                         <!--Student Information-->
                         <div class="cbedu-result-student-information-area">
                             <div class="cbedu-result-student-information-heading">
-                                <h4><?php esc_html_e('Student Information', 'edu-results'); ?></h4>
+                                <h4>
+                                    <?php echo \CBEDU\Frontend\Helpers\Icons::get('user', array('class' => 'cbedu-icon cbedu-icon--heading', 'size' => 22)); ?>
+                                    <span><?php esc_html_e('Student Information', 'edu-results'); ?></span>
+                                </h4>
                             </div>
                             <table>
                                 <tbody>
@@ -474,7 +484,10 @@ final class CBEDUResultPublishing
                         <div class="cbedu-result-student-subject-area">
                             <div class="cbedu-result-student-subject">
                                 <div class="cbedu-result-student-subject-heading">
-                                    <h4><?php esc_html_e('Result Sheet', 'edu-results'); ?></h4>
+                                    <h4>
+                                        <?php echo \CBEDU\Frontend\Helpers\Icons::get('chart', array('class' => 'cbedu-icon cbedu-icon--heading', 'size' => 22)); ?>
+                                        <span><?php esc_html_e('Result Sheet', 'edu-results'); ?></span>
+                                    </h4>
                                 </div>
                                 <table>
                                     <thead>
@@ -546,12 +559,19 @@ final class CBEDUResultPublishing
                             </div>                                                   
                         </div>
                         <div class="cbedu-print-button-container">
-                            <button onclick="cbeduPrintResult('cbedu-result-table')"><?php esc_html_e('Print', 'edu-results'); ?></button>
+                            <button type="button" class="cbedu-print-btn" onclick="cbeduPrintResult('cbedu-result-table')">
+                                <?php echo \CBEDU\Frontend\Helpers\Icons::get('print', array('size' => 18)); ?>
+                                <span><?php esc_html_e('Print', 'edu-results'); ?></span>
+                            </button>
                         </div>  
                         <?php
             }
         } else {
-            echo '<p>' . esc_html__('No results found for the selected examination.', 'edu-results') . '</p>';
+            echo '<div class="cbedu-empty-state">';
+            echo \CBEDU\Frontend\Helpers\Icons::get('empty', array('class' => 'cbedu-icon cbedu-icon--empty', 'size' => 48));
+            echo '<p class="cbedu-empty-state__title">' . esc_html__('No results found', 'edu-results') . '</p>';
+            echo '<p class="cbedu-empty-state__text">' . esc_html__('No results found for the selected examination. Please verify your details and try again.', 'edu-results') . '</p>';
+            echo '</div>';
         }
     
         wp_reset_postdata(); // Reset main query
