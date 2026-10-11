@@ -1208,31 +1208,91 @@
   }
 }
 
-/* Print Styles */
+/* Native browser print fallback (popup uses print-sheet.css) */
 @media print {
-  .cbedu-print-button-container {
-    display: none;
+  @page {
+    size: A4;
+    margin: 12mm 14mm;
   }
 
-  .cbedu-ajax-result-area {
-    box-shadow: none;
-    border: 1px solid #ddd;
+  body {
+    background: #fff !important;
+    color: #1a202c;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .cbedu-print-button-container,
+  .cbedu-results-search-form-area,
+  .cbedu-search-form-header,
+  .cbedu-modern-form,
+  .cbedu-preloader-wrapper,
+  header,
+  footer,
+  .site-header,
+  .site-footer,
+  .primebuilder-custom-header,
+  nav {
+    display: none !important;
+  }
+
+  .cbedu-ajax-result-area,
+  .cbedu-results-render-wrapping-area,
+  .cbedu-results-shortcode-area {
+    box-shadow: none !important;
+    border: none !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .cbedu-result-student-information-area,
+  .cbedu-result-student-subject-area {
+    box-shadow: none !important;
+    border: 1px solid #0f4c81;
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 
   .cbedu-result-student-information-heading,
-  .cbedu-result-student-subject-heading {
-    background: #1769aa !important;
+  .cbedu-result-student-subject-heading,
+  .cbedu-result-student-subject table thead {
+    background: #0f4c81 !important;
+    color: #fff !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+  }
+
+  .cbedu-result-student-information-heading h4,
+  .cbedu-result-student-subject-heading h4,
+  .cbedu-result-student-subject table thead th {
+    color: #fff !important;
+  }
+
+  .cbedu-result-student-information-area th,
+  .cbedu-result-student-information-area td,
+  .cbedu-result-student-subject th,
+  .cbedu-result-student-subject td {
+    border: 1px solid #a0aec0 !important;
+  }
+
+  .cbedu-result-student-information-area th {
+    background: #edf2f7 !important;
   }
 
   .cbedu-result-student-subject table tbody td.highlight {
     background: #d6ebf8 !important;
+    color: #0f4c81 !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 
-  body {
-    background: #fff;
+  .cbedu-status-badge--passed,
+  .cbedu-status-badge--pass,
+  .cbedu-status-badge--promoted {
+    background: #def7ec !important;
+    color: #03543f !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 }

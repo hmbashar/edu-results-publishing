@@ -1,0 +1,304 @@
+/* Standalone print / PDF stylesheet for the result sheet popup */
+
+@page {
+  size: A4;
+  margin: 12mm 14mm;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  color: #1a202c;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 11.5pt;
+  line-height: 1.45;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.cbedu-print-doc {
+  width: 100%;
+  max-width: 190mm;
+  margin: 0 auto;
+}
+
+/* Document header */
+.cbedu-print-header {
+  display: grid;
+  grid-template-columns: 72px 1fr 72px;
+  gap: 14px;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 3px solid #0f4c81;
+  margin-bottom: 16px;
+}
+
+.cbedu-print-header__logo,
+.cbedu-print-header__photo {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.cbedu-print-header__logo.is-circle {
+  border-radius: 50%;
+}
+
+.cbedu-print-header__meta {
+  text-align: center;
+  min-width: 0;
+}
+
+.cbedu-print-header__college {
+  margin: 0 0 4px;
+  font-size: 18pt;
+  font-weight: 800;
+  color: #0f4c81;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.cbedu-print-header__reg,
+.cbedu-print-header__contact {
+  margin: 0;
+  font-size: 9pt;
+  color: #4a5568;
+}
+
+.cbedu-print-header__contact {
+  margin-top: 2px;
+}
+
+.cbedu-print-title {
+  margin: 0 0 14px;
+  text-align: center;
+  font-size: 13pt;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #0f4c81;
+}
+
+.cbedu-print-title span {
+  display: inline-block;
+  padding: 4px 14px;
+  border: 1.5px solid #1769aa;
+  border-radius: 4px;
+  background: #f0f7fc;
+}
+
+/* Reuse result block markup inside print window */
+.cbedu-ajax-result-area,
+.cbedu-ajax-result,
+.cbedu-results-render-wrapping-area,
+.cbedu-result-render-area {
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.cbedu-result-ver-banner-area,
+.cbedu-print-button-container,
+.cbedu-result-banner-heading {
+  display: none !important;
+}
+
+.cbedu-result-student-information-area,
+.cbedu-result-student-subject-area {
+  box-shadow: none !important;
+  border: 1px solid #0f4c81;
+  border-radius: 0;
+  overflow: hidden;
+  margin: 0 0 14px;
+  background: #fff;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.cbedu-result-student-information-heading,
+.cbedu-result-student-subject-heading,
+.cbedu-result-student-subject table thead {
+  background: #0f4c81 !important;
+  color: #fff !important;
+  padding: 8px 12px;
+  margin: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.cbedu-result-student-information-heading h4,
+.cbedu-result-student-subject-heading h4 {
+  margin: 0;
+  color: #fff !important;
+  font-size: 11pt;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cbedu-result-student-information-heading h4 .cbedu-icon,
+.cbedu-result-student-subject-heading h4 .cbedu-icon {
+  color: #fff !important;
+  width: 16px;
+  height: 16px;
+}
+
+.cbedu-result-student-information-area table,
+.cbedu-result-student-subject table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  table-layout: fixed;
+}
+
+.cbedu-result-student-information-area th,
+.cbedu-result-student-information-area td,
+.cbedu-result-student-subject th,
+.cbedu-result-student-subject td {
+  border: 1px solid #a0aec0;
+  padding: 7px 10px;
+  font-size: 10pt;
+  vertical-align: middle;
+  word-wrap: break-word;
+}
+
+.cbedu-result-student-information-area th {
+  width: 18%;
+  background: #edf2f7 !important;
+  color: #2d3748;
+  font-weight: 700;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 8.5pt;
+}
+
+.cbedu-result-student-information-area td {
+  width: 32%;
+  color: #1a202c;
+  font-weight: 600;
+  background: #fff;
+}
+
+.cbedu-result-student-subject table thead th {
+  background: #0f4c81 !important;
+  color: #fff !important;
+  border-color: #0c3d68;
+  font-size: 8.5pt;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 8px 6px;
+}
+
+.cbedu-result-student-subject table tbody td {
+  text-align: center;
+  font-weight: 500;
+}
+
+.cbedu-result-student-subject table tbody td:nth-child(2) {
+  text-align: left;
+  font-weight: 600;
+}
+
+.cbedu-result-student-subject table tbody tr:nth-child(even) td {
+  background: #f7fafc !important;
+}
+
+.cbedu-result-student-subject table tbody td.highlight {
+  background: #d6ebf8 !important;
+  color: #0f4c81 !important;
+  font-weight: 800;
+  font-size: 12pt;
+  border: 1.5px solid #1769aa;
+}
+
+.cbedu-status-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 9pt;
+  font-weight: 700;
+  border: 1px solid currentColor;
+  background: #edf2f7;
+  color: #2d3748;
+}
+
+.cbedu-status-badge--passed,
+.cbedu-status-badge--pass,
+.cbedu-status-badge--promoted {
+  background: #def7ec !important;
+  color: #03543f !important;
+  border-color: #03543f;
+}
+
+.cbedu-status-badge--failed,
+.cbedu-status-badge--fail {
+  background: #fde8e8 !important;
+  color: #9b1c1c !important;
+  border-color: #9b1c1c;
+}
+
+.cbedu-print-footer {
+  margin-top: 18px;
+  padding-top: 10px;
+  border-top: 1.5px solid #cbd5e0;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 8.5pt;
+  color: #4a5568;
+}
+
+.cbedu-print-footer__note {
+  max-width: 65%;
+}
+
+.cbedu-print-signatures {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  margin-top: 28px;
+  page-break-inside: avoid;
+}
+
+.cbedu-print-signatures__item {
+  text-align: center;
+  padding-top: 36px;
+  border-top: 1px solid #718096;
+  font-size: 9pt;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+/* Screen preview when print popup is open before dialog */
+@media screen {
+  body {
+    background: #e2e8f0;
+    padding: 20px;
+  }
+
+  .cbedu-print-doc {
+    background: #fff;
+    padding: 18mm 16mm;
+    box-shadow: 0 8px 30px rgba(15, 76, 129, 0.15);
+  }
+}

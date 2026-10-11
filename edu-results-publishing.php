@@ -564,7 +564,7 @@ final class CBEDUResultPublishing
                         <div class="cbedu-print-button-container">
                             <button type="button" class="cbedu-print-btn" onclick="cbeduPrintResult('cbedu-result-table')">
                                 <?php echo \CBEDU\Frontend\Helpers\Icons::get('print', array('size' => 18)); ?>
-                                <span><?php esc_html_e('Print', 'edu-results'); ?></span>
+                                <span><?php esc_html_e('Print / PDF', 'edu-results'); ?></span>
                             </button>
                         </div>  
                         <?php

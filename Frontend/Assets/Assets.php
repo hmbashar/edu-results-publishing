@@ -26,8 +26,24 @@ class Assets
             'nonce' => wp_create_nonce('cbedu_ajax_search_result_nonce') // Create a nonce for security
         ));
 
-        //script for print
+        //script for print / PDF sheet
+        $print_css_ver = $this->asset_version('css/print-sheet.css');
         wp_enqueue_script('cbedu-print-js', CBEDU_FRONTEND_ASSETS_URL . '/js/print.js', array('jquery'), $print_ver, true);
+        wp_localize_script('cbedu-print-js', 'cbedu_print_object', array(
+            'printCss'       => add_query_arg('ver', $print_css_ver, CBEDU_FRONTEND_ASSETS_URL . '/css/print-sheet.css'),
+            'collegeName'    => (string) get_option('cbedu_results_collage_name', ''),
+            'collegeReg'     => (string) get_option('cbedu_results_collage_registration_number', ''),
+            'collegePhone'   => (string) get_option('cbedu_results_collage_phone_number', ''),
+            'collegeEmail'   => (string) get_option('cbedu_results_collage_email_address', ''),
+            'collegeLogo'    => (string) get_option('cbedu_results_logo', ''),
+            'sheetTitle'     => __('Academic Result Sheet', 'edu-results'),
+            'regLabel'       => __('College Registration', 'edu-results'),
+            'printedLabel'   => __('Printed on', 'edu-results'),
+            'signatureLeft'  => __('Prepared by', 'edu-results'),
+            'signatureMid'   => __('Checked by', 'edu-results'),
+            'signatureRight' => __('Controller of Examinations', 'edu-results'),
+            'footerNote'     => __('This is a computer-generated result sheet. Verify details with the institute if needed.', 'edu-results'),
+        ));
     }
 
     /**
