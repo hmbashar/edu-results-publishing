@@ -4,11 +4,20 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 use CBEDU\Frontend\Helpers\Helpers;
 use CBEDU\Frontend\Helpers\Icons;
 
-$post_id = 1062;
+// $result_id is set by ResultDetails shortcode (attribute, ?result_id=, or roll+reg lookup).
+$result_id = isset($result_id) ? absint($result_id) : 0;
+
+if (!$result_id) {
+    echo '<div class="cbedu-empty-state">';
+    echo '<p class="cbedu-empty-state__title">' . esc_html__('No result selected', 'edu-results') . '</p>';
+    echo '<p class="cbedu-empty-state__text">' . esc_html__('Use the search form to look up a student result, or pass a result ID: [cbedu_result_details id="123"].', 'edu-results') . '</p>';
+    echo '</div>';
+} else {
 $cbedu_result = new \WP_Query(
     array(
-        'post_type' => 'cbedu_results',
-        'p'         => $post_id,
+        'post_type'   => 'cbedu_results',
+        'p'           => $result_id,
+        'post_status' => 'publish',
     )
 );
 $collageName = get_option('cbedu_results_collage_name');
@@ -19,8 +28,6 @@ $collageAddress = get_option('cbedu_results_collage_address');
 $collageWebsite = get_option('cbedu_results_collage_website_url');
 $collageBannerHeading = get_option('cbedu_results_banner_heading');
 $collageLogo = get_option('cbedu_results_logo');
-
-
 
 if ($cbedu_result->have_posts()) :
     while ($cbedu_result->have_posts()) :
@@ -277,5 +284,11 @@ if ($cbedu_result->have_posts()) :
         </div>
 <?php
     endwhile;
+    wp_reset_postdata();
+else :
+    echo '<div class="cbedu-empty-state cbedu-empty-state--error">';
+    echo '<p class="cbedu-empty-state__title">' . esc_html__('Result not found', 'edu-results') . '</p>';
+    echo '<p class="cbedu-empty-state__text">' . esc_html__('The requested result could not be found or is not published.', 'edu-results') . '</p>';
+    echo '</div>';
 endif;
-wp_reset_query();
+} // end if result_id
