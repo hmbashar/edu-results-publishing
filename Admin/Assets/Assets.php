@@ -35,7 +35,12 @@ class Assets
 
             // Load admin CSS for students, subjects, and results post types
             if (in_array($post_type, array('cbedu_students', 'cbedu_subjects', 'cbedu_results'))) {
-                wp_enqueue_style('cbedu-admin-meta-fields', CBEDU_ADMIN_ASSETS_URL . '/css/admin-meta-fields.css', array(), CBEDU_VERSION);
+                wp_enqueue_style(
+                    'cbedu-admin-meta-fields',
+                    CBEDU_ADMIN_ASSETS_URL . '/css/admin-meta-fields.css',
+                    array(),
+                    $this->asset_version('css/admin-meta-fields.css')
+                );
             }
 
             // For autocomplete jquery in results post type with registration number
@@ -62,14 +67,14 @@ class Assets
             'cbedu-admin-settings',
             CBEDU_ADMIN_ASSETS_URL . '/css/admin-settings.css',
             array(),
-            CBEDU_VERSION
+            $this->asset_version('css/admin-settings.css')
         );
         
         wp_enqueue_style(
             'cbedu-admin-import-export',
             CBEDU_ADMIN_ASSETS_URL . '/css/admin-import-export.css',
             array(),
-            CBEDU_VERSION
+            $this->asset_version('css/admin-import-export.css')
         );
         
         // Enqueue SweetAlert2
@@ -86,7 +91,7 @@ class Assets
             'cbedu-students-import-export',
             CBEDU_ADMIN_ASSETS_URL . '/js/import-export/students-import-export.js',
             array('jquery', 'sweetalert2'),
-            CBEDU_VERSION,
+            $this->asset_version('js/import-export/students-import-export.js'),
             true
         );
         
@@ -95,7 +100,7 @@ class Assets
             'cbedu-results-import-export',
             CBEDU_ADMIN_ASSETS_URL . '/js/import-export/results-import-export.js',
             array('jquery', 'sweetalert2'),
-            CBEDU_VERSION,
+            $this->asset_version('js/import-export/results-import-export.js'),
             true
         );
         
@@ -104,7 +109,7 @@ class Assets
             'cbedu-import-export',
             CBEDU_ADMIN_ASSETS_URL . '/js/import-export.js',
             array('jquery', 'cbedu-students-import-export', 'cbedu-results-import-export'),
-            CBEDU_VERSION,
+            $this->asset_version('js/import-export.js'),
             true
         );
         
@@ -122,5 +127,17 @@ class Assets
                 'importResultsNonce' => wp_create_nonce('cbedu_import_results_nonce')
             )
         );
+    }
+
+    /**
+     * Use filemtime so browsers pick up asset changes without bumping plugin version.
+     *
+     * @param string $relative_path Path under Admin/Assets.
+     * @return string|false
+     */
+    private function asset_version($relative_path)
+    {
+        $file = CBEDU_RESULT_PATH . 'Admin/Assets/' . ltrim($relative_path, '/');
+        return file_exists($file) ? (string) filemtime($file) : CBEDU_VERSION;
     }
 }
