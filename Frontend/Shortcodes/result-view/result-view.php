@@ -66,24 +66,27 @@ if ($cbedu_result->have_posts()) :
                                     <h4><?php _e('College Registration: ', 'edu-results'); echo esc_html($collageRegistrationNumber); ?></h4>
                                 </div>
                             <?php endif; ?>
-                            <?php if(!empty($collagePhone) && !empty($collageEmail)) : ?>
+                            <?php if (!empty($collagePhone) || !empty($collageEmail)) : ?>
                                 <div class="cbedu-result-collage-info">
-                                    <?php if(!empty($collagePhone)) : ?>
+                                    <?php if (!empty($collagePhone)) : ?>
                                         <p><?php _e('Phone: ', 'edu-results'); echo esc_html($collagePhone); ?></p>
                                     <?php endif; ?>
-                                    <?php if(!empty($collageEmail)) : ?>
+                                    <?php if (!empty($collageEmail)) : ?>
                                         <p><?php _e('Email: ', 'edu-results'); echo esc_html($collageEmail); ?></p>
-                                    <?php endif; ?>                                    
+                                    <?php endif; ?>
                                 </div>
                             <?php endif; ?>
-                            <?php if(!empty($collageAddress)) : ?>
+                            <?php if (!empty($collageAddress)) : ?>
                                 <div class="cbedu-result-collage-info">
                                     <p><?php _e('Address: ', 'edu-results'); echo esc_html($collageAddress); ?></p>
                                 </div>
                             <?php endif; ?>
-                            <?php if(!empty($collageWebsite)) : ?>
+                            <?php if (!empty($collageWebsite)) : ?>
                                 <div class="cbedu-result-collage-info">
-                                    <p><?php _e('Website: ', 'edu-results'); echo esc_html($collageWebsite); ?></p>
+                                    <p><?php
+                                        _e('Website: ', 'edu-results');
+                                        echo '<a href="' . esc_url($collageWebsite) . '" target="_blank" rel="noopener noreferrer">' . esc_html($collageWebsite) . '</a>';
+                                    ?></p>
                                 </div>
                             <?php endif; ?>
                         </div>
