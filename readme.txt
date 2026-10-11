@@ -3,8 +3,8 @@ Contributors: hmbashar
 Donate link: https://www.buymeacoffee.com/hmbashar
 Tags: Result, WP Result Plugin, EDU Results, academic
 Requires at least: 4.7
-Tested up to: 7.0
-Stable tag: 1.2.2
+Tested up to: 7.1.3
+Stable tag: 1.2.3
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -123,6 +123,17 @@ https://www.youtube.com/watch?v=GS50XOJcpvA
 
 == Changelog ==
 
+= 1.2.3 =
+* Redesigned frontend result/search UI with education-blue accents and custom SVG icons
+* Improved mobile responsive result sheet layout
+* Added designed A4 Print / PDF result sheet
+* Made result details shortcode dynamic (no hardcoded result ID)
+* Added settings sidebar with setup guidelines and GitHub documentation links
+* Hardened admin security: capability/nonce checks, settings restricted to manage_options
+* Removed public nopriv student-details AJAX lookup
+* Asset cache-busting via filemtime without requiring version bumps for CSS/JS
+* Tested up to WordPress 7.1.3
+
 = 1.2.0 =
 * Enhanced features and improvements
 * Bug fixes and performance optimization
@@ -139,6 +150,9 @@ https://www.youtube.com/watch?v=GS50XOJcpvA
 
 
 == Upgrade Notice ==
+
+= 1.2.3 =
+UI/UX refresh, Print/PDF result sheet, settings guide sidebar, and admin security hardening. Tested up to WordPress 7.1.3.
 
 = 1.0 =
 Upgrade to access easy result publishing for educational institutions.

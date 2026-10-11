@@ -2,7 +2,7 @@
 
 A powerful WordPress plugin designed to simplify the process of publishing exam results for educational institutions such as schools, colleges, and universities.
 
-[![WordPress Plugin Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](https://github.com/hmbashar/edu-results-publishing)
+[![WordPress Plugin Version](https://img.shields.io/badge/version-1.2.3-blue.svg)](https://github.com/hmbashar/edu-results-publishing)
 [![WordPress Compatibility](https://img.shields.io/badge/wordpress-6.9%20tested-brightgreen.svg)](https://wordpress.org/)
 [![License](https://img.shields.io/badge/license-GPLv2-orange.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 [![Plugin Download](https://img.shields.io/badge/Download-WordPress.org-21759b.svg)](https://wordpress.org/plugins/edu-results-publishing/)
@@ -121,7 +121,7 @@ Use this shortcode to display the result search form on any page or post.
 
 - **WordPress**: 4.7 or higher
 - **PHP**: 7.0 or higher
-- **Tested up to**: WordPress 6.9
+- **Tested up to**: WordPress 7.1.3
 
 ## Screenshots
 
@@ -139,6 +139,17 @@ Use this shortcode to display the result search form on any page or post.
 12. New Student fields
 
 ## Changelog
+
+### 1.2.3
+* Redesigned frontend result/search UI with education-blue accents and custom SVG icons
+* Improved mobile responsive result sheet layout
+* Added designed A4 Print / PDF result sheet
+* Made result details shortcode dynamic (no hardcoded result ID)
+* Added settings sidebar with setup guidelines and GitHub documentation links
+* Hardened admin security: capability/nonce checks, settings restricted to manage_options
+* Removed public nopriv student-details AJAX lookup
+* Asset cache-busting via filemtime without requiring version bumps for CSS/JS
+* Tested up to WordPress 7.1.3
 
 ### 1.2.0
 * **NEW**: Student Import/Export functionality via CSV
