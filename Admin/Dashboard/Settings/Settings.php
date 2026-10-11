@@ -74,6 +74,7 @@ class Settings
                 </a>
             </div>
             
+            <div class="cbedu-settings-layout">
             <div class="cbedu-settings-container">
                 <?php if ($active_tab === 'general') : ?>
                     <!-- General Settings Tab -->
@@ -190,8 +191,121 @@ class Settings
                     
                 <?php endif; ?>
             </div>
+            <?php $this->render_guidelines_sidebar($active_tab); ?>
+            </div>
         </div>
     <?php
+    }
+
+    /**
+     * Settings sidebar with setup guidelines and GitHub documentation links.
+     *
+     * @param string $active_tab Current settings tab slug.
+     */
+    private function render_guidelines_sidebar($active_tab)
+    {
+        $github_repo = 'https://github.com/hmbashar/edu-results-publishing';
+        $github_docs = 'https://github.com/hmbashar/edu-results-publishing/tree/main/docs';
+        $github_issues = 'https://github.com/hmbashar/edu-results-publishing/issues';
+        $live_demo = 'https://hmbashar.github.io/edu-results-publishing/';
+        $user_manual = 'https://github.com/hmbashar/edu-results-publishing/blob/main/docs/user-manual.md';
+        $shortcodes_doc = 'https://github.com/hmbashar/edu-results-publishing/blob/main/docs/shortcodes-and-frontend.md';
+        ?>
+        <aside class="cbedu-settings-sidebar" aria-label="<?php esc_attr_e('Setup guidelines', 'edu-results'); ?>">
+            <div class="cbedu-sidebar-card">
+                <div class="cbedu-sidebar-card__header">
+                    <?php echo Icons::get('help', array('class' => 'cbedu-icon', 'size' => 20)); ?>
+                    <h2><?php esc_html_e('Quick Setup Guide', 'edu-results'); ?></h2>
+                </div>
+                <ol class="cbedu-sidebar-steps">
+                    <li>
+                        <strong><?php esc_html_e('Institution details', 'edu-results'); ?></strong>
+                        <span><?php esc_html_e('Add logo, name, registration, and contact info on the General tab.', 'edu-results'); ?></span>
+                    </li>
+                    <li>
+                        <strong><?php esc_html_e('Taxonomies', 'edu-results'); ?></strong>
+                        <span><?php esc_html_e('Create Examinations, Session Years, Boards, and Department/Groups.', 'edu-results'); ?></span>
+                    </li>
+                    <li>
+                        <strong><?php esc_html_e('Subjects & students', 'edu-results'); ?></strong>
+                        <span><?php esc_html_e('Add subjects, then import or create student records with unique registration numbers.', 'edu-results'); ?></span>
+                    </li>
+                    <li>
+                        <strong><?php esc_html_e('Publish results', 'edu-results'); ?></strong>
+                        <span><?php esc_html_e('Create result entries with roll, registration, grades, and subject marks.', 'edu-results'); ?></span>
+                    </li>
+                    <li>
+                        <strong><?php esc_html_e('Frontend shortcode', 'edu-results'); ?></strong>
+                        <span><?php esc_html_e('Place [cbedu_search_form] on a full-width page for public result lookup.', 'edu-results'); ?></span>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="cbedu-sidebar-card">
+                <div class="cbedu-sidebar-card__header">
+                    <?php echo Icons::get('document', array('class' => 'cbedu-icon', 'size' => 20)); ?>
+                    <h2>
+                        <?php
+                        echo esc_html(
+                            $active_tab === 'import-export'
+                                ? __('Import / Export Tips', 'edu-results')
+                                : __('Useful Shortcodes', 'edu-results')
+                        );
+                        ?>
+                    </h2>
+                </div>
+                <?php if ($active_tab === 'import-export') : ?>
+                    <ul class="cbedu-sidebar-list">
+                        <li><?php esc_html_e('Download the sample CSV before importing.', 'edu-results'); ?></li>
+                        <li><?php esc_html_e('Keep required headers exactly as shown.', 'edu-results'); ?></li>
+                        <li><?php esc_html_e('Use UTF-8 CSV for Bengali/Arabic names.', 'edu-results'); ?></li>
+                        <li><?php esc_html_e('Export first if you need a backup.', 'edu-results'); ?></li>
+                    </ul>
+                <?php else : ?>
+                    <ul class="cbedu-sidebar-list cbedu-sidebar-list--code">
+                        <li><code>[cbedu_search_form]</code><span><?php esc_html_e('Public result search', 'edu-results'); ?></span></li>
+                        <li><code>[cbedu_result_details id="123"]</code><span><?php esc_html_e('Single result by ID', 'edu-results'); ?></span></li>
+                    </ul>
+                <?php endif; ?>
+            </div>
+
+            <div class="cbedu-sidebar-card cbedu-sidebar-card--github">
+                <div class="cbedu-sidebar-card__header">
+                    <?php echo Icons::get('layers', array('class' => 'cbedu-icon', 'size' => 20)); ?>
+                    <h2><?php esc_html_e('Docs & GitHub', 'edu-results'); ?></h2>
+                </div>
+                <p class="cbedu-sidebar-card__text">
+                    <?php esc_html_e('Full documentation, demos, and support are on GitHub.', 'edu-results'); ?>
+                </p>
+                <div class="cbedu-sidebar-links">
+                    <a class="cbedu-sidebar-link cbedu-sidebar-link--primary" href="<?php echo esc_url($github_repo); ?>" target="_blank" rel="noopener noreferrer">
+                        <?php echo Icons::get('globe', array('class' => 'cbedu-icon', 'size' => 16)); ?>
+                        <span><?php esc_html_e('GitHub Repository', 'edu-results'); ?></span>
+                    </a>
+                    <a class="cbedu-sidebar-link" href="<?php echo esc_url($github_docs); ?>" target="_blank" rel="noopener noreferrer">
+                        <?php echo Icons::get('document', array('class' => 'cbedu-icon', 'size' => 16)); ?>
+                        <span><?php esc_html_e('Documentation', 'edu-results'); ?></span>
+                    </a>
+                    <a class="cbedu-sidebar-link" href="<?php echo esc_url($user_manual); ?>" target="_blank" rel="noopener noreferrer">
+                        <?php echo Icons::get('help', array('class' => 'cbedu-icon', 'size' => 16)); ?>
+                        <span><?php esc_html_e('User Manual', 'edu-results'); ?></span>
+                    </a>
+                    <a class="cbedu-sidebar-link" href="<?php echo esc_url($shortcodes_doc); ?>" target="_blank" rel="noopener noreferrer">
+                        <?php echo Icons::get('check', array('class' => 'cbedu-icon', 'size' => 16)); ?>
+                        <span><?php esc_html_e('Shortcodes Guide', 'edu-results'); ?></span>
+                    </a>
+                    <a class="cbedu-sidebar-link" href="<?php echo esc_url($live_demo); ?>" target="_blank" rel="noopener noreferrer">
+                        <?php echo Icons::get('image', array('class' => 'cbedu-icon', 'size' => 16)); ?>
+                        <span><?php esc_html_e('Live Template / Demo', 'edu-results'); ?></span>
+                    </a>
+                    <a class="cbedu-sidebar-link" href="<?php echo esc_url($github_issues); ?>" target="_blank" rel="noopener noreferrer">
+                        <?php echo Icons::get('alert', array('class' => 'cbedu-icon', 'size' => 16)); ?>
+                        <span><?php esc_html_e('Support / Issues', 'edu-results'); ?></span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+        <?php
     }
 
     public function registerSettings()
