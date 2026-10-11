@@ -52,7 +52,7 @@ if ($cbedu_result->have_posts()) :
         $cbedu_std_all_subjects_result = get_post_meta(get_the_ID(), 'cbedu_subjects_results', true);
 ?>
 
-        <div class="cbedu-results-render-wrapping-area" id="cbedu-results-render-wrapping-area">
+        <div class="cbedu-results-render-wrapping-area" id="cbedu-result-table">
             <div class="cbedu-result-render-area">
                 <!--Banner Area-->
                 <div class="cbedu-result-ver-banner-area">
@@ -280,6 +280,12 @@ if ($cbedu_result->have_posts()) :
                         </table>
                     </div>
                 </div><!--/ Student Subjects Information-->
+            </div>
+            <div class="cbedu-print-button-container">
+                <button type="button" class="cbedu-print-btn" onclick="cbeduPrintResult('cbedu-result-table')">
+                    <?php echo Icons::get('print', array('size' => 18)); ?>
+                    <span><?php esc_html_e('Print / PDF', 'edu-results'); ?></span>
+                </button>
             </div>
         </div>
 <?php
