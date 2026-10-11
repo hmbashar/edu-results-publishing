@@ -219,7 +219,7 @@ final class CBEDUResultPublishing
     public function register_ajax_handlers()
     {
         add_action('wp_ajax_get_student_details_by_registration', array($this, 'get_student_details_by_registration_callback'));
-        add_action('wp_ajax_nopriv_get_student_details_by_registration', array($this, 'get_student_details_by_registration_callback'));
+        // Admin-only lookup — do not expose via wp_ajax_nopriv_*.
 
         add_action('wp_ajax_cbedu_handle_form_submission', array($this, 'cbedu_handle_form_submission')); // ajax search result
         add_action('wp_ajax_nopriv_cbedu_handle_form_submission', array($this, 'cbedu_handle_form_submission')); //ajax search result
@@ -231,7 +231,11 @@ final class CBEDUResultPublishing
         // Check nonce for security
         check_ajax_referer('cbedu_register_number_nonce', 'security');
 
-        $registration_number = sanitize_text_field($_POST['registration_number']);
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('You do not have permission to look up students.', 'edu-results')), 403);
+        }
+
+        $registration_number = sanitize_text_field(wp_unslash($_POST['registration_number'] ?? ''));
 
         $args = array(
             'post_type' => 'cbedu_students',

@@ -32,7 +32,7 @@ class Settings
         $parentSlug = 'edit.php?post_type=' . $this->prefix . 'results';
         $pageTitle = __('Edu Result Settings', 'edu-results');
         $menuTitle = __('Settings', 'edu-results');
-        $capability = 'edit_posts';
+        $capability = 'manage_options';
         $menuSlug = 'cbedu_results_settings';
         $function = array($this, 'renderSettingsPage');
 
@@ -40,8 +40,12 @@ class Settings
     }
     public function renderSettingsPage()
     {
+        if (!current_user_can('manage_options')) {
+            wp_die(esc_html__('You do not have permission to access these settings.', 'edu-results'));
+        }
+
         // Get current tab
-        $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'general';
+        $active_tab = isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : 'general';
     ?>
         <div class="wrap cbedu-settings-wrap">
             <div class="cbedu-settings-header">
@@ -317,11 +321,17 @@ class Settings
 
     public function validateNonce()
     {
-        if (isset($_POST['cbedu_results_settings_nonce_field'])) {
-            $nonce = sanitize_text_field(wp_unslash($_POST['cbedu_results_settings_nonce_field']));
-            if (!wp_verify_nonce($nonce, 'cbedu_results_settings_nonce')) {
-                die('Security check failed.');
-            }
+        if (!isset($_POST['cbedu_results_settings_nonce_field'])) {
+            return;
+        }
+
+        if (!current_user_can('manage_options')) {
+            wp_die(esc_html__('You do not have permission to save these settings.', 'edu-results'));
+        }
+
+        $nonce = sanitize_text_field(wp_unslash($_POST['cbedu_results_settings_nonce_field']));
+        if (!wp_verify_nonce($nonce, 'cbedu_results_settings_nonce')) {
+            wp_die(esc_html__('Security check failed.', 'edu-results'));
         }
     }
 

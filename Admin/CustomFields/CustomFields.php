@@ -39,35 +39,53 @@ class CustomFields {
      */
     public function handle_auto_draft_deletion()
     {
-        // Check if we're trying to delete an auto-draft
-        if (isset($_GET['action']) && $_GET['action'] === 'trash' && isset($_GET['post'])) {
-            $post_id = intval($_GET['post']);
+        if (!is_admin() || !isset($_GET['action']) || $_GET['action'] !== 'trash' || !isset($_GET['post'])) {
+            return;
+        }
+
+        $allowed_types = array('cbedu_students', 'cbedu_subjects', 'cbedu_results');
+
+        // Single trash (WordPress uses trash-post_{ID} nonce).
+        if (!is_array($_GET['post'])) {
+            $post_id = absint($_GET['post']);
+            if (!$post_id || !current_user_can('delete_post', $post_id)) {
+                return;
+            }
+
+            if (
+                !isset($_GET['_wpnonce']) ||
+                !wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), 'trash-post_' . $post_id)
+            ) {
+                return;
+            }
+
             $post = get_post($post_id);
-            
-            if ($post && $post->post_status === 'auto-draft' && 
-                in_array($post->post_type, array('cbedu_students', 'cbedu_subjects', 'cbedu_results'))) {
-                
-                // Force delete auto-draft instead of trashing
+            if ($post && $post->post_status === 'auto-draft' && in_array($post->post_type, $allowed_types, true)) {
                 wp_delete_post($post_id, true);
-                
-                // Redirect back to the list
-                wp_redirect(admin_url('edit.php?post_type=' . $post->post_type . '&deleted=1'));
+                wp_safe_redirect(admin_url('edit.php?post_type=' . $post->post_type . '&deleted=1'));
                 exit;
             }
+
+            return;
         }
-        
-        // Handle bulk deletion
-        if (isset($_GET['action']) && $_GET['action'] === 'trash' && isset($_GET['post']) && is_array($_GET['post'])) {
-            foreach ($_GET['post'] as $post_id) {
-                $post_id = intval($post_id);
-                $post = get_post($post_id);
-                
-                if ($post && $post->post_status === 'auto-draft' && 
-                    in_array($post->post_type, array('cbedu_students', 'cbedu_subjects', 'cbedu_results'))) {
-                    
-                    // Force delete auto-draft instead of trashing
-                    wp_delete_post($post_id, true);
-                }
+
+        // Bulk trash (WordPress uses bulk-posts nonce).
+        if (
+            !isset($_GET['_wpnonce']) ||
+            !wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), 'bulk-posts')
+        ) {
+            return;
+        }
+
+        foreach ((array) $_GET['post'] as $post_id) {
+            $post_id = absint($post_id);
+            if (!$post_id || !current_user_can('delete_post', $post_id)) {
+                continue;
+            }
+
+            $post = get_post($post_id);
+            if ($post && $post->post_status === 'auto-draft' && in_array($post->post_type, $allowed_types, true)) {
+                wp_delete_post($post_id, true);
             }
         }
     }
@@ -402,9 +420,20 @@ class CustomFields {
             return;
         }
 
+        if (!current_user_can('edit_post', $post_id)) {
+            return;
+        }
+
+        if (
+            !isset($_POST['cbedu_save_student_nonce']) ||
+            !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['cbedu_save_student_nonce'])), 'cbedu_save_student_nonce_action')
+        ) {
+            return;
+        }
+
         // Update ID number
         if (isset($_POST['cbedu_result_std_id'])) {
-            update_post_meta($post_id, 'cbedu_result_std_id', sanitize_text_field($_POST['cbedu_result_std_id']));
+            update_post_meta($post_id, 'cbedu_result_std_id', sanitize_text_field(wp_unslash($_POST['cbedu_result_std_id'])));
         }
 
         // Update Registration Number
@@ -520,6 +549,8 @@ class CustomFields {
      */
     public function render_subject_fields_meta_box($post)
     {
+        wp_nonce_field('cbedu_save_subject_nonce_action', 'cbedu_save_subject_nonce');
+
         // Retrieve existing value for subject code
         $subject_code = get_post_meta($post->ID, 'cbedu_subject_code', true);
 
@@ -567,9 +598,20 @@ class CustomFields {
             return;
         }
 
+        if (!current_user_can('edit_post', $post_id)) {
+            return;
+        }
+
+        if (
+            !isset($_POST['cbedu_save_subject_nonce']) ||
+            !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['cbedu_save_subject_nonce'])), 'cbedu_save_subject_nonce_action')
+        ) {
+            return;
+        }
+
         // Check if Subject Code is set and sanitize it
         if (isset($_POST['cbedu_subject_code'])) {
-            $sanitized_subject_code = sanitize_text_field($_POST['cbedu_subject_code']);
+            $sanitized_subject_code = sanitize_text_field(wp_unslash($_POST['cbedu_subject_code']));
             update_post_meta($post_id, 'cbedu_subject_code', $sanitized_subject_code);
         }
     }
@@ -619,6 +661,7 @@ class CustomFields {
      */
     public function render_result_fields_meta_box($post)
     {
+        wp_nonce_field('cbedu_save_result_nonce_action', 'cbedu_save_result_nonce');
 
         // Generate a nonce
         $nonce = wp_create_nonce('cbedu_register_number_nonce');
@@ -759,36 +802,46 @@ class CustomFields {
             return;
         }
 
+        if (!current_user_can('edit_post', $post_id)) {
+            return;
+        }
+
+        if (
+            !isset($_POST['cbedu_save_result_nonce']) ||
+            !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['cbedu_save_result_nonce'])), 'cbedu_save_result_nonce_action')
+        ) {
+            return;
+        }
+
         // Update Roll
         if (isset($_POST['cbedu_result_std_roll'])) {
-            update_post_meta($post_id, 'cbedu_result_std_roll', sanitize_text_field($_POST['cbedu_result_std_roll']));
+            update_post_meta($post_id, 'cbedu_result_std_roll', sanitize_text_field(wp_unslash($_POST['cbedu_result_std_roll'])));
         }
 
         // Update Student Type
         if (isset($_POST['cbedu_result_std_student_type'])) {
-            update_post_meta($post_id, 'cbedu_result_std_student_type', sanitize_text_field($_POST['cbedu_result_std_student_type']));
+            update_post_meta($post_id, 'cbedu_result_std_student_type', sanitize_text_field(wp_unslash($_POST['cbedu_result_std_student_type'])));
         }
 
         // Update Result Status
-
         if (isset($_POST['cbedu_result_std_result_status'])) {
-            $sanitized_result_status = sanitize_text_field($_POST['cbedu_result_std_result_status']);
+            $sanitized_result_status = sanitize_text_field(wp_unslash($_POST['cbedu_result_std_result_status']));
             update_post_meta($post_id, 'cbedu_result_std_result_status', $sanitized_result_status);
         }
 
         // Update GPA
         if (isset($_POST['cbedu_result_std_gpa'])) {
-            update_post_meta($post_id, 'cbedu_result_std_gpa', sanitize_text_field($_POST['cbedu_result_std_gpa']));
+            update_post_meta($post_id, 'cbedu_result_std_gpa', sanitize_text_field(wp_unslash($_POST['cbedu_result_std_gpa'])));
         }
 
         // Update Was GPA
         if (isset($_POST['cbedu_result_std_was_gpa'])) {
-            update_post_meta($post_id, 'cbedu_result_std_was_gpa', sanitize_text_field($_POST['cbedu_result_std_was_gpa']));
+            update_post_meta($post_id, 'cbedu_result_std_was_gpa', sanitize_text_field(wp_unslash($_POST['cbedu_result_std_was_gpa'])));
         }
 
         // Save Registration Number from dropdown
         if (isset($_POST['cbedu_result_std_registration_number'])) {
-            update_post_meta($post_id, 'cbedu_result_std_registration_number', sanitize_text_field($_POST['cbedu_result_std_registration_number']));
+            update_post_meta($post_id, 'cbedu_result_std_registration_number', sanitize_text_field(wp_unslash($_POST['cbedu_result_std_registration_number'])));
         }
     }
 
@@ -905,10 +958,14 @@ class CustomFields {
         // Check the post type
         if (get_post_type($post_id) !== 'cbedu_students') return;
 
+        if (!current_user_can('edit_post', $post_id)) {
+            return;
+        }
+
         // Verify the nonce before proceeding.
         if (
             !isset($_POST['cbedu_save_student_nonce']) ||
-            !wp_verify_nonce($_POST['cbedu_save_student_nonce'], 'cbedu_save_student_nonce_action')
+            !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['cbedu_save_student_nonce'])), 'cbedu_save_student_nonce_action')
         ) {
             return;
         }
@@ -990,7 +1047,11 @@ class CustomFields {
         // Verify the nonce
         check_ajax_referer('cbedu_auto_complete_nonce', 'AutoNonce');
 
-        $term = sanitize_text_field($_POST['term']);
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => __('You do not have permission to search students.', 'edu-results')), 403);
+        }
+
+        $term = sanitize_text_field(wp_unslash($_POST['term'] ?? ''));
 
         $args = array(
             'post_type' => 'cbedu_students',
