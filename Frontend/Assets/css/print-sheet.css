@@ -165,7 +165,7 @@ body {
   width: 100%;
   border-collapse: collapse;
   margin: 0;
-  table-layout: fixed;
+  table-layout: auto;
 }
 
 .cbedu-result-student-information-area th,
@@ -176,11 +176,14 @@ body {
   padding: 7px 10px;
   font-size: 10pt;
   vertical-align: middle;
-  word-wrap: break-word;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .cbedu-result-student-information-area th {
-  width: 18%;
+  min-width: 90px;
+  width: auto;
   background: #edf2f7 !important;
   color: #2d3748;
   font-weight: 700;
@@ -191,7 +194,7 @@ body {
 }
 
 .cbedu-result-student-information-area td {
-  width: 32%;
+  min-width: 70px;
   color: #1a202c;
   font-weight: 600;
   background: #fff;
