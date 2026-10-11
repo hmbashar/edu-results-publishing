@@ -14,11 +14,11 @@
 
 /* Hero Section */
 .cbedu-ie-hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0f4c81 0%, #1769aa 100%);
     border-radius: 16px;
     padding: 40px 50px;
     margin-bottom: 30px;
-    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.2);
+    box-shadow: 0 10px 40px rgba(15, 76, 129, 0.2);
     position: relative;
     overflow: hidden;
 }
@@ -76,15 +76,27 @@
 }
 
 .cbedu-ie-separator-line::before {
-    content: '⬥';
+    content: '';
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
-    background: #ffffff;
-    padding: 0 20px;
-    color: #667eea;
-    font-size: 20px;
+    width: 10px;
+    height: 10px;
+    transform: translate(-50%, -50%) rotate(45deg);
+    background: #0f4c81;
+    border: 3px solid #ffffff;
+    border-radius: 2px;
+    padding: 0;
+}
+
+.cbedu-ie-hero-title {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 12px;
+}
+
+.cbedu-ie-hero-title .cbedu-icon {
+    color: #ffffff;
 }
 
 
@@ -107,7 +119,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(90deg, #0f4c81 0%, #1769aa 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -134,7 +146,7 @@
 }
 
 .cbedu-ie-card-export .cbedu-ie-card-icon {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0f4c81 0%, #1769aa 100%);
     color: #ffffff;
 }
 
@@ -195,7 +207,7 @@
 
 .cbedu-ie-feature-icon {
     flex-shrink: 0;
-    color: #667eea;
+    color: #0f4c81;
 }
 
 .cbedu-ie-feature-item span {
@@ -280,7 +292,7 @@
 }
 
 .cbedu-ie-file-input:focus + .cbedu-ie-upload-label {
-    outline: 2px solid #667eea;
+    outline: 2px solid #0f4c81;
     outline-offset: 2px;
 }
 
@@ -330,11 +342,15 @@
 }
 
 .cbedu-ie-info-list li::before {
-    content: '→';
+    content: '';
     position: absolute;
-    left: 0;
-    color: #f59e0b;
-    font-weight: bold;
+    left: 2px;
+    top: 0.55em;
+    width: 7px;
+    height: 7px;
+    border-radius: 2px;
+    background: #0f4c81;
+    transform: rotate(45deg);
 }
 
 .cbedu-ie-info-list code {
@@ -379,7 +395,7 @@
 }
 
 .cbedu-ie-btn-export {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0f4c81 0%, #1769aa 100%);
     color: #ffffff;
 }
 

@@ -69,24 +69,33 @@ if ($cbedu_result->have_posts()) :
                             <?php if (!empty($collagePhone) || !empty($collageEmail)) : ?>
                                 <div class="cbedu-result-collage-info">
                                     <?php if (!empty($collagePhone)) : ?>
-                                        <p><?php _e('Phone: ', 'edu-results'); echo esc_html($collagePhone); ?></p>
+                                        <p class="cbedu-contact-line">
+                                            <?php echo Icons::get('phone', array('class' => 'cbedu-icon cbedu-icon--contact', 'size' => 15)); ?>
+                                            <span><?php echo esc_html($collagePhone); ?></span>
+                                        </p>
                                     <?php endif; ?>
                                     <?php if (!empty($collageEmail)) : ?>
-                                        <p><?php _e('Email: ', 'edu-results'); echo esc_html($collageEmail); ?></p>
+                                        <p class="cbedu-contact-line">
+                                            <?php echo Icons::get('email', array('class' => 'cbedu-icon cbedu-icon--contact', 'size' => 15)); ?>
+                                            <span><?php echo esc_html($collageEmail); ?></span>
+                                        </p>
                                     <?php endif; ?>
                                 </div>
                             <?php endif; ?>
                             <?php if (!empty($collageAddress)) : ?>
                                 <div class="cbedu-result-collage-info">
-                                    <p><?php _e('Address: ', 'edu-results'); echo esc_html($collageAddress); ?></p>
+                                    <p class="cbedu-contact-line">
+                                        <?php echo Icons::get('map', array('class' => 'cbedu-icon cbedu-icon--contact', 'size' => 15)); ?>
+                                        <span><?php echo esc_html($collageAddress); ?></span>
+                                    </p>
                                 </div>
                             <?php endif; ?>
                             <?php if (!empty($collageWebsite)) : ?>
                                 <div class="cbedu-result-collage-info">
-                                    <p><?php
-                                        _e('Website: ', 'edu-results');
-                                        echo '<a href="' . esc_url($collageWebsite) . '" target="_blank" rel="noopener noreferrer">' . esc_html($collageWebsite) . '</a>';
-                                    ?></p>
+                                    <p class="cbedu-contact-line">
+                                        <?php echo Icons::get('globe', array('class' => 'cbedu-icon cbedu-icon--contact', 'size' => 15)); ?>
+                                        <a href="<?php echo esc_url($collageWebsite); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html($collageWebsite); ?></a>
+                                    </p>
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -176,7 +185,10 @@ if ($cbedu_result->have_posts()) :
                             </td>
                             <th><?php _e('Result', 'edu-results'); ?></th>
                             <td>
-                                <?php echo esc_html($cbedu_std_re_status); ?>
+                                <?php
+                                $status_slug = sanitize_html_class(strtolower((string) $cbedu_std_re_status));
+                                echo '<span class="cbedu-status-badge cbedu-status-badge--' . esc_attr($status_slug) . '">' . esc_html($cbedu_std_re_status) . '</span>';
+                                ?>
                             </td>
                         </tr>
                         <tr>

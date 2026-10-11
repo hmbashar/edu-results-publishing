@@ -6,7 +6,7 @@
  * Description: A powerful tool designed to simplify the process of publishing exam results for educational institutions such as schools, colleges, and universities. With an easy-to-use interface, it empowers administrators and educators to effortlessly manage and showcase academic achievements.
  * Tags: Result, WP Result Plugin, EDU Results
  * Text Domain: edu-results
- * Version: 1.2.3
+ * Version: 1.2.4
  * License: GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Domain Path: /languages
@@ -98,7 +98,7 @@ final class CBEDUResultPublishing
         }
 
         if (!defined('CBEDU_VERSION')) {
-            define('CBEDU_VERSION', '1.2.3');
+            define('CBEDU_VERSION', '1.2.4');
         }
     }
 
@@ -456,7 +456,10 @@ final class CBEDUResultPublishing
                                     <th><?php esc_html_e('Session', 'edu-results'); ?></th>
                                     <td><?php echo esc_html($session_year); ?></td>
                                     <th><?php esc_html_e('Result Status', 'edu-results'); ?></th>
-                                    <td><?php echo esc_html($rs_std_result_status); ?></td>                                            
+                                    <td><?php
+                                        $status_slug = sanitize_html_class(strtolower((string) $rs_std_result_status));
+                                        echo '<span class="cbedu-status-badge cbedu-status-badge--' . esc_attr($status_slug) . '">' . esc_html($rs_std_result_status) . '</span>';
+                                    ?></td>                                            
                                 </tr>
                                 <tr>
                                     <th><?php esc_html_e('Gender', 'edu-results'); ?></th>

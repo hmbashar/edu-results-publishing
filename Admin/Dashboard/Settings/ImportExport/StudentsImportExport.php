@@ -1,6 +1,8 @@
 <?php
 namespace CBEDU\Admin\Dashboard\Settings\ImportExport;
 
+use CBEDU\Inc\Icons;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class StudentsImportExport
@@ -345,10 +347,7 @@ class StudentsImportExport
         <!-- Export Card -->
         <div class="cbedu-ie-card cbedu-ie-card-export">
             <div class="cbedu-ie-card-icon">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 15L12 3M12 15L8 11M12 15L16 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M2 17L2 19C2 20.1046 2.89543 21 4 21L20 21C21.1046 21 22 20.1046 22 19L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
+                <?php echo Icons::get('download', array('class' => 'cbedu-icon', 'size' => 48)); ?>
             </div>
             
             <div class="cbedu-ie-card-header">
@@ -359,27 +358,19 @@ class StudentsImportExport
             <div class="cbedu-ie-card-body">
                 <div class="cbedu-ie-features">
                     <div class="cbedu-ie-feature-item">
-                        <svg class="cbedu-ie-feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        <?php echo Icons::get('check', array('class' => 'cbedu-icon cbedu-ie-feature-icon', 'size' => 20)); ?>
                         <span><?php esc_html_e('All published students', 'edu-results'); ?></span>
                     </div>
                     <div class="cbedu-ie-feature-item">
-                        <svg class="cbedu-ie-feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        <?php echo Icons::get('check', array('class' => 'cbedu-icon cbedu-ie-feature-icon', 'size' => 20)); ?>
                         <span><?php esc_html_e('17 custom meta fields', 'edu-results'); ?></span>
                     </div>
                     <div class="cbedu-ie-feature-item">
-                        <svg class="cbedu-ie-feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        <?php echo Icons::get('check', array('class' => 'cbedu-icon cbedu-ie-feature-icon', 'size' => 20)); ?>
                         <span><?php esc_html_e('All taxonomy terms', 'edu-results'); ?></span>
                     </div>
                     <div class="cbedu-ie-feature-item">
-                        <svg class="cbedu-ie-feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        <?php echo Icons::get('check', array('class' => 'cbedu-icon cbedu-ie-feature-icon', 'size' => 20)); ?>
                         <span><?php esc_html_e('UTF-8 encoded CSV', 'edu-results'); ?></span>
                     </div>
                 </div>
@@ -387,10 +378,7 @@ class StudentsImportExport
                 <form method="post" action="" class="cbedu-ie-form cbedu-students-export-form">
                     <?php wp_nonce_field('cbedu_export_students_action', 'cbedu_export_students_nonce'); ?>
                     <button type="submit" name="cbedu_export_students" class="cbedu-ie-btn cbedu-ie-btn-export">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 15L12 3M12 15L8 11M12 15L16 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M2 17L2 19C2 20.1046 2.89543 21 4 21L20 21C21.1046 21 22 20.1046 22 19L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
+                        <?php echo Icons::get('download', array('class' => 'cbedu-icon', 'size' => 20)); ?>
                         <span><?php esc_html_e('Export to CSV', 'edu-results'); ?></span>
                     </button>
                 </form>
@@ -400,10 +388,7 @@ class StudentsImportExport
         <!-- Import Card -->
         <div class="cbedu-ie-card cbedu-ie-card-import">
             <div class="cbedu-ie-card-icon">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 3L12 15M12 3L16 7M12 3L8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M2 17L2 19C2 20.1046 2.89543 21 4 21L20 21C21.1046 21 22 20.1046 22 19L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
+                <?php echo Icons::get('upload', array('class' => 'cbedu-icon', 'size' => 48)); ?>
             </div>
             
             <div class="cbedu-ie-card-header">
@@ -418,9 +403,7 @@ class StudentsImportExport
                     <div class="cbedu-ie-upload-area cbedu-students-upload-area">
                         <input type="file" name="cbedu_import_file" id="cbedu_students_import_file" accept=".csv" required class="cbedu-ie-file-input" />
                         <label for="cbedu_students_import_file" class="cbedu-ie-upload-label">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
-                                <path d="M7 18C4.23858 18 2 15.7614 2 13C2 10.2386 4.23858 8 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C19.7614 8 22 10.2386 22 13C22 15.7614 19.7614 18 17 18M12 15V21M12 15L9 18M12 15L15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                            <?php echo Icons::get('cloud', array('class' => 'cbedu-icon', 'size' => 48)); ?>
                             <span class="cbedu-ie-upload-text"><?php esc_html_e('Click to browse or drag CSV file here', 'edu-results'); ?></span>
                             <span class="cbedu-ie-upload-hint"><?php esc_html_e('Maximum file size: 10MB', 'edu-results'); ?></span>
                         </label>
@@ -428,9 +411,7 @@ class StudentsImportExport
                     
                     <div class="cbedu-ie-info-box">
                         <div class="cbedu-ie-info-header">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                <path d="M12 16V12M12 8H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                            <?php echo Icons::get('help', array('class' => 'cbedu-icon', 'size' => 20)); ?>
                             <strong><?php esc_html_e('Important Notes', 'edu-results'); ?></strong>
                         </div>
                         <ul class="cbedu-ie-info-list">
@@ -442,10 +423,7 @@ class StudentsImportExport
                     </div>
                     
                     <button type="submit" name="cbedu_import_students" class="cbedu-ie-btn cbedu-ie-btn-import">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 3L12 15M12 3L16 7M12 3L8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M2 17L2 19C2 20.1046 2.89543 21 4 21L20 21C21.1046 21 22 20.1046 22 19L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
+                        <?php echo Icons::get('upload', array('class' => 'cbedu-icon', 'size' => 20)); ?>
                         <span><?php esc_html_e('Import from CSV', 'edu-results'); ?></span>
                     </button>
                 </form>

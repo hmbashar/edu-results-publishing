@@ -2,6 +2,8 @@
 
 namespace CBEDU\Admin\CustomFields;
 
+use CBEDU\Inc\Icons;
+
 class ResultSubjectRF
 {
 
@@ -83,7 +85,7 @@ class ResultSubjectRF
                                 </td>
                                 <td class="cbedu-repeater-td-action">
                                     <button type="button" class="button remove-row cbedu-remove-btn">
-                                        <span class="dashicons dashicons-trash"></span>
+                                        <?php echo Icons::get('trash', array('class' => 'cbedu-icon', 'size' => 16)); ?>
                                         <?php esc_html_e('Remove', 'edu-results'); ?>
                                     </button>
                                 </td>
@@ -110,7 +112,7 @@ class ResultSubjectRF
                             </td>
                             <td class="cbedu-repeater-td-action">
                                 <button type="button" class="button remove-row cbedu-remove-btn">
-                                    <span class="dashicons dashicons-trash"></span>
+                                    <?php echo Icons::get('trash', array('class' => 'cbedu-icon', 'size' => 16)); ?>
                                     <?php esc_html_e('Remove', 'edu-results'); ?>
                                 </button>
                             </td>
@@ -136,7 +138,7 @@ class ResultSubjectRF
                         </td>
                         <td class="cbedu-repeater-td-action">
                             <button type="button" class="button remove-row cbedu-remove-btn">
-                                <span class="dashicons dashicons-trash"></span>
+                                <?php echo Icons::get('trash', array('class' => 'cbedu-icon', 'size' => 16)); ?>
                                 <?php esc_html_e('Remove', 'edu-results'); ?>
                             </button>
                         </td>
@@ -146,7 +148,7 @@ class ResultSubjectRF
 
             <div class="cbedu-repeater-footer">
                 <button type="button" id="edu-add-subject-row" class="button button-primary cbedu-add-subject-btn">
-                    <span class="dashicons dashicons-plus-alt"></span>
+                    <?php echo Icons::get('plus', array('class' => 'cbedu-icon', 'size' => 16)); ?>
                     <?php esc_html_e('Add Another Subject', 'edu-results'); ?>
                 </button>
             </div>

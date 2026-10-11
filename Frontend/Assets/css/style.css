@@ -101,6 +101,51 @@
   overflow-wrap: anywhere;
 }
 
+.cbedu-contact-line {
+  display: inline-flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  text-align: left;
+}
+
+.cbedu-contact-line .cbedu-icon--contact {
+  color: #0f4c81;
+  margin-top: 2px;
+}
+
+.cbedu-contact-line a {
+  color: #0f4c81;
+  text-decoration: underline;
+  word-break: break-word;
+}
+
+.cbedu-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: #edf2f7;
+  color: #2d3748;
+}
+
+.cbedu-status-badge--passed,
+.cbedu-status-badge--pass,
+.cbedu-status-badge--promoted {
+  background: #def7ec;
+  color: #03543f;
+}
+
+.cbedu-status-badge--failed,
+.cbedu-status-badge--fail,
+.cbedu-status-badge--absent {
+  background: #fde8e8;
+  color: #9b1c1c;
+}
+
 .cbedu-result-banner-heading {
   text-align: center;
   margin-top: 16px;

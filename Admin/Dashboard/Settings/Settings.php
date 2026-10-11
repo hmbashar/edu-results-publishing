@@ -1,6 +1,8 @@
 <?php
 namespace CBEDU\Admin\Dashboard\Settings;
 
+use CBEDU\Inc\Icons;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class Settings
@@ -43,8 +45,13 @@ class Settings
     ?>
         <div class="wrap cbedu-settings-wrap">
             <div class="cbedu-settings-header">
-                <h1><?php echo esc_html__('Edu Results Settings', 'edu-results'); ?></h1>
-                <p class="cbedu-settings-subtitle"><?php echo esc_html__('Configure your educational institution settings', 'edu-results'); ?></p>
+                <div class="cbedu-settings-header-title">
+                    <?php echo Icons::get('settings', array('class' => 'cbedu-icon cbedu-icon--header', 'size' => 28)); ?>
+                    <div>
+                        <h1><?php echo esc_html__('Edu Results Settings', 'edu-results'); ?></h1>
+                        <p class="cbedu-settings-subtitle"><?php echo esc_html__('Configure your educational institution settings', 'edu-results'); ?></p>
+                    </div>
+                </div>
             </div>
             
             <?php settings_errors(); ?>
@@ -53,20 +60,12 @@ class Settings
             <div class="cbedu-modern-tabs">
                 <a href="?post_type=<?php echo esc_attr($this->prefix . 'results'); ?>&page=cbedu_results_settings&tab=general" 
                    class="cbedu-modern-tab <?php echo $active_tab === 'general' ? 'active' : ''; ?>">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    <?php echo Icons::get('layers', array('class' => 'cbedu-icon', 'size' => 20)); ?>
                     <span><?php esc_html_e('General Settings', 'edu-results'); ?></span>
                 </a>
                 <a href="?post_type=<?php echo esc_attr($this->prefix . 'results'); ?>&page=cbedu_results_settings&tab=import-export" 
                    class="cbedu-modern-tab <?php echo $active_tab === 'import-export' ? 'active' : ''; ?>">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    <?php echo Icons::get('download', array('class' => 'cbedu-icon', 'size' => 20)); ?>
                     <span><?php esc_html_e('Import / Export', 'edu-results'); ?></span>
                 </a>
             </div>
@@ -82,11 +81,7 @@ class Settings
                         <div class="cbedu-modern-card">
                             <div class="cbedu-modern-card-header">
                                 <div class="cbedu-modern-card-icon">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
-                                        <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/>
-                                        <path d="M21 15L16 10L5 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
+                                    <?php echo Icons::get('image', array('class' => 'cbedu-icon', 'size' => 24)); ?>
                                 </div>
                                 <div>
                                     <h3><?php esc_html_e('Branding & Identity', 'edu-results'); ?></h3>
@@ -106,9 +101,7 @@ class Settings
                         <div class="cbedu-modern-card">
                             <div class="cbedu-modern-card-header">
                                 <div class="cbedu-modern-card-icon">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
+                                    <?php echo Icons::get('building', array('class' => 'cbedu-icon', 'size' => 24)); ?>
                                 </div>
                                 <div>
                                     <h3><?php esc_html_e('Basic Information', 'edu-results'); ?></h3>
@@ -145,10 +138,7 @@ class Settings
                         <div class="cbedu-modern-card">
                             <div class="cbedu-modern-card-header">
                                 <div class="cbedu-modern-card-icon">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
+                                    <?php echo Icons::get('email', array('class' => 'cbedu-icon', 'size' => 24)); ?>
                                 </div>
                                 <div>
                                     <h3><?php esc_html_e('Contact Information', 'edu-results'); ?></h3>
@@ -183,7 +173,10 @@ class Settings
                         
                         <!-- Save Button -->
                         <div class="cbedu-modern-save-section">
-                            <?php submit_button(esc_html__('💾 Save All Settings', 'edu-results'), 'primary cbedu-modern-save-btn', 'submit', false); ?>
+                            <button type="submit" name="submit" id="submit" class="button button-primary cbedu-modern-save-btn">
+                                <?php echo Icons::get('save', array('class' => 'cbedu-icon', 'size' => 18)); ?>
+                                <span><?php esc_html_e('Save All Settings', 'edu-results'); ?></span>
+                            </button>
                         </div>
                     </form>
                     

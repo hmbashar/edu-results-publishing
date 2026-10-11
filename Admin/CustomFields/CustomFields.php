@@ -2,6 +2,8 @@
 
 namespace CBEDU\Admin\CustomFields;
 
+use CBEDU\Inc\Icons;
+
 class CustomFields {
     // Class properties and methods go here
 
@@ -202,7 +204,7 @@ class CustomFields {
         <div class="cbedu-meta-box-wrap">
             <!-- Basic Information Section -->
             <div class="cbedu-field-section">
-                <h3 class="cbedu-section-header"><?php esc_html_e('Basic Information', 'edu-results'); ?></h3>
+                <h3 class="cbedu-section-header"><?php echo Icons::get('user', array('class' => 'cbedu-icon', 'size' => 18)); ?><span><?php esc_html_e('Basic Information', 'edu-results'); ?></span></h3>
                 <div class="cbedu-section-content">
                     <div class="cbedu-field-row">
                         <div class="cbedu-field-group">
@@ -264,7 +266,7 @@ class CustomFields {
 
             <!-- Contact Information Section -->
             <div class="cbedu-field-section">
-                <h3 class="cbedu-section-header"><?php esc_html_e('Contact Information', 'edu-results'); ?></h3>
+                <h3 class="cbedu-section-header"><?php echo Icons::get('phone', array('class' => 'cbedu-icon', 'size' => 18)); ?><span><?php esc_html_e('Contact Information', 'edu-results'); ?></span></h3>
                 <div class="cbedu-section-content">
                     <div class="cbedu-field-row">
                         <div class="cbedu-field-group">
@@ -302,7 +304,7 @@ class CustomFields {
 
             <!-- Family Information Section -->
             <div class="cbedu-field-section">
-                <h3 class="cbedu-section-header"><?php esc_html_e('Family Information', 'edu-results'); ?></h3>
+                <h3 class="cbedu-section-header"><?php echo Icons::get('family', array('class' => 'cbedu-icon', 'size' => 18)); ?><span><?php esc_html_e('Family Information', 'edu-results'); ?></span></h3>
                 <div class="cbedu-section-content">
                     <div class="cbedu-field-row">
                         <div class="cbedu-field-group">
@@ -354,7 +356,7 @@ class CustomFields {
 
             <!-- Government Documents Section -->
             <div class="cbedu-field-section">
-                <h3 class="cbedu-section-header"><?php esc_html_e('Government Documents', 'edu-results'); ?></h3>
+                <h3 class="cbedu-section-header"><?php echo Icons::get('idcard', array('class' => 'cbedu-icon', 'size' => 18)); ?><span><?php esc_html_e('Government Documents', 'edu-results'); ?></span></h3>
                 <div class="cbedu-section-content">
                     <div class="cbedu-field-row">
                         <div class="cbedu-field-group">
@@ -525,7 +527,7 @@ class CustomFields {
     ?>
         <div class="cbedu-meta-box-wrap">
             <div class="cbedu-field-section">
-                <h3 class="cbedu-section-header"><?php esc_html_e('Subject Information', 'edu-results'); ?></h3>
+                <h3 class="cbedu-section-header"><?php echo Icons::get('books', array('class' => 'cbedu-icon', 'size' => 18)); ?><span><?php esc_html_e('Subject Information', 'edu-results'); ?></span></h3>
                 <div class="cbedu-section-content">
                     <div class="cbedu-field-row">
                         <div class="cbedu-field-group">
@@ -637,7 +639,7 @@ class CustomFields {
         <div class="cbedu-meta-box-wrap">
             <!-- Student Selection Section -->
             <div class="cbedu-field-section">
-                <h3 class="cbedu-section-header"><?php esc_html_e('Student Selection', 'edu-results'); ?></h3>
+                <h3 class="cbedu-section-header"><?php echo Icons::get('search', array('class' => 'cbedu-icon', 'size' => 18)); ?><span><?php esc_html_e('Student Selection', 'edu-results'); ?></span></h3>
                 <div class="cbedu-section-content">
                     <div class="cbedu-field-row">
                         <div class="cbedu-field-group">
@@ -681,7 +683,7 @@ class CustomFields {
 
             <!-- Result Details Section -->
             <div class="cbedu-field-section">
-                <h3 class="cbedu-section-header"><?php esc_html_e('Result Details', 'edu-results'); ?></h3>
+                <h3 class="cbedu-section-header"><?php echo Icons::get('chart', array('class' => 'cbedu-icon', 'size' => 18)); ?><span><?php esc_html_e('Result Details', 'edu-results'); ?></span></h3>
                 <div class="cbedu-section-content">
                     <div class="cbedu-field-row">
                         <div class="cbedu-field-group">

@@ -129,7 +129,7 @@ function initStudentsImportExport() {
                             icon: 'success',
                             title: 'Export Successful!',
                             html: `<strong>${count}</strong> students exported successfully.`,
-                            confirmButtonColor: '#667eea',
+                            confirmButtonColor: '#0f4c81',
                             timer: 3000
                         });
                     } else {
@@ -195,14 +195,14 @@ function initStudentsImportExport() {
                     if (response.success) {
                         const data = response.data;
                         let html = '<div style="text-align: left;">';
-                        html += `<p><strong>✓ Created:</strong> ${data.imported} students</p>`;
-                        html += `<p><strong>✓ Updated:</strong> ${data.updated} students</p>`;
+                        html += `<p><strong>Created:</strong> ${data.imported} students</p>`;
+                        html += `<p><strong>Updated:</strong> ${data.updated} students</p>`;
                         
                         if (data.errors > 0) {
-                            html += `<p style="color: #f59e0b;"><strong>⚠ Errors:</strong> ${data.errors} rows</p>`;
+                            html += `<p style="color: #f59e0b;"><strong>Errors:</strong> ${data.errors} rows</p>`;
                             
                             if (data.error_messages && data.error_messages.length > 0) {
-                                html += '<details style="margin-top: 10px;"><summary style="cursor: pointer; color: #667eea;">View Error Details</summary>';
+                                html += '<details style="margin-top: 10px;"><summary style="cursor: pointer; color: #0f4c81;">View Error Details</summary>';
                                 html += '<ul style="margin-top: 10px; font-size: 13px;">';
                                 data.error_messages.forEach(msg => {
                                     html += `<li>${msg}</li>`;
@@ -217,7 +217,7 @@ function initStudentsImportExport() {
                             icon: data.errors > 0 ? 'warning' : 'success',
                             title: 'Import Completed!',
                             html: html,
-                            confirmButtonColor: '#667eea',
+                            confirmButtonColor: '#0f4c81',
                             width: '600px'
                         });
 

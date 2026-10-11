@@ -5,20 +5,38 @@
 }
 
 .cbedu-settings-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0f4c81 0%, #1769aa 100%);
     color: #fff;
-    padding: 30px 40px;
-    border-radius: 12px 12px 0 0;
-    margin: 0 0 30px 0;
-    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+    padding: 28px 32px;
+    border-radius: 14px;
+    margin: 0 0 24px 0;
+    box-shadow: 0 8px 24px rgba(15, 76, 129, 0.18);
+}
+
+.cbedu-settings-header-title {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.cbedu-settings-header-title .cbedu-icon--header {
+    color: #fff;
+    flex-shrink: 0;
+    margin-top: 4px;
 }
 
 .cbedu-settings-header h1 {
     color: #fff;
     margin: 0 0 8px 0;
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 700;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.4px;
+}
+
+.cbedu-icon {
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
 }
 
 .cbedu-settings-subtitle {
@@ -67,22 +85,24 @@
 }
 
 .cbedu-modern-tab:hover {
-    color: #667eea;
+    color: #0f4c81;
     background: #f9fafb;
     border-color: #d1d5db;
 }
 
+.cbedu-modern-tab:hover .cbedu-icon,
 .cbedu-modern-tab:hover svg {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 .cbedu-modern-tab.active {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0f4c81 0%, #1769aa 100%);
     color: #fff;
-    border-color: #667eea;
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
+    border-color: #0f4c81;
+    box-shadow: 0 4px 12px rgba(15, 76, 129, 0.22);
 }
 
+.cbedu-modern-tab.active .cbedu-icon,
 .cbedu-modern-tab.active svg {
     color: #fff;
 }
@@ -94,7 +114,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0f4c81 0%, #1769aa 100%);
 }
 
 .cbedu-settings-container {
@@ -178,8 +198,8 @@
 .cbedu-card-body input[type="url"]:focus,
 .cbedu-card-body textarea:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: #0f4c81;
+    box-shadow: 0 0 0 3px rgba(15, 76, 129, 0.1);
     background: #fafbff;
 }
 
@@ -200,16 +220,16 @@
     border-radius: 6px;
     font-size: 13px;
     font-weight: 600;
-    border: 1.5px solid #667eea;
+    border: 1.5px solid #0f4c81;
     background: #fff;
-    color: #667eea;
+    color: #0f4c81;
     transition: all 0.2s ease;
     cursor: pointer;
     margin-top: 8px;
 }
 
 .cbedu-card-body .button:hover {
-    background: #667eea;
+    background: #0f4c81;
     color: #fff;
     border-color: #5a67d8;
     transform: translateY(-1px);
@@ -238,7 +258,7 @@
     line-height: 1.6;
     padding: 15px;
     background: #f7fafc;
-    border-left: 4px solid #667eea;
+    border-left: 4px solid #0f4c81;
     border-radius: 4px;
 }
 
@@ -259,7 +279,7 @@
 }
 
 .cbedu-save-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    background: linear-gradient(135deg, #0f4c81 0%, #1769aa 100%) !important;
     border: none !important;
     color: #fff !important;
     padding: 14px 40px !important;
@@ -268,7 +288,7 @@
     border-radius: 8px !important;
     cursor: pointer;
     transition: all 0.3s ease !important;
-    box-shadow: 0 4px 14px rgba(102, 126, 234, 0.35) !important;
+    box-shadow: 0 4px 14px rgba(15, 76, 129, 0.35) !important;
     text-transform: uppercase;
     letter-spacing: 0.6px;
     height: auto !important;
@@ -278,7 +298,7 @@
 .cbedu-save-btn:hover {
     background: linear-gradient(135deg, #5a67d8 0%, #6b46a0 100%) !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45) !important;
+    box-shadow: 0 6px 20px rgba(15, 76, 129, 0.45) !important;
 }
 
 .cbedu-save-btn:active {
@@ -307,12 +327,12 @@
 
 .cbedu-modern-card:hover {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
-    border-color: #667eea;
+    border-color: #0f4c81;
 }
 
 /* Card Header */
 .cbedu-modern-card-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0f4c81 0%, #1769aa 100%);
     padding: 24px 28px;
     display: flex;
     align-items: center;
@@ -404,8 +424,8 @@
 .cbedu-modern-field input[type="number"]:focus,
 .cbedu-modern-field textarea:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: #0f4c81;
+    box-shadow: 0 0 0 3px rgba(15, 76, 129, 0.1);
     background: #fafbff;
 }
 
@@ -431,19 +451,19 @@
     border-radius: 8px;
     font-size: 14px;
     font-weight: 600;
-    border: 1.5px solid #667eea;
+    border: 1.5px solid #0f4c81;
     background: #fff;
-    color: #667eea;
+    color: #0f4c81;
     transition: all 0.2s ease;
     cursor: pointer;
     margin-top: 12px;
 }
 
 .cbedu-modern-field .button:hover {
-    background: #667eea;
+    background: #0f4c81;
     color: #fff;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
+    box-shadow: 0 4px 12px rgba(15, 76, 129, 0.25);
 }
 
 /* Save Section */
@@ -458,7 +478,11 @@
 }
 
 .cbedu-modern-save-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #0f4c81 0%, #1769aa 100%) !important;
     border: none !important;
     color: #fff !important;
     padding: 16px 48px !important;
@@ -467,22 +491,26 @@
     border-radius: 10px !important;
     cursor: pointer;
     transition: all 0.3s ease !important;
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
+    box-shadow: 0 6px 20px rgba(15, 76, 129, 0.4) !important;
     text-transform: none !important;
     letter-spacing: 0.5px;
     height: auto !important;
     line-height: 1 !important;
 }
 
+.cbedu-modern-save-btn .cbedu-icon {
+    color: #fff;
+}
+
 .cbedu-modern-save-btn:hover {
-    background: linear-gradient(135deg, #5a67d8 0%, #6b46a0 100%) !important;
-    transform: translateY(-3px) !important;
-    box-shadow: 0 8px 28px rgba(102, 126, 234, 0.5) !important;
+    background: linear-gradient(135deg, #0d3f6b 0%, #145a91 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 28px rgba(15, 76, 129, 0.5) !important;
 }
 
 .cbedu-modern-save-btn:active {
     transform: translateY(-1px) !important;
-    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4) !important;
+    box-shadow: 0 4px 16px rgba(15, 76, 129, 0.4) !important;
 }
 
 /* Responsive Design */
