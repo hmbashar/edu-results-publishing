@@ -70,13 +70,13 @@ if ($cbedu_result->have_posts()) :
                                 <div class="cbedu-result-collage-info">
                                     <?php if (!empty($collagePhone)) : ?>
                                         <p class="cbedu-contact-line">
-                                            <?php echo Icons::get('phone', array('class' => 'cbedu-icon cbedu-icon--contact', 'size' => 15)); ?>
+                                            <?php echo Icons::get('phone', array('class' => 'cbedu-icon cbedu-icon--contact', 'size' => 18)); ?>
                                             <span><?php echo esc_html($collagePhone); ?></span>
                                         </p>
                                     <?php endif; ?>
                                     <?php if (!empty($collageEmail)) : ?>
                                         <p class="cbedu-contact-line">
-                                            <?php echo Icons::get('email', array('class' => 'cbedu-icon cbedu-icon--contact', 'size' => 15)); ?>
+                                            <?php echo Icons::get('email', array('class' => 'cbedu-icon cbedu-icon--contact', 'size' => 18)); ?>
                                             <span><?php echo esc_html($collageEmail); ?></span>
                                         </p>
                                     <?php endif; ?>
@@ -85,7 +85,7 @@ if ($cbedu_result->have_posts()) :
                             <?php if (!empty($collageAddress)) : ?>
                                 <div class="cbedu-result-collage-info">
                                     <p class="cbedu-contact-line">
-                                        <?php echo Icons::get('map', array('class' => 'cbedu-icon cbedu-icon--contact', 'size' => 15)); ?>
+                                        <?php echo Icons::get('map', array('class' => 'cbedu-icon cbedu-icon--contact', 'size' => 18)); ?>
                                         <span><?php echo esc_html($collageAddress); ?></span>
                                     </p>
                                 </div>
@@ -93,7 +93,7 @@ if ($cbedu_result->have_posts()) :
                             <?php if (!empty($collageWebsite)) : ?>
                                 <div class="cbedu-result-collage-info">
                                     <p class="cbedu-contact-line">
-                                        <?php echo Icons::get('globe', array('class' => 'cbedu-icon cbedu-icon--contact', 'size' => 15)); ?>
+                                        <?php echo Icons::get('globe', array('class' => 'cbedu-icon cbedu-icon--contact', 'size' => 18)); ?>
                                         <a href="<?php echo esc_url($collageWebsite); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html($collageWebsite); ?></a>
                                     </p>
                                 </div>

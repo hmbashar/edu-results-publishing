@@ -112,6 +112,15 @@
 .cbedu-contact-line .cbedu-icon--contact {
   color: #0f4c81;
   margin-top: 2px;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.cbedu-contact-line .cbedu-icon--contact path,
+.cbedu-contact-line .cbedu-icon--contact circle,
+.cbedu-contact-line .cbedu-icon--contact rect {
+  stroke: currentColor;
 }
 
 .cbedu-contact-line a {
@@ -343,13 +352,13 @@
   font-size: 36px;
   font-weight: 800;
   margin: 0 0 12px 0;
-  color: #3d4a9e;
+  color: #0f4c81;
   letter-spacing: -0.5px;
 }
 
 .cbedu-search-form-header h2 .cbedu-icon {
   flex-shrink: 0;
-  color: #667eea;
+  color: #1769aa;
 }
 
 .cbedu-icon {
@@ -363,7 +372,7 @@
 }
 
 .cbedu-icon--empty {
-  color: #667eea;
+  color: #1769aa;
   margin-bottom: 8px;
 }
 
@@ -379,9 +388,9 @@
   background: #ffffff;
   border-radius: 20px;
   padding: 48px;
-  box-shadow: 0 10px 40px rgba(102, 126, 234, 0.1), 
+  box-shadow: 0 10px 40px rgba(23, 105, 170, 0.1), 
               0 4px 8px rgba(0, 0, 0, 0.02);
-  border: 1px solid rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(23, 105, 170, 0.1);
   transition: all 0.3s ease;
   animation: fadeInUp 0.7s ease-out;
 }
@@ -398,7 +407,7 @@
 }
 
 .cbedu-modern-form:hover {
-  box-shadow: 0 15px 60px rgba(102, 126, 234, 0.15), 
+  box-shadow: 0 15px 60px rgba(23, 105, 170, 0.15), 
               0 6px 12px rgba(0, 0, 0, 0.03);
 }
 
@@ -435,8 +444,8 @@
   width: 28px;
   height: 28px;
   border-radius: 8px;
-  background: rgba(102, 126, 234, 0.1);
-  color: #667eea;
+  background: rgba(23, 105, 170, 0.1);
+  color: #1769aa;
 }
 
 .cbedu-form-field .label-icon .cbedu-icon {
@@ -469,14 +478,14 @@
   height: 12px;
   transform: translateY(-50%);
   pointer-events: none;
-  background-color: #667eea;
+  background-color: #1769aa;
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9l6 6 6-6' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9l6 6 6-6' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
   transition: background-color 0.3s ease;
 }
 
 .cbedu-select-wrapper:hover::after {
-  background-color: #764ba2;
+  background-color: #0f4c81;
 }
 
 /* Input & Select Styles */
@@ -505,9 +514,9 @@
 
 .cbedu-form-field input[type="text"]:focus,
 .cbedu-form-field select:focus {
-  border-color: #667eea;
-  background: #f8f9ff;
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  border-color: #1769aa;
+  background: #f5f9fc;
+  box-shadow: 0 0 0 4px rgba(23, 105, 170, 0.1);
   transform: translateY(-2px);
 }
 
@@ -561,12 +570,12 @@
   font-size: 15px;
   font-weight: 700;
   color: #ffffff !important;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1769aa 0%, #0f4c81 100%);
   border: none;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 20px rgba(23, 105, 170, 0.4);
   text-transform: uppercase;
   letter-spacing: 1.2px;
   position: relative;
@@ -593,13 +602,13 @@
 
 .cbedu-submit-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
-  background: linear-gradient(135deg, #5a67d8 0%, #6b46a0 100%);
+  box-shadow: 0 10px 30px rgba(23, 105, 170, 0.5);
+  background: linear-gradient(135deg, #155a93 0%, #0c3d68 100%);
 }
 
 .cbedu-submit-btn:active {
   transform: translateY(-1px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 5px 15px rgba(23, 105, 170, 0.4);
 }
 
 .cbedu-submit-btn .btn-icon,
@@ -655,7 +664,7 @@
 }
 
 .cbedu-preloader-text {
-  color: #667eea;
+  color: #1769aa;
   font-size: 16px;
   font-weight: 600;
   margin: 0;
@@ -680,7 +689,7 @@
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1769aa 0%, #0f4c81 100%);
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 
@@ -857,7 +866,7 @@
 /* Section Headings */
 .cbedu-result-student-information-heading,
 .cbedu-result-student-subject-heading {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1769aa 0%, #0f4c81 100%);
   padding: 20px 30px;
   margin: 0;
 }
@@ -905,16 +914,16 @@
 }
 
 .cbedu-result-student-information-area table tbody tr:nth-child(even) {
-  background: #f8f9ff;
+  background: #f5f9fc;
 }
 
 .cbedu-result-student-information-area table tbody tr:hover {
-  background: #f0f2ff;
+  background: #eaf3fa;
   transition: background 0.3s ease;
 }
 
 .cbedu-result-student-information-area th {
-  background: #f7f8fc;
+  background: #f5f8fb;
   color: #2d3748;
   font-weight: 600;
   padding: 16px 20px;
@@ -953,7 +962,7 @@
 }
 
 .cbedu-result-student-subject table thead {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1769aa 0%, #0f4c81 100%);
 }
 
 .cbedu-result-student-subject table thead tr th {
@@ -973,7 +982,7 @@
 }
 
 .cbedu-result-student-subject table tbody tr:nth-child(even) {
-  background: #f8f9ff;
+  background: #f5f9fc;
 }
 
 .cbedu-result-student-subject table tbody tr:hover {
@@ -990,7 +999,7 @@
 
 .cbedu-result-student-subject table tbody td:nth-child(1) {
   font-weight: 700;
-  color: #667eea;
+  color: #1769aa;
 }
 
 .cbedu-result-student-subject table tbody td:nth-child(2) {
@@ -1001,12 +1010,12 @@
 
 /* Highlight cells (GPA columns) */
 .cbedu-result-student-subject table tbody td.highlight {
-  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  background: linear-gradient(135deg, #e8f4fc 0%, #d6ebf8 100%);
   font-weight: 700;
   font-size: 18px;
   color: #2d3748;
-  border-left: 3px solid #667eea;
-  border-right: 3px solid #764ba2;
+  border-left: 3px solid #1769aa;
+  border-right: 3px solid #0f4c81;
 }
 
 /* Grade styling */
@@ -1019,7 +1028,7 @@
 .cbedu-print-button-container {
   text-align: center;
   padding: 30px;
-  background: #f7f8fc;
+  background: #f5f8fb;
   border-radius: 0 0 12px 12px;
 }
 
@@ -1029,7 +1038,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1769aa 0%, #0f4c81 100%);
   color: #fff;
   padding: 14px 40px;
   font-size: 16px;
@@ -1038,7 +1047,7 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 15px rgba(23, 105, 170, 0.3);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -1051,7 +1060,7 @@
 .cbedu-print-button-container button:hover,
 .cbedu-print-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 25px rgba(23, 105, 170, 0.4);
 }
 
 .cbedu-print-button-container button:active,
@@ -1212,13 +1221,13 @@
 
   .cbedu-result-student-information-heading,
   .cbedu-result-student-subject-heading {
-    background: #667eea !important;
+    background: #1769aa !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 
   .cbedu-result-student-subject table tbody td.highlight {
-    background: #fed6e3 !important;
+    background: #d6ebf8 !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
